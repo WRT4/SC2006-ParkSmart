@@ -1,7 +1,7 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
 import { auth } from './config/firebase';
+import { useContext, useState } from 'react';
 import { AuthContext } from './auth/AuthWrapper';
 
 export default function LoginPage() {
@@ -14,13 +14,17 @@ export default function LoginPage() {
     return <Navigate to="/home" />;
   }
 
-  const signUp = async () => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/home');
-    } catch (err) {
-      console.log(err);
-    }
+  const signIn = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigate('/home');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
   return (
     <>
@@ -43,12 +47,12 @@ export default function LoginPage() {
       <button
         type="submit"
         onClick={() => {
-          signUp();
+          signIn();
           document.querySelector('#email').value = '';
           document.querySelector('#password').value = '';
         }}
       >
-        Sign Up
+        Login
       </button>
     </>
   );

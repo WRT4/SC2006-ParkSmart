@@ -1,22 +1,30 @@
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import SignUpPage from './SignUpPage';
-import Home from './Home';
+import LoginPage from './LoginPage';
+import HomePage from './HomePage';
+import Index from './Index';
 
 function App() {
-  const [user, setUser] = useState(null);
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      setUser(user);
-    }
-  });
-  if (user) {
-    return <Home></Home>;
-  }
-  return <SignUpPage></SignUpPage>;
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Index></Index>,
+    },
+    {
+      path: 'signup',
+      element: <SignUpPage></SignUpPage>,
+    },
+    {
+      path: 'login',
+      element: <LoginPage></LoginPage>,
+    },
+    {
+      path: 'home',
+      element: <HomePage></HomePage>,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

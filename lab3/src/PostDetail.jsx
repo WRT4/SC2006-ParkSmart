@@ -15,11 +15,12 @@ function PostDetail() {
     const [reportText, setReportText] = useState("");  // State to hold report text
     const [reportingPost, setReportingPost] = useState(false);  // Track if reporting post
     const [reportingCommentId, setReportingCommentId] = useState(null);  // Track comment being reported
+    const [image, setImage] = useState("");
 
     useEffect(() => {
         // Fetch the specific post by its ID
         axios.get(`http://localhost:5000/api/posts/${id}`)
-            .then(res => setPost(res.data))
+            .then(res => {setPost(res.data); setImage(res.data.image || "");})
             .catch(err => console.log(err));
     }, [id]);
 
@@ -79,18 +80,21 @@ function PostDetail() {
         }
     };
 
+    // Edit Comment Functionality
     const editComment = (commentId, currentText) => {
         // Start editing the comment by setting the current text
         setEditingCommentId(commentId);
-        setEditedCommentText(currentText);
+        setEditedCommentText(currentText); // Populate the input with the current comment text
     };
 
+    // Save the edited comment
     const saveComment = (commentId) => {
-        // Save the edited comment to the backend
         if (!editedCommentText.trim()) {
             alert("Comment cannot be empty.");
             return;
         }
+
+        // Send the updated comment to the backend
         axios.put(`http://localhost:5000/api/posts/${id}/comments/${commentId}`, {
             text: editedCommentText
         })
@@ -103,9 +107,12 @@ function PostDetail() {
                 )
             }));
             setEditingCommentId(null); // Reset editing state
-            setEditedCommentText(""); // Clear the input
+            setEditedCommentText(""); // Clear the input field
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.error(err);
+            alert("Something went wrong. Please try again.");
+        });
     };
 
     const deleteComment = (commentId) => {
@@ -175,6 +182,11 @@ function PostDetail() {
         <div className="post-detail">
             <h1>{post.title}</h1>
             <p>{post.content}</p>
+            {image && (
+                <div>
+                    <img src={image} alt="Post Image" style={{ width: "200px", marginTop: "10px" }} />
+                </div>
+            )}
             <p><strong>Posted by:</strong> {post.username} <strong> on </strong> {new Date(post.date).toLocaleString()}</p>
 
             {/* Conditionally render Edit and Delete buttons */}
@@ -212,7 +224,20 @@ function PostDetail() {
                         .sort((a, b) => new Date(a.date) - new Date(b.date))  // Sort by date (ascending)
                         .map((c, index) => (
                             <div key={index} className="comment">
-                                <p><strong>{c.username}</strong>: {c.text}</p>
+                                <p>
+                                    <strong>{c.username}</strong>: {editingCommentId === c._id ? (
+                                    <div>
+                                        <input
+                                        type="text"
+                                        value={editedCommentText}
+                                        onChange={(e) => setEditedCommentText(e.target.value)}
+                                        />
+                                        <button onClick={() => saveComment(c._id)}>Save</button>
+                                    </div>
+                                    ) : (
+                                    <span>{c.text}</span>
+                                    )}
+                                </p>
                                 <small>{new Date(c.date).toLocaleString()}</small>
 
                                 {/* Conditionally render Edit and Delete buttons for each comment */}

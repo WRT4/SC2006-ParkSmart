@@ -7,6 +7,7 @@ function Forum() {
     const [posts, setPosts] = useState([]);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [image, setImage] = useState(""); // New state for image
     const navigate = useNavigate(); // For navigation after successful post
     const { user } = useContext(AuthContext);
 
@@ -16,6 +17,17 @@ function Forum() {
             .then(res => setPosts(res.data))
             .catch(err => console.log(err));
     }, []);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImage(reader.result); // Store the base64 string of the image
+            };
+            reader.readAsDataURL(file); // Read the file as base64 string
+        }
+    };
 
     const createPost = () => {
         if (!user) {
@@ -27,12 +39,14 @@ function Forum() {
         axios.post("http://localhost:5000/api/posts", { 
             title, 
             content, 
-            username: user.username // Add the username to the post data
+            username: user.username, // Add the username to the post data
+            image // Add the base64 image to the post data
         })
         .then(res => {
             setPosts([...posts, res.data]); // Add the new post to the list of posts
             setTitle("");  // Clear input fields
             setContent(""); // Clear content field
+            setImage(""); // Clear image after post creation
         })
         .catch(err => console.log(err));
     };
@@ -53,6 +67,12 @@ function Forum() {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                     />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange} // Handle image selection
+                    />
+                    {image && <img src={image} alt="Post Preview" style={{ width: "200px", marginTop: "10px" }} />} {/* Image preview */}
                     <button onClick={createPost}>Create Post</button>
                 </>
             ) : (
@@ -64,6 +84,7 @@ function Forum() {
                 <div key={post._id}>
                     <Link to={`/post/${post._id}`}><h3>{post.title}</h3></Link>
                     <p>{post.content}</p>
+                    {post.image && <img src={post.image} alt="Post Image" style={{ width: "200px", marginTop: "10px" }} />} {/* Image display */}
                     <p><strong>Posted by:</strong> {post.username} {/* Display the username */} <strong> on </strong> {new Date(post.date).toLocaleString()} </p>
                     {/* Display comments for each post */}
                     <div className="comments-section">

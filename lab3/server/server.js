@@ -40,6 +40,7 @@ const PostSchema = new mongoose.Schema({
     username: { type: String, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true },
+    image: { type: String }, // Base64 image string field
     comments: [commentSchema], // Add the comments array
     deleted: { type: Boolean, default: false },
     date: { type: Date, default: Date.now }
@@ -165,12 +166,12 @@ app.post('/api/auth/verify', verifyToken, (req, res) => {
 // Create a new post
 app.post("/api/posts", async (req, res) => {
     try {
-        const { title, content, username } = req.body;
+        const { title, content, username, image } = req.body;
         if (!title || !content) {
             return res.status(400).json({ message: "Title and content are required" });
         }
 
-        const newPost = new Post({ title, content, username });
+        const newPost = new Post({ title, content, username, image });
         await newPost.save();
         res.status(201).json(newPost);
     } catch (err) {
@@ -307,7 +308,7 @@ app.get("/api/posts/:id", async (req, res) => {
 // Update a post
 app.put("/api/posts/:id", async (req, res) => {
     try {
-        const { title, content } = req.body;
+        const { title, content, image } = req.body;
         const post = await Post.findById(req.params.id);
 
         if (!post) {
@@ -316,6 +317,7 @@ app.put("/api/posts/:id", async (req, res) => {
 
         post.title = title;
         post.content = content;
+        post.image = image; // Update the image field
 
         await post.save();
         res.json(post);
@@ -325,6 +327,41 @@ app.put("/api/posts/:id", async (req, res) => {
     }
 });
 
+// POST route to upload image as base64 string
+app.post("/api/posts/:id/upload-image", async (req, res) => {
+    const { imageBase64 } = req.body; // Assuming the base64 string is sent in the body
+
+    if (!imageBase64) {
+        return res.status(400).json({ message: "No image provided" });
+    }
+
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        // Store the base64 image string in the post's image field
+        post.image = imageBase64;
+
+        // Save the updated post
+        await post.save();
+        res.status(200).json(post);
+    } catch (err) {
+        console.error("Error uploading image:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+// Delete image
+app.put('/api/posts/:id/delete-image', (req, res) => {
+    const postId = req.params.id;
+
+    // Update the post and set the image field to null or an empty string
+    Post.findByIdAndUpdate(postId, { image: "" }, { new: true })
+        .then(updatedPost => res.json(updatedPost))
+        .catch(err => res.status(500).json({ error: "Failed to delete image" }));
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+/* normalise */
+
 html,
 body,
 #root {

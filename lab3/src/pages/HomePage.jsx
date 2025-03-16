@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import { getAuth, signOut } from 'firebase/auth';
-import { useNavigate, Navigate } from 'react-router-dom';
-import './styles/HomePage.css';
-import { AuthContext } from './auth/AuthWrapper';
+import { useContext, useState } from "react";
+import reactLogo from "../assets/react.svg";
+import viteLogo from "/vite.svg";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate, Navigate } from "react-router-dom";
+import "../styles/HomePage.css";
+import { AuthContext } from "../auth/AuthWrapper";
 
 function Home() {
   const [count, setCount] = useState(0);
@@ -43,7 +43,7 @@ function Home() {
           signOut(auth)
             .then(() => {
               // Sign-out successful.
-              navigate('/login');
+              navigate("/login");
             })
             .catch((error) => {
               // An error happened.

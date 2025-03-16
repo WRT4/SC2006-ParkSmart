@@ -1,8 +1,8 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Navigate, Link } from "react-router-dom";
-import { auth } from "./config/firebase";
+import { auth } from "../config/firebase";
 import { useContext, useState } from "react";
-import { AuthContext } from "./auth/AuthWrapper";
+import { AuthContext } from "../auth/AuthWrapper";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

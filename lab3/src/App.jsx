@@ -1,25 +1,25 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import SignUpPage from './SignUpPage';
-import LoginPage from './LoginPage';
-import HomePage from './HomePage';
-import Index from './Index';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import Index from "./pages/Index";
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: "/",
       element: <Index></Index>,
     },
     {
-      path: 'signup',
+      path: "signup",
       element: <SignUpPage></SignUpPage>,
     },
     {
-      path: 'login',
+      path: "login",
       element: <LoginPage></LoginPage>,
     },
     {
-      path: 'home',
+      path: "home",
       element: <HomePage></HomePage>,
     },
   ]);

@@ -5,6 +5,7 @@ import { auth } from "../config/firebase";
 import { AuthContext } from "../auth/AuthWrapper";
 import PasswordChecklist from "react-password-checklist";
 import "../styles/SignUpPage.css";
+import Title from "../components/Title";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -35,9 +36,8 @@ export default function SignUpPage() {
   return (
     <div className="signup flex min-h-full min-w-full flex-col min-[600px]:flex-row">
       <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
-        <header className="justify-self-start text-xl font-bold">
-          ParkSmart
-        </header>
+        <Title></Title>
+
         <p className="max-w-[350px] text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl min-[600px]:text-start">
           Join Our Parking Community
         </p>

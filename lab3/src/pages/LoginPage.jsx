@@ -3,6 +3,7 @@ import { useNavigate, Navigate, Link } from "react-router-dom";
 import { auth } from "../config/firebase";
 import { useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthWrapper";
+import Title from "../components/Title";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -41,9 +42,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
       <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
-        <header className="justify-self-start text-xl font-bold">
-          ParkSmart
-        </header>
+        <Title></Title>
         <img
           src="./car.jpg"
           alt="Image of a car"

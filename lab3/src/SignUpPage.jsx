@@ -39,10 +39,10 @@ export default function SignUpPage() {
         <header className="justify-self-start text-xl font-bold">
           ParkSmart
         </header>
-        <p className="max-w-[350px] text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl">
+        <p className="max-w-[350px] text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl min-[600px]:text-start">
           Join Our Parking Community
         </p>
-        <p className="text-sm text-gray-600 min-[450px]:text-base">
+        <p className="max-w-[350px] text-sm text-gray-600 min-[450px]:text-base min-[600px]:-mt-[3rem] min-[600px]:text-start">
           Connect and have easy access to carparks in Singapore
         </p>
         <img
@@ -163,6 +163,7 @@ export default function SignUpPage() {
                 placeholder="Create a password"
                 type={passwordVisbility ? "text" : "password"}
                 id="password"
+                pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}

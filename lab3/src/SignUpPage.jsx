@@ -3,8 +3,8 @@ import { useNavigate, Navigate, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { auth } from "./config/firebase";
 import { AuthContext } from "./auth/AuthWrapper";
-import "./styles/SignUpPage.css";
 import PasswordChecklist from "react-password-checklist";
+import "./styles/SignUpPage.css";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -20,9 +20,8 @@ export default function SignUpPage() {
   }
 
   const handleSubmit = () => {
+    document.querySelector("form").reset();
     signUp();
-    document.querySelector("#email").value = "";
-    document.querySelector("#password").value = "";
   };
 
   const signUp = async () => {
@@ -58,7 +57,10 @@ export default function SignUpPage() {
         </footer>
       </section>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
         className="grid max-w-[400px] grow gap-5 self-center p-4 text-start min-[600px]:max-w-none"
       >
         <section className="grid gap-2">

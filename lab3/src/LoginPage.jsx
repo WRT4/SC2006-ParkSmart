@@ -196,6 +196,12 @@ export default function LoginPage() {
             Login
           </button>
         </main>
+        <small>
+          Don't have an account?{" "}
+          <Link to="/signup" className="font-bold text-blue-600">
+            Sign up
+          </Link>
+        </small>
       </form>
     </div>
   );

@@ -34,7 +34,7 @@ export default function SignUpPage() {
     }
   };
   return (
-    <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
+    <div className="signup flex min-h-full min-w-full flex-col min-[600px]:flex-row">
       <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
         <header className="justify-self-start text-xl font-bold">
           ParkSmart
@@ -84,7 +84,7 @@ export default function SignUpPage() {
                 placeholder="Enter your email"
                 type="email"
                 id="email"
-                pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 size="30"
                 required
                 onChange={(e) => {

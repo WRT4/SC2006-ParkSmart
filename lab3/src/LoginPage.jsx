@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, Navigate, Link } from "react-router-dom";
 import { auth } from "./config/firebase";
 import { useContext, useState } from "react";
 import { AuthContext } from "./auth/AuthWrapper";
@@ -7,6 +7,8 @@ import { AuthContext } from "./auth/AuthWrapper";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordVisbility, setPasswordVisibility] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
@@ -15,6 +17,14 @@ export default function LoginPage() {
   }
 
   const signIn = () => {
+    const emailInput = document.querySelector("#email");
+    const passwordInput = document.querySelector("#password");
+    if (!emailInput.checkValidity() || !passwordInput.checkValidity()) {
+      setError(true);
+      return;
+    }
+    setError(false);
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
@@ -24,36 +34,45 @@ export default function LoginPage() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        document.querySelector("#password").value = "";
+        document.querySelector(".incorrect").classList.remove("hidden");
       });
   };
   return (
-    <div className="flex min-h-full flex-col min-[600px]:flex-row">
+    <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
       <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
-        <p className="text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl">
-          Join Our Parking Community
-        </p>
-        <p className="text-sm text-gray-600 min-[450px]:text-base">
-          Connect and have easy access to carparks in Singapore
-        </p>
+        <header className="justify-self-start text-xl font-bold">
+          ParkSmart
+        </header>
         <img
           src="./car.jpg"
           alt="Image of a car"
           className="w-full max-w-[350px] rounded-lg shadow-lg"
         />
-        <footer className="text-sm text-gray-600">
-          Already have an account?{" "}
-          <Link to="/login" className="font-bold text-blue-600">
-            Sign in
-          </Link>
+        <p className="text-3xl font-bold">Welcome Back</p>
+        <p className="text-gray-600">
+          Login to access your account and continue your journey with us.
+        </p>
+        <footer className="inline-flex items-center gap-1 text-sm text-gray-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="#60a5fa"
+            className="bi bi-car-front-fill"
+            viewBox="0 0 16 16"
+          >
+            <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+          </svg>
+          &copy; 2025 ParkSmart. All rights reserved.
         </footer>
       </section>
-      <form
-        onSubmit={handleSubmit}
-        className="grid max-w-[400px] grow gap-5 self-center p-4 text-start min-[600px]:max-w-none"
-      >
+      <form className="grid max-w-[400px] grow gap-5 self-center p-4 text-start min-[600px]:max-w-none">
         <section className="grid gap-2">
-          <h1 className="text-3xl font-semibold">Create Account</h1>
-          <p className="text-gray-600">Fill in your details to get started.</p>
+          <h1 className="text-3xl font-semibold">Login</h1>
+          <p className="text-gray-600">
+            Enter your credentials to access your account.
+          </p>
         </section>
         <main className="grid gap-4">
           <div className="grid gap-1">
@@ -74,7 +93,7 @@ export default function LoginPage() {
                 placeholder="Enter your email"
                 type="email"
                 id="email"
-                pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 size="30"
                 required
                 onChange={(e) => {
@@ -83,58 +102,7 @@ export default function LoginPage() {
               ></input>
             </div>
           </div>
-          <div className="grid gap-1">
-            <label htmlFor="carplate-number">Car Plate Number</label>
-            <div className="relative inline-flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="#9ca3af"
-                className="bi bi-car-front absolute left-2"
-                viewBox="0 0 16 16"
-              >
-                <path d="M4 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m10 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM4.862 4.276 3.906 6.19a.51.51 0 0 0 .497.731c.91-.073 2.35-.17 3.597-.17s2.688.097 3.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 10.691 4H5.309a.5.5 0 0 0-.447.276" />
-                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM4.82 3a1.5 1.5 0 0 0-1.379.91l-.792 1.847a1.8 1.8 0 0 1-.853.904.8.8 0 0 0-.43.564L1.03 8.904a1.5 1.5 0 0 0-.03.294v.413c0 .796.62 1.448 1.408 1.484 1.555.07 3.786.155 5.592.155s4.037-.084 5.592-.155A1.48 1.48 0 0 0 15 9.611v-.413q0-.148-.03-.294l-.335-1.68a.8.8 0 0 0-.43-.563 1.8 1.8 0 0 1-.853-.904l-.792-1.848A1.5 1.5 0 0 0 11.18 3z" />
-              </svg>
-              <input
-                className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                placeholder="Enter plate number"
-                type="text"
-                id="carplate-number"
-                onChange={(e) => {
-                  setCarplateNumber(e.target.value);
-                }}
-                required
-              ></input>
-            </div>
-            <p className="text-sm text-gray-600">Format: ABC-1234</p>
-          </div>
-          <div className="grid gap-1">
-            <label htmlFor="userID">User ID</label>
-            <div className="relative inline-flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="#9ca3af"
-                className="bi bi-person-fill absolute left-2"
-                viewBox="0 0 16 16"
-              >
-                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-              </svg>
-              <input
-                className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                placeholder="Choose a user ID"
-                type="text"
-                id="userID"
-                onChange={(e) => {
-                  setUserID(e.target.value);
-                }}
-                required
-              ></input>
-            </div>
-          </div>
+
           <div className="grid gap-1">
             <label htmlFor="password">Password</label>
             <div className="relative inline-flex items-center">
@@ -151,8 +119,8 @@ export default function LoginPage() {
               <input
                 className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
                 placeholder="Create a password"
-                type={passwordVisbility ? "text" : "password"}
                 id="password"
+                type={passwordVisbility ? "text" : "password"}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -206,71 +174,29 @@ export default function LoginPage() {
                 </svg>
               </button>
             </div>
-            <PasswordChecklist
-              rules={["minLength", "specialChar", "number", "capital"]}
-              minLength={8}
-              value={password}
-              messages={{
-                minLength: "Password must be at least 8 characters long.",
-                specialChar:
-                  "Password must include at least one special character.",
-                number: "Password must contain at least one number.",
-                capital: "Password must have at least one uppercase letter.",
-              }}
-              style={{ fontSize: "0.875rem" }}
-            />
+            <small className="incorrect hidden text-red-600">
+              Credentials are incorrect. Please try again.
+            </small>
+            <small className={"error text-red-600" + (error ? "" : " hidden")}>
+              Please check that you have filled up all fields correctly.
+            </small>
           </div>
-          <div className="flex gap-3 min-[860px]:gap-1.5">
-            <input
-              type="checkbox"
-              id="termsAccepted"
-              name="termsAccepted"
-              value="1"
-              required
-            />
-            <label htmlFor="termsAccepted">
-              I agree to the{" "}
-              <span className="font-bold text-blue-600">Terms of Service</span>{" "}
-              and{" "}
-              <span className="font-bold text-blue-600">Privacy Policy</span>.
-            </label>
+          <div className="flex gap-1.5">
+            <input type="checkbox" id="remember" name="remember" value="1" />
+            <label htmlFor="remember">Remember me</label>
           </div>
           <button
+            onClick={(e) => {
+              e.preventDefault();
+              signIn();
+            }}
             type="submit"
             className="rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"
           >
-            Create Account
+            Login
           </button>
         </main>
       </form>
     </div>
-    // <>
-    //   <label htmlFor="email">Email</label>
-    //   <input
-    //     type="email"
-    //     id="email"
-    //     onChange={(e) => {
-    //       setEmail(e.target.value);
-    //     }}
-    //   ></input>
-    //   <label htmlFor="password">Password</label>
-    //   <input
-    //     type="password"
-    //     id="password"
-    //     onChange={(e) => {
-    //       setPassword(e.target.value);
-    //     }}
-    //   ></input>
-    //   <button
-    //     type="submit"
-    //     onClick={() => {
-    //       signIn();
-    //       document.querySelector('#email').value = '';
-    //       document.querySelector('#password').value = '';
-    //     }}
-    //   >
-    //     Login
-    //   </button>
-    // </>
   );
 }

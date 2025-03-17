@@ -1,9 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
+import { useState } from "react";
+
 import Title from "./Title";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+
   return (
     <header>
       <nav className="border-gray-200 bg-white px-4 py-2.5 lg:px-6 dark:bg-gray-800">
@@ -39,11 +43,12 @@ export default function Header() {
               type="button"
               className="ml-1 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 focus:outline-none lg:hidden dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="mobile-menu-2"
-              aria-expanded="false"
+              aria-expanded={isMenuOpen}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <span className="sr-only">Open main menu</span>
               <svg
-                className="h-6 w-6"
+                className={`h-6 w-6 ${isMenuOpen ? "hidden" : "block"}`}
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +60,7 @@ export default function Header() {
                 ></path>
               </svg>
               <svg
-                className="hidden h-6 w-6"
+                className={`h-6 w-6 ${isMenuOpen ? "block" : "hidden"}`}
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +74,9 @@ export default function Header() {
             </button>
           </div>
           <div
-            className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
+            className={`w-full items-center justify-between lg:order-1 lg:flex lg:w-auto ${
+              isMenuOpen ? "block" : "hidden"
+            }`}
             id="mobile-menu-2"
           >
             <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">

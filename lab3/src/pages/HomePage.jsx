@@ -53,6 +53,13 @@ function Home() {
       >
         Sign Out
       </button>
+      <button
+        onClick={() => {
+          navigate("/home");
+        }}
+      >
+        test
+      </button>
     </>
   );
 }

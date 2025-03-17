@@ -12,7 +12,6 @@ export function AuthWrapper({ children }) {
     const auth = getAuth();
 
     const unsubscribe = onAuthStateChanged(auth, (newUser) => {
-      console.log("user has changed!", user, newUser);
       setUser(newUser);
       setLoading(false); // Authentication check complete
     });

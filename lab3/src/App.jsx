@@ -5,6 +5,9 @@ import HomePage from "./pages/HomePage";
 import Index from "./pages/Index";
 import SearchPage from "./pages/SearchPage";
 import LoadingPage from "./pages/LoadingPage";
+import Forum from "./Forum";
+import PostDetail from "./PostDetail";
+import EditPost from "./EditPost";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,6 +34,18 @@ function App() {
     {
       path: "loading",
       element: <LoadingPage></LoadingPage>,
+    },
+    {
+      path: "forum",
+      element: <Forum />,
+    },
+    {
+      path: "forum/post/:id",
+      element: <PostDetail />,
+    },
+    {
+      path: "forum/post/:id",
+      element: <EditPost />,
     },
   ]);
 

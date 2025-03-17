@@ -1,19 +1,35 @@
 import { useContext, useState } from "react";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
-import { getAuth, signOut } from "firebase/auth";
 import { useNavigate, Navigate } from "react-router-dom";
 import "../styles/HomePage.css";
 import { AuthContext } from "../auth/AuthWrapper";
+import axios from "axios";
 
 function Home() {
   const [count, setCount] = useState(0);
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext); // Assuming AuthContext has setUser to update user state
   const navigate = useNavigate();
 
   if (!user) {
     return <Navigate to="/login" />;
   }
+
+  const handleSignOut = async () => {
+    try {
+      // Optional: Call the server to invalidate JWT if needed (if using cookies)
+      await axios.post("http://localhost:5000/logout"); // Replace with your actual server logout URL
+
+      // Clear local JWT (if stored in localStorage/sessionStorage)
+      localStorage.removeItem("jwtToken"); // Or sessionStorage.removeItem('jwtToken')
+
+      // Clear user context and redirect
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   return (
     <>
@@ -37,22 +53,7 @@ function Home() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <button
-        onClick={() => {
-          const auth = getAuth();
-          signOut(auth)
-            .then(() => {
-              // Sign-out successful.
-              navigate("/login");
-            })
-            .catch((error) => {
-              // An error happened.
-              console.log(error);
-            });
-        }}
-      >
-        Sign Out
-      </button>
+      <button onClick={handleSignOut}>Sign Out</button>
       <button
         onClick={() => {
           navigate("/home");

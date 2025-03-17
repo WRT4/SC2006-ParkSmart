@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import { auth } from "../config/firebase";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../auth/AuthWrapper";
 import Title from "../components/Title";
 

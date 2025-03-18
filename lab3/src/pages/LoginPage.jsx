@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+// import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import { auth } from "../config/firebase";
 import { useContext, useState, useEffect } from "react";
@@ -11,13 +11,43 @@ export default function LoginPage() {
   const [passwordVisbility, setPasswordVisibility] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
 
+  // if (token) {
+  //   // You can send the token to your backend to validate the session
+  //   fetch("http://localhost:5000/api/auth/verify", {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`, // Include the token in request headers
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data.user) {
+  //         setUser(data.user); // Set user if the token is valid
+  //         return <Navigate to="/home" />;
+  //       } else {
+  //         // Handle token invalidation (e.g., redirect to login page)
+  //         localStorage.removeItem("token");
+  //         setUser(null);
+  //         return <Navigate to="/login" />;
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error verifying token:", error);
+  //       localStorage.removeItem("token");
+  //       setUser(null);
+  //       return <Navigate to="/login" />;
+  //     });
+
+  //   // return user ? <Navigate to="/home" /> : <Navigate to="/login" />;
+  // }
   if (user) {
     return <Navigate to="/home" />;
   }
 
-  const signIn = () => {
+  const signIn = async () => {
     const emailInput = document.querySelector("#email");
     const passwordInput = document.querySelector("#password");
     if (!emailInput.checkValidity() || !passwordInput.checkValidity()) {
@@ -26,19 +56,52 @@ export default function LoginPage() {
     }
     setError(false);
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        navigate("/home");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        document.querySelector("#password").value = "";
-        document.querySelector(".incorrect").classList.remove("hidden");
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Error logging in.");
+      }
+      setUser(data.user);
+      // Optionally, save the token in localStorage/sessionStorage if using JWT
+      localStorage.setItem("token", data.token); // assuming the server returns a token
+      navigate("/home");
+    } catch (error) {
+      document.querySelector("#password").value = "";
+      document.querySelector(".incorrect").classList.remove("hidden");
+    }
   };
+
+  // const signIn = () => {
+  //   const emailInput = document.querySelector("#email");
+  //   const passwordInput = document.querySelector("#password");
+  //   if (!emailInput.checkValidity() || !passwordInput.checkValidity()) {
+  //     setError(true);
+  //     return;
+  //   }
+  //   setError(false);
+
+  //   signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       // Signed in
+  //       const user = userCredential.user;
+  //       navigate("/home");
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       document.querySelector("#password").value = "";
+  //       document.querySelector(".incorrect").classList.remove("hidden");
+  //     });
+  // };
   return (
     <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
       <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
@@ -67,7 +130,13 @@ export default function LoginPage() {
         </footer>
       </section>
       <div className="flex grow items-center justify-center">
-        <form className="grid max-w-[400px] grow gap-5 self-center p-4 text-start min-[600px]:max-w-[600px]">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            signIn();
+          }}
+          className="grid max-w-[400px] grow gap-5 self-center p-4 text-start min-[600px]:max-w-[600px]"
+        >
           <section className="grid gap-2">
             <h1 className="text-3xl font-semibold">Login</h1>
             <p className="text-gray-600">
@@ -187,10 +256,11 @@ export default function LoginPage() {
               <label htmlFor="remember">Remember me</label>
             </div>
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                signIn();
-              }}
+              // onClick={(e) => {
+              //   console.log(e);
+              //   e.preventDefault();
+              //   signIn();
+              // }}
               type="submit"
               className="rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"
             >

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../auth/AuthWrapper";
 
 export default function Index() {
-  // const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   if (token) {
     // You can send the token to your backend to validate the session
@@ -34,4 +34,5 @@ export default function Index() {
 
     // return user ? <Navigate to="/home" /> : <Navigate to="/login" />;
   }
+  return <Navigate to="/login" />;
 }

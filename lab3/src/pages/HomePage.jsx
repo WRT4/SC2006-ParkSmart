@@ -21,7 +21,7 @@ function Home() {
       await axios.post("http://localhost:5000/logout"); // Replace with your actual server logout URL
 
       // Clear local JWT (if stored in localStorage/sessionStorage)
-      localStorage.removeItem("jwtToken"); // Or sessionStorage.removeItem('jwtToken')
+      localStorage.removeItem("token"); // Or sessionStorage.removeItem('jwtToken')
 
       // Clear user context and redirect
       setUser(null);

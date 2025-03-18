@@ -10,27 +10,39 @@ import Title from "../components/Title";
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [carplateNumber, setCarplateNumber] = useState("");
-  const [userID, setUserID] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisbility, setPasswordVisibility] = useState(false);
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+  const [errorState, setErrorState] = useState(false);
 
   if (user) {
     return <Navigate to="/home" />;
   }
 
-  const handleSubmit = () => {
-    document.querySelector("form").reset();
-    signUp();
-  };
-
   const signUp = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const response = await fetch("http://localhost:5000/api/auth/signup", {
+        // Updated to the correct signup endpoint
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, username }), // Send username along with email and password
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("An error has occurred. Please try again.");
+      }
+      setUser(data.user);
+      // Optionally, save the token in localStorage/sessionStorage if using JWT
+      localStorage.setItem("token", data.token); // assuming the server returns a token
       navigate("/home");
     } catch (err) {
-      console.log(err);
+      setErrorState(true);
     }
   };
   return (
@@ -60,7 +72,7 @@ export default function SignUpPage() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleSubmit();
+            signUp();
           }}
           className="grid max-w-[400px] gap-5 self-center p-4 text-start min-[600px]:max-w-[600px]"
         >
@@ -126,7 +138,7 @@ export default function SignUpPage() {
               <p className="text-sm text-gray-600">Format: ABC-1234</p>
             </div>
             <div className="grid gap-1">
-              <label htmlFor="userID">User ID</label>
+              <label htmlFor="username">User ID</label>
               <div className="relative inline-flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -142,9 +154,9 @@ export default function SignUpPage() {
                   className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
                   placeholder="Choose a user ID"
                   type="text"
-                  id="userID"
+                  id="username"
                   onChange={(e) => {
-                    setUserID(e.target.value);
+                    setUsername(e.target.value);
                   }}
                   required
                 ></input>
@@ -253,6 +265,9 @@ export default function SignUpPage() {
                 <span className="font-bold text-blue-600">Privacy Policy</span>.
               </label>
             </div>
+            <small className={errorState ? "text-red-600" : "hidden"}>
+              An error occurred. Please try again later.
+            </small>
             <button
               type="submit"
               className="rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"

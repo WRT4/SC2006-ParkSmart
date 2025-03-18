@@ -40,6 +40,7 @@ export function AuthWrapper({ children }) {
         .then((data) => {
           if (data.user) {
             setUser(data.user); // Set user if the token is valid
+            setLoading(false);
           } else {
             throw new Error("Invalid token!");
             // Handle token invalidation (e.g., redirect to login page)
@@ -57,9 +58,9 @@ export function AuthWrapper({ children }) {
     }
   }, []);
 
-  // if (loading) {
-  //   return <LoadingPage></LoadingPage>;
-  // }
+  if (loading) {
+    return <LoadingPage></LoadingPage>;
+  }
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

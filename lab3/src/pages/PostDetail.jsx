@@ -202,7 +202,7 @@ function PostDetail() {
       {image && (
         <div>
           <img
-            src={image}
+            src={image.startsWith("data:") || image.startsWith("http") ? image : `data:image/jpeg;base64,${image}`}
             alt="Post Image"
             style={{ width: "200px", marginTop: "10px" }}
           />
@@ -320,6 +320,7 @@ function PostDetail() {
           <p>Please log in to comment.</p>
         )}
       </div>
+    <button onClick={() => navigate("/forum")}>Back to Forum</button>
     </div>
   );
 }

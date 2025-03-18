@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import imageCompression from "browser-image-compression";
 import axios from "axios";
 
 function EditPost() {
@@ -7,13 +8,16 @@ function EditPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(""); // State to store the image (base64 or URL)
-  const navigate = useNavigate(); // Correct way in React Router v6
+  const [post, setPost] = useState(null);
+  const navigate = useNavigate(); // For navigation after successful update
+  const [uploaded, setUploaded] = useState(false);
 
   // Fetch the post by ID when the component mounts
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/posts/${id}`)
       .then((res) => {
+        setPost(res.data);
         setTitle(res.data.title);
         setContent(res.data.content);
         setImage(res.data.image || ""); // Assuming `image` is a field in the post document
@@ -21,29 +25,54 @@ function EditPost() {
       .catch((err) => console.log(err));
   }, [id]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result); // Store the base64 string of the image
-      };
-      reader.readAsDataURL(file); // Read the file as base64 string
-    }
-  };
+  const handleImageChange = async (e) => {
+      const file = e.target.files[0];
+      setUploaded(true);
+      if (file) {
+        try {
+          // Set compression options
+          const options = {
+            maxSizeMB: 1, // Limit image size to 1MB
+            maxWidthOrHeight: 1024, // Resize to max 1024px width/height
+            useWebWorker: true, // Enable multi-threading for faster processing
+          };
+    
+          // Compress the image
+          const compressedFile = await imageCompression(file, options);
+    
+          // Convert the compressed file to base64 (if needed)
+          const reader = new FileReader();
+          reader.readAsDataURL(compressedFile);
+          reader.onloadend = () => {
+            setImage(compressedFile); // Set the file (not base64) for upload
+          };
+        } catch (error) {
+          console.error("Error compressing image:", error);
+        }
+      }
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Update the post with the new title and content
-    axios
-      .put(`http://localhost:5000/api/posts/${id}`, { title, content, image })
-      .then(() => {
-        // Redirect back to the post details page after successful update
-        navigate(`/forum/post/${id}`);
-      })
-      .catch((err) => console.log(err));
-  };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+    
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+    
+      // Only append the image if a new one is selected
+      if (image && typeof image !== "string") {
+        formData.append("image", image); // Append the image file
+      }
+    
+      axios
+        .put(`http://localhost:5000/api/posts/${id}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then(() => {
+          navigate(`/forum/post/${id}`); // Redirect after successful update
+        })
+        .catch((err) => console.log(err));
+    };    
 
   const deleteImage = () => {
     // Send a request to delete the image
@@ -78,10 +107,22 @@ function EditPost() {
         </div>
 
         {/* Display image preview if there is an image */}
-        {image && (
+        {image && !uploaded && (
           <div>
             <img
-              src={image}
+              src={post.image.startsWith("data:") || post.image.startsWith("http") ? post.image : `data:image/jpeg;base64,${post.image}`}
+              alt="Post Image"
+              style={{ width: "200px", marginTop: "10px" }}
+            />
+            <button type="button" onClick={deleteImage}>
+              Delete Image
+            </button>
+          </div>
+        )}
+        {image && uploaded && (
+          <div>
+            <img
+              src={typeof image === "string" ? image : URL.createObjectURL(image)}
               alt="Post Image"
               style={{ width: "200px", marginTop: "10px" }}
             />

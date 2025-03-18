@@ -5,9 +5,9 @@ import HomePage from "./pages/HomePage";
 import Index from "./pages/Index";
 import SearchPage from "./pages/SearchPage";
 import LoadingPage from "./pages/LoadingPage";
-import Forum from "./Forum";
-import PostDetail from "./PostDetail";
-import EditPost from "./EditPost";
+import Forum from "./pages/Forum";
+import PostDetail from "./pages/PostDetail";
+import EditPost from "./pages/EditPost";
 
 function App() {
   const router = createBrowserRouter([

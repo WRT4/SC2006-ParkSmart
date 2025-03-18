@@ -1,7 +1,5 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import { useContext, useState } from "react";
-import { auth } from "../config/firebase";
 import { AuthContext } from "../auth/AuthWrapper";
 import PasswordChecklist from "react-password-checklist";
 import "../styles/SignUpPage.css";

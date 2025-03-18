@@ -1,7 +1,5 @@
-import { createContext, useState, useEffect, useRef } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { createContext, useState, useEffect } from "react";
 import LoadingPage from "../pages/LoadingPage";
-import { useNavigate, Navigate, Link } from "react-router-dom";
 
 // Create context for user authentication
 export const AuthContext = createContext();

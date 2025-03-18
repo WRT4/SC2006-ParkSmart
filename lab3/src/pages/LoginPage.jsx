@@ -1,7 +1,5 @@
-// import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Navigate, Link } from "react-router-dom";
-import { auth } from "../config/firebase";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthWrapper";
 import Title from "../components/Title";
 
@@ -12,37 +10,7 @@ export default function LoginPage() {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
-  const token = localStorage.getItem("token");
 
-  // if (token) {
-  //   // You can send the token to your backend to validate the session
-  //   fetch("http://localhost:5000/api/auth/verify", {
-  //     method: "POST",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`, // Include the token in request headers
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.user) {
-  //         setUser(data.user); // Set user if the token is valid
-  //         return <Navigate to="/home" />;
-  //       } else {
-  //         // Handle token invalidation (e.g., redirect to login page)
-  //         localStorage.removeItem("token");
-  //         setUser(null);
-  //         return <Navigate to="/login" />;
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error verifying token:", error);
-  //       localStorage.removeItem("token");
-  //       setUser(null);
-  //       return <Navigate to="/login" />;
-  //     });
-
-  //   // return user ? <Navigate to="/home" /> : <Navigate to="/login" />;
-  // }
   if (user) {
     return <Navigate to="/home" />;
   }
@@ -80,28 +48,6 @@ export default function LoginPage() {
     }
   };
 
-  // const signIn = () => {
-  //   const emailInput = document.querySelector("#email");
-  //   const passwordInput = document.querySelector("#password");
-  //   if (!emailInput.checkValidity() || !passwordInput.checkValidity()) {
-  //     setError(true);
-  //     return;
-  //   }
-  //   setError(false);
-
-  //   signInWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       // Signed in
-  //       const user = userCredential.user;
-  //       navigate("/home");
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       document.querySelector("#password").value = "";
-  //       document.querySelector(".incorrect").classList.remove("hidden");
-  //     });
-  // };
   return (
     <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
       <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
@@ -256,11 +202,6 @@ export default function LoginPage() {
               <label htmlFor="remember">Remember me</label>
             </div>
             <button
-              // onClick={(e) => {
-              //   console.log(e);
-              //   e.preventDefault();
-              //   signIn();
-              // }}
               type="submit"
               className="rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"
             >

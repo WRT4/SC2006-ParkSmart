@@ -64,7 +64,7 @@ export default function SearchPage() {
       <Header></Header>
       <main className="grid gap-1 p-4">
         <section className="rounded-lg bg-blue-50 p-4">
-          <form onSubmit={handleSubmit} className="mx-auto max-w-md">
+          <form onSubmit={handleSubmit} className="relative mx-auto max-w-md">
             <label htmlFor="search-input" className="sr-only">
               Search
             </label>
@@ -102,19 +102,19 @@ export default function SearchPage() {
                 Search
               </button>
             </div>
+            <section
+              id="search-results"
+              className="absolute top-20 overflow-hidden rounded-lg border-1 border-[#dee2e6] shadow-md empty:border-0"
+            >
+              {searchResults.slice(0, 5).map((result, index) => (
+                <SearchResult
+                  key={index}
+                  title={result.SEARCHVAL}
+                  address={result.ADDRESS}
+                />
+              ))}
+            </section>
           </form>
-        </section>
-        <section
-          id="search-results"
-          className="overflow-hidden rounded-lg border-1 border-[#dee2e6] shadow-md empty:border-0"
-        >
-          {searchResults.slice(0, 5).map((result, index) => (
-            <SearchResult
-              key={index}
-              title={result.SEARCHVAL}
-              address={result.ADDRESS}
-            />
-          ))}
         </section>
       </main>
       {/* <iframe

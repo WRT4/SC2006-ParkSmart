@@ -12,7 +12,7 @@ export default function Header() {
     <header>
       <nav className="border-gray-200 bg-white px-4 py-2.5 lg:px-6 dark:bg-gray-800">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
-          <Title color="text-white"></Title>
+          <Title colorLight="text-black" colorDark="text-white"></Title>
           <div className="flex items-center lg:order-2">
             <Link
               to="/license"

@@ -1,11 +1,14 @@
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
 
-export default function Title({ color = "text-black" }) {
+export default function Title({
+  colorLight = "text-black",
+  colorDark = "text-white",
+}) {
   return (
     <Link
       to="/home"
-      className={`${color} justify-self-start text-xl font-bold tracking-wide`}
+      className={`${colorLight} ${colorDark && `dark:${colorDark}`} justify-self-start text-xl font-bold tracking-wide`}
     >
       <Logo></Logo>
       arkSmart

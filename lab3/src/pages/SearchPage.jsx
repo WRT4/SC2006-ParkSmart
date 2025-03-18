@@ -7,7 +7,13 @@ import SearchResult from "../components/SearchResult";
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
   const { user } = useContext(AuthContext);
+
+  const mapUrl =
+    "https://www.onemap.gov.sg/minimap/minimap.html?mapStyle=Default&zoomLevel=15";
+  const mapSrc = lat && lng ? `${mapUrl}&latLng=${lat},${lng}` : mapUrl;
 
   if (!user) {
     return <Navigate to="/login" />;
@@ -39,6 +45,15 @@ export default function SearchPage() {
 
     return () => clearTimeout(timeoutId); // Cleanup previous timeout
   }, [query]);
+
+  function handleClick(e) {
+    e.stopPropagation();
+    const longitude = e.currentTarget.getAttribute("data-longitude");
+    const latitude = e.currentTarget.getAttribute("data-latitude");
+    setLat(latitude);
+    setLng(longitude);
+    setQuery("");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -104,27 +119,31 @@ export default function SearchPage() {
             </div>
             <section
               id="search-results"
-              className="absolute top-20 overflow-hidden rounded-lg border-1 border-[#dee2e6] shadow-md empty:border-0"
+              className="absolute top-20 overflow-hidden rounded-lg border-1 border-[#dee2e6] bg-white shadow-md empty:border-0"
             >
               {searchResults.slice(0, 5).map((result, index) => (
                 <SearchResult
                   key={index}
                   title={result.SEARCHVAL}
                   address={result.ADDRESS}
+                  lat={result.LATITUDE}
+                  lng={result.LONGITUDE}
+                  handleClick={handleClick}
                 />
               ))}
             </section>
           </form>
         </section>
       </main>
-      {/* <iframe
-        src="https://www.onemap.gov.sg/minimap/minimap.html?mapStyle=Default&zoomLevel=15"
-        width="450px"
-        height="450px"
+      <iframe
+        src={mapSrc}
+        width="1000px"
+        height="1000px"
         scrolling="no"
         frameBorder="0"
         allowFullScreen="allowfullscreen"
-      ></iframe> */}
+        className="h-[250px] w-[70vw] justify-self-center rounded-md shadow-md"
+      ></iframe>
     </>
   );
 }

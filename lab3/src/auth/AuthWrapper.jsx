@@ -9,21 +9,6 @@ export const AuthContext = createContext();
 export function AuthWrapper({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Track loading state
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   const auth = getAuth();
-
-  //   const unsubscribe = onAuthStateChanged(auth, (newUser) => {
-  //     setUser(newUser);
-  //     setLoading(false); // Authentication check complete
-  //   });
-
-  //   return unsubscribe; // Cleanup on unmount
-  // }, []);
-
-  // if (loading) {
-  //   return <LoadingPage></LoadingPage>;
-  // }
 
   // Check if there's a valid token saved in localStorage to determine the authenticated user
   useEffect(() => {
@@ -40,21 +25,20 @@ export function AuthWrapper({ children }) {
         .then((data) => {
           if (data.user) {
             setUser(data.user); // Set user if the token is valid
-            setLoading(false);
           } else {
             throw new Error("Invalid token!");
-            // Handle token invalidation (e.g., redirect to login page)
-            // localStorage.removeItem("token");
-            // setUser(null);
-            // navigate('/login');
           }
         })
         .catch((error) => {
           console.error("Error verifying token:", error);
           localStorage.removeItem("token");
           setUser(null);
-          // navigate("/login");
+        })
+        .finally(() => {
+          setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   }, []);
 

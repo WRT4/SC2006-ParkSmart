@@ -2,9 +2,11 @@ import Header from "../components/Header";
 import { AuthContext } from "../auth/AuthWrapper";
 import { useState, useContext } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
+import SearchResult from "../components/SearchResult";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const { user } = useContext(AuthContext);
 
   if (!user) {
@@ -24,15 +26,14 @@ export default function SearchPage() {
     })
       .then((response) => response.json()) // Parse response as JSON
       .then((data) => {
-        console.log(data);
-        const searchResults = document.querySelector("#search-results");
-        searchResults.innerHTML = "";
+        const results = data.results;
+        setSearchResults(results);
       }) // Log the data to the console
       .catch((error) => console.error("Error:", error)); // Log any errors
   };
 
   return (
-    <header>
+    <>
       <Header></Header>
       <main className="grid gap-1 p-4">
         <section className="rounded-lg bg-blue-50 p-4">
@@ -78,8 +79,16 @@ export default function SearchPage() {
         </section>
         <section
           id="search-results"
-          className="overflow-hidden rounded-lg border-1 border-[#dee2e6] shadow-md"
-        ></section>
+          className="overflow-hidden rounded-lg border-1 border-[#dee2e6] shadow-md empty:border-0"
+        >
+          {searchResults.map((result, index) => (
+            <SearchResult
+              key={index}
+              title={result.SEARCHVAL}
+              address={result.ADDRESS}
+            />
+          ))}
+        </section>
       </main>
       {/* <iframe
         src="https://www.onemap.gov.sg/minimap/minimap.html?mapStyle=Default&zoomLevel=15"
@@ -89,6 +98,6 @@ export default function SearchPage() {
         frameBorder="0"
         allowFullScreen="allowfullscreen"
       ></iframe> */}
-    </header>
+    </>
   );
 }

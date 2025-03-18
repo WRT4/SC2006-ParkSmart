@@ -46,7 +46,7 @@ export default function SignUpPage() {
   return (
     <div className="signup flex min-h-full min-w-full flex-col min-[600px]:flex-row">
       <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
-        <Title></Title>
+        <Title colorDark="text-black"></Title>
 
         <p className="max-w-[350px] text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl min-[600px]:text-start">
           Join Our Parking Community

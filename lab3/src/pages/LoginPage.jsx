@@ -51,7 +51,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
       <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
-        <Title></Title>
+        <Title colorDark="text-black"></Title>
         <img
           src="./car.jpg"
           alt="Image of a car"

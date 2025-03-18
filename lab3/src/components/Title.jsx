@@ -8,7 +8,7 @@ export default function Title({
   return (
     <Link
       to="/home"
-      className={`${colorLight} ${colorDark && `dark:${colorDark}`} justify-self-start text-xl font-bold tracking-wide`}
+      className={`${colorLight} ${`dark:${colorDark}`} justify-self-start text-xl font-bold tracking-wide`}
     >
       <Logo></Logo>
       arkSmart

@@ -64,7 +64,7 @@ function PostDetail() {
       return;
     }
     // Redirect to the edit post page
-    navigate(`/edit/${id}`);
+    navigate(`/forum/post/${id}/edit`);
   };
 
   const deletePost = () => {

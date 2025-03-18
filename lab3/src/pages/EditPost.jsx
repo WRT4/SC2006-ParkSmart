@@ -40,7 +40,7 @@ function EditPost() {
       .put(`http://localhost:5000/api/posts/${id}`, { title, content, image })
       .then(() => {
         // Redirect back to the post details page after successful update
-        navigate(`/post/${id}`);
+        navigate(`/forum/post/${id}`);
       })
       .catch((err) => console.log(err));
   };

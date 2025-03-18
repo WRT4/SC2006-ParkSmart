@@ -44,7 +44,7 @@ function App() {
       element: <PostDetail />,
     },
     {
-      path: "forum/post/:id",
+      path: "forum/post/:id/edit",
       element: <EditPost />,
     },
   ]);

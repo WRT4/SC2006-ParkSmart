@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import { AuthContext } from "../auth/AuthWrapper";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import SearchResult from "../components/SearchResult";
 
@@ -12,6 +12,33 @@ export default function SearchPage() {
   if (!user) {
     return <Navigate to="/login" />;
   }
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const authToken = process.env.ONEMAP_API_KEY;
+
+    const timeoutId = setTimeout(() => {
+      const url = `https://www.onemap.gov.sg/api/common/elastic/search?searchVal=${query}&returnGeom=Y&getAddrDetails=Y&pageNum=1`;
+
+      fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `${authToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setSearchResults(data.results || []);
+        })
+        .catch((error) => console.error("Error:", error));
+    }, 500); // 500ms debounce delay, API rate limit is 260/min
+
+    return () => clearTimeout(timeoutId); // Cleanup previous timeout
+  }, [query]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,7 +108,7 @@ export default function SearchPage() {
           id="search-results"
           className="overflow-hidden rounded-lg border-1 border-[#dee2e6] shadow-md empty:border-0"
         >
-          {searchResults.map((result, index) => (
+          {searchResults.slice(0, 5).map((result, index) => (
             <SearchResult
               key={index}
               title={result.SEARCHVAL}

@@ -2,7 +2,6 @@ import Header from "../components/Header";
 import { AuthContext } from "../auth/AuthWrapper";
 import { useState, useContext } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import { searchForWorkspaceRoot } from "vite";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");

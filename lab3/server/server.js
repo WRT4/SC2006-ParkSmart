@@ -4,17 +4,24 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcrypt"); // For password hashing
 const jwt = require("jsonwebtoken"); // For token generation
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+}).single('image'); // 'image' is the name of the form field in the frontend
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Increase limit for JSON payloads
+app.use(express.json({ limit: "10mb" })); // Increase the limit as needed (e.g., 10mb)
+
 // Connect to MongoDB
 
-// process.env.MONGO_URI not working, so replaced with hardcoded string for now
-
 mongoose
-  .connect("mongodb://localhost:27017/sc2006", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -186,21 +193,22 @@ app.post("/api/auth/verify", verifyToken, (req, res) => {
 });
 
 // Create a new post
-app.post("/api/posts", async (req, res) => {
+app.post('/api/posts', upload, async (req, res) => {
   try {
-    const { title, content, username, image } = req.body;
+    const { title, content, username } = req.body;
+    const image = req.file ? req.file.buffer.toString('base64') : null; // Convert image buffer to base64 if needed
+
     if (!title || !content) {
-      return res
-        .status(400)
-        .json({ message: "Title and content are required" });
+      return res.status(400).json({ message: 'Title and content are required' });
     }
 
     const newPost = new Post({ title, content, username, image });
     await newPost.save();
+
     res.status(201).json(newPost);
   } catch (err) {
-    console.error("Error creating post:", err);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error('Error creating post:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
@@ -330,18 +338,27 @@ app.get("/api/posts/:id", async (req, res) => {
 });
 
 // Update a post
-app.put("/api/posts/:id", async (req, res) => {
+app.put("/api/posts/:id", upload, async (req, res) => {
   try {
-    const { title, content, image } = req.body;
+    const { title, content } = req.body;
     const post = await Post.findById(req.params.id);
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
+    if (!title || !content) {
+      return res.status(400).json({ message: 'Title and content are required' });
+    }
+
     post.title = title;
     post.content = content;
-    post.image = image; // Update the image field
+
+    // Only update the image if a new one is uploaded
+    if (req.file) {
+      const image = req.file.buffer.toString('base64');
+      post.image = image; // Update the image field
+    }
 
     await post.save();
     res.json(post);
@@ -350,6 +367,7 @@ app.put("/api/posts/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 
 // POST route to upload image as base64 string
 app.post("/api/posts/:id/upload-image", async (req, res) => {

@@ -3,6 +3,9 @@ import { AuthContext } from "../auth/AuthWrapper";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import SearchResult from "../components/SearchResult";
+import SVY21 from "../utils/SVY21.js";
+import { orderByDistance, getDistance } from "geolib";
+import { sortByDistance } from "sort-by-distance";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -37,7 +40,6 @@ export default function SearchPage() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           setSearchResults(data.results || []);
         })
         .catch((error) => console.error("Error:", error));
@@ -53,25 +55,47 @@ export default function SearchPage() {
     setLat(latitude);
     setLng(longitude);
     setQuery("");
+    const svy21 = new SVY21();
+
+    fetch(
+      "https://data.gov.sg/api/action/datastore_search?resource_id=d_23f946fa557947f93a8043bbef41dd09&limit=5000",
+      {
+        method: "GET",
+      },
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        let records = data.result.records;
+        records = records.map((record) => {
+          record.x_coord = parseFloat(record.x_coord);
+          record.y_coord = parseFloat(record.y_coord);
+          const { lat, lon } = svy21.computeLatLon(
+            record.x_coord,
+            record.y_coord,
+          );
+          record.latitude = lat;
+          record.longitude = lon;
+          return { latitude, longitude };
+          // return record;
+        });
+
+        const orderedRecords = orderByDistance(
+          { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
+          records,
+        );
+        console.log(latitude, longitude, records, orderedRecords);
+        console.log(
+          { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
+          records,
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = `https://www.onemap.gov.sg/api/common/elastic/search?searchVal=${query}&returnGeom=Y&getAddrDetails=Y&pageNum=1`;
-    const authToken = process.env.ONEMAP_API_KEY;
-
-    fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `${authToken}`, // API token for authorization
-      },
-    })
-      .then((response) => response.json()) // Parse response as JSON
-      .then((data) => {
-        const results = data.results;
-        setSearchResults(results);
-      }) // Log the data to the console
-      .catch((error) => console.error("Error:", error)); // Log any errors
   };
 
   return (

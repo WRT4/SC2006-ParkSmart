@@ -205,7 +205,7 @@ app.post("/api/auth/login", async (req, res) => {
 
   // Generate JWT token for the user
   const token = jwt.sign(
-    { id: user.id, username: user.username },
+    { id: user.id, username: user.username, email: user.email},
     process.env.JWT_SECRET,
     { expiresIn: "1h" },
   );
@@ -447,6 +447,74 @@ app.put("/api/posts/:id/delete-image", (req, res) => {
   Post.findByIdAndUpdate(postId, { image: "" }, { new: true })
     .then((updatedPost) => res.json(updatedPost))
     .catch((err) => res.status(500).json({ error: "Failed to delete image" }));
+});
+
+// Route to update user details
+// app.put('/api/users/update', verifyToken, async (req, res) => {
+  app.put('/api/users/update', async (req, res) => {
+    const { current_username, username, email } = req.body;
+    console.log("updating db", current_username, username, email)
+    
+    try {
+
+        // Check if the user exists
+        const user = await User.findOne({'username' : current_username});
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        } 
+
+        // Update username and email
+        if (username) user.username = username;
+        if (email) user.email = email;
+
+        await user.save();
+
+        // Send updated user data
+        res.json({ user });
+    } catch (err) {
+        console.error("Error updating user:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// Change Password Route
+app.put("/api/auth/change-password", async (req, res) => {
+    console.log("entered server");
+    const { user, currentPassword, newPassword } = req.body;
+    console.log(user, currentPassword, newPassword);
+    
+
+    if (!currentPassword || !newPassword) {
+        console.log("entered if");
+        return res.status(400).json({ message: "Both old and new passwords are required" });
+    }
+
+    try {
+
+        const user_obj = await User.findOne({'username' : user.username});
+
+        // Compare old password with stored password
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Old password is incorrect" });
+        }
+
+        // Hash the new password before saving
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update password
+        user_obj.password = hashedNewPassword;
+
+        // Save the updated user
+        await user_obj.save();
+
+        res.json({ message: "Password updated successfully" });
+        console.log(user_obj);
+    } catch (error) {
+        console.error("Error changing password:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
 });
 
 // Start the server

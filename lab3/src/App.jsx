@@ -10,6 +10,7 @@ import PostDetail from "./pages/PostDetail";
 import EditPost from "./pages/EditPost";
 import FeedbackPage from "./pages/FeedbackPage";
 import AdminDashboard from "./pages/AdminDashboard";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -56,6 +57,10 @@ function App() {
     {
       path: "feedback/admin",
       element: <AdminDashboard />,
+    },
+    {
+      path: "profile",
+      element: <ProfilePage />,
     },
   ]);
 

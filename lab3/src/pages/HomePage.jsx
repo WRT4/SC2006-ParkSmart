@@ -41,6 +41,7 @@ function Home() {
           <a href="#">Services</a>
           <a href="#">Locations</a>
           <a href="#">Support</a>
+          <button onClick={handleSignOut}>Sign Out</button>
         </nav>
       </header>
       

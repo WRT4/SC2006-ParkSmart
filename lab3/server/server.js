@@ -67,6 +67,7 @@ const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  carPlateNumber: { type: String },
 });
 
 const User = mongoose.model("User", UserSchema);
@@ -149,7 +150,7 @@ app.post("/api/posts/:postId/comments/:commentId/report", async (req, res) => {
 
 // Signup route
 app.post("/api/auth/signup", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, carPlateNumber } = req.body;
 
   // Check if the username already exists
   const temp = await User.findOne({ username: username });
@@ -166,11 +167,11 @@ app.post("/api/auth/signup", async (req, res) => {
   // Hash the password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = new User({ username, email, password: hashedPassword });
+  const newUser = new User({ username, email, password: hashedPassword, carPlateNumber });
   await newUser.save();
   // Generate JWT token for the user
   const token = jwt.sign(
-    { id: newUser.id, username: newUser.username },
+    { id: newUser.id, username: newUser.username, email: newUser.email, carPlateNumber: newUser.carPlateNumber },
     process.env.JWT_SECRET,
     { expiresIn: "1h" },
   );
@@ -205,7 +206,7 @@ app.post("/api/auth/login", async (req, res) => {
 
   // Generate JWT token for the user
   const token = jwt.sign(
-    { id: user.id, username: user.username, email: user.email},
+    { id: user.id, username: user.username, email: user.email, carPlateNumber: user.carPlateNumber },
     process.env.JWT_SECRET,
     { expiresIn: "1h" },
   );
@@ -452,8 +453,8 @@ app.put("/api/posts/:id/delete-image", (req, res) => {
 // Route to update user details
 // app.put('/api/users/update', verifyToken, async (req, res) => {
   app.put('/api/users/update', async (req, res) => {
-    const { current_username, username, email } = req.body;
-    console.log("updating db", current_username, username, email)
+    const { current_username, username, email, carPlateNumber} = req.body;
+    console.log("updating db", current_username, username, email, carPlateNumber)
     
     try {
 
@@ -464,9 +465,26 @@ app.put("/api/posts/:id/delete-image", (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         } 
 
-        // Update username and email
+        if (user.username != username) {
+          // Check if the username already exists
+          const temp = await User.findOne({ username: username });
+          if (temp) {
+            return res.status(400).json({ message: "Username already exists" });
+          }
+        }
+
+        if (user.email != email) {
+          // Check if the email already in use
+          const temp2 = await User.findOne({ email: email });
+          if (temp2) {
+            return res.status(400).json({ message: "Email already in use" });
+          }
+        }
+
+        // Update details
         if (username) user.username = username;
         if (email) user.email = email;
+        if (carPlateNumber) user.carPlateNumber = carPlateNumber;
 
         await user.save();
 

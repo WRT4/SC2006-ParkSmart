@@ -1,52 +1,57 @@
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from '../auth/AuthWrapper';
 import '../styles/ProfilePage.css';
+import { useNavigate, Navigate } from "react-router-dom";
 
 function ProfilePage() {
     const { user, setUser } = useContext(AuthContext);  // Get user from AuthContext
     const [isEditing, setIsEditing] = useState(false);
     const [username, setUsername] = useState(user ? user.username : "");
     const [email, setEmail] = useState(user ? user.email : "");
+    const [carPlateNumber, setCarPlateNumber] = useState(user ? user.carPlateNumber : "");
 
     const [isChangingPassword, setIsChangingPassword] = useState(false);
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-
-    useEffect(() => {
-        if (user) {
-            setUsername(user.username || "");
-            setEmail(user.email || ""); // Update email when user changes
-        }
-      }, [user]);
+    const [usernameError, setUsernameError] = useState(""); // Store username error
+    const [emailError, setEmailError] = useState(""); // Store email error
+    const navigate = useNavigate();
 
     const handleCancel = () => {
         setIsEditing(false);
         setUsername(user.username); // Reset username to original value
         setEmail(user.email); // Reset email to original value
+        setUsernameError(""); // Clear previous errors
+        setEmailError("");
     };
     
     const handleSave = async () => {
-        const current_username = user.username ;
-        console.log("current username", current_username);
-        const updatedUser = { current_username, username, email };
-        console.log("in save", updatedUser, JSON.stringify(updatedUser));
+        setUsernameError(""); // Clear previous errors
+        setEmailError("");
+
+        const updatedUser = { current_username: user.username, username, email, carPlateNumber };
+
         try {
             const response = await fetch('http://localhost:5000/api/users/update', {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updatedUser)
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error('Failed to update user');
+                if (data.message === "Username already exists") {
+                    setUsernameError("Username already in use");
+                }
+                if (data.message === "Email already in use") {
+                    setEmailError("Email already in use");
+                }
+                throw new Error(data.message);
             }
 
-            const data = await response.json();
-            setUser(data.user); // Update user context state
-            setIsEditing(false); // Close editing mode
-            console.log("finished send to db", data.user)
+            setUser(data.user);
+            setIsEditing(false);
         } catch (error) {
             console.error('Error updating profile:', error);
         }
@@ -119,6 +124,10 @@ function ProfilePage() {
                                     <span className="icon time-icon"></span>
                                     Last login: Today at {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                                 </div>
+                                <div className="detail-item">
+                                    <span className="icon">🚗</span>
+                                    {carPlateNumber}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -136,6 +145,7 @@ function ProfilePage() {
                                         value={username} 
                                         onChange={(e) => setUsername(e.target.value)} 
                                     />
+                                    {usernameError && <p className="error-message">{usernameError}</p>}
                                 </div>
                                 <div className="form-group">
                                     <label>Email</label>
@@ -143,6 +153,15 @@ function ProfilePage() {
                                         type="email" 
                                         value={email} 
                                         onChange={(e) => setEmail(e.target.value)} 
+                                    />
+                                    {emailError && <p className="error-message">{emailError}</p>}
+                                </div>
+                                <div className="form-group">
+                                    <label>Cap Plate Number</label>
+                                    <input 
+                                        type="carPlateNumber" 
+                                        value={carPlateNumber} 
+                                        onChange={(e) => setCarPlateNumber(e.target.value)} 
                                     />
                                 </div>
                                 <div className="button-group">
@@ -249,6 +268,7 @@ function ProfilePage() {
             ) : (
                 <p className="login-message">Please log in first to view your profile.</p>
             )}
+            <button onClick={() => navigate("/home")}>Back to Home</button>
         </div>
     );
 }

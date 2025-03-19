@@ -51,11 +51,11 @@ function App() {
       element: <EditPost />,
     },
     {
-      path: "feedback",
+      path: "support",
       element: <FeedbackPage />,
     },
     {
-      path: "feedback/admin",
+      path: "support/admin",
       element: <AdminDashboard />,
     },
     {

@@ -7,7 +7,7 @@ import Title from "../components/Title";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
-  const [carplateNumber, setCarplateNumber] = useState("");
+  const [carPlateNumber, setCarPlateNumber] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisbility, setPasswordVisibility] = useState(false);
@@ -27,7 +27,7 @@ export default function SignUpPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, username }), // Send username along with email and password
+        body: JSON.stringify({ email, password, username, carPlateNumber }), // Send username along with email and password
       });
 
       const data = await response.json();
@@ -128,7 +128,7 @@ export default function SignUpPage() {
                   type="text"
                   id="carplate-number"
                   onChange={(e) => {
-                    setCarplateNumber(e.target.value);
+                    setCarPlateNumber(e.target.value);
                   }}
                   required
                 ></input>
@@ -136,7 +136,7 @@ export default function SignUpPage() {
               <p className="text-sm text-gray-600">Format: ABC-1234</p>
             </div>
             <div className="grid gap-1">
-              <label htmlFor="username">User ID</label>
+              <label htmlFor="username">Username</label>
               <div className="relative inline-flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +150,7 @@ export default function SignUpPage() {
                 </svg>
                 <input
                   className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                  placeholder="Choose a user ID"
+                  placeholder="Choose a username"
                   type="text"
                   id="username"
                   onChange={(e) => {

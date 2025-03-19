@@ -80,7 +80,51 @@ const ReportSchema = new mongoose.Schema({
 });
 
 const Report = mongoose.model("Report", ReportSchema);
+
+const FeedbackSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  subject: { type: String, required: true },
+  message: { type: String, required: true },
+  rating: { type: Number, required: true },
+  createdAt: { type: Date, required: true },
+});
+
+const Feedback = mongoose.model("Feedback", FeedbackSchema);
+
 // API Routes
+
+// Get all feedback
+app.get("/api/feedbacks", async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find().sort({ createdAt: -1 });
+    res.json(feedbacks);
+  }
+  catch (err) {
+    console.error("Error fetching feedbacks:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// Feedback route
+app.post("/api/feedback", async (req, res) => {
+  const { name, email, subject, message, rating } = req.body;
+
+  // Create new feedback entry with ID and timestamp
+  const newFeedback = new Feedback({
+    name,
+    email,
+    subject,
+    message,
+    rating,
+    createdAt: new Date().toISOString(),
+  });
+
+  await newFeedback.save();
+
+  // Send feedback to server
+  res.status(201).json(newFeedback);
+});
 
 // Report a post
 app.post("/api/posts/:id/report", async (req, res) => {

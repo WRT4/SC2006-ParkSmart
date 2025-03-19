@@ -32,36 +32,63 @@ function Home() {
   };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <button onClick={handleSignOut}>Sign Out</button>
-      <button
-        onClick={() => {
-          navigate("/home");
-        }}
-      >
-        test
-      </button>
-    </>
+    <div className="homepage">
+      {/* Header */}
+      <header className="header">
+        <div className="logo">ParkSmart</div>
+        <nav>
+          <a href="#">Dashboard</a>
+          <a href="#">Services</a>
+          <a href="#">Locations</a>
+          <a href="#">Support</a>
+        </nav>
+      </header>
+      
+      {/* Welcome Section */}
+      <section className="welcome">
+        <div className="welcome-text">
+          <h1>Welcome to ParkSmart</h1>
+          <p>Manage your parking experience efficiently with our smart parking solutions.</p>
+        </div>
+        <div className="welcome-image">
+          <img src="/assets/parking.jpg" alt="Parking Area" />
+        </div>
+      </section>
+
+      {/* Quick Access Section */}
+      <section className="quick-access">
+        <div className="access-card blue">
+          <h3>My Profile</h3>
+          <p>View and manage your account settings and preferences</p>
+          <a href="/profile">Access &gt;</a>
+        </div>
+        <div className="access-card green">
+          <h3>Carpark Location</h3>
+          <p>Find and navigate to available parking spaces</p>
+          <a href="/searchpage">Access &gt;</a>
+        </div>
+        <div className="access-card purple">
+          <h3>Carpark Information</h3>
+          <p>View real-time parking availability and rates</p>
+          <a href="#">Access &gt;</a>
+        </div>
+        <div className="access-card yellow">
+          <h3>Provide Feedback</h3>
+          <p>Share your experience and help us improve</p>
+          <a href="/feedback">Access &gt;</a>
+        </div>
+        <div className="access-card pink">
+          <h3>Community Forum</h3>
+          <p>Connect with other users and share insights</p>
+          <a href="forum">Access &gt;</a>
+        </div>
+        <div className="access-card light-blue">
+          <h3>FAQs & Support</h3>
+          <p>Get help and find answers to common questions</p>
+          <a href="support">Access &gt;</a>
+        </div>
+      </section>
+    </div>
   );
 }
 

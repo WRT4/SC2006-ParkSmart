@@ -8,6 +8,8 @@ import LoadingPage from "./pages/LoadingPage";
 import Forum from "./pages/Forum";
 import PostDetail from "./pages/PostDetail";
 import EditPost from "./pages/EditPost";
+import FeedbackPage from "./pages/FeedbackPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   const router = createBrowserRouter([
@@ -46,6 +48,14 @@ function App() {
     {
       path: "forum/post/:id/edit",
       element: <EditPost />,
+    },
+    {
+      path: "feedback",
+      element: <FeedbackPage />,
+    },
+    {
+      path: "feedback/admin",
+      element: <AdminDashboard />,
     },
   ]);
 

@@ -81,12 +81,12 @@ function Home() {
         <div className="access-card pink">
           <h3>Community Forum</h3>
           <p>Connect with other users and share insights</p>
-          <a href="forum">Access &gt;</a>
+          <a href="/forum">Access &gt;</a>
         </div>
         <div className="access-card light-blue">
           <h3>FAQs & Support</h3>
           <p>Get help and find answers to common questions</p>
-          <a href="support">Access &gt;</a>
+          <a href="/support">Access &gt;</a>
         </div>
       </section>
     </div>

@@ -76,7 +76,7 @@ function Home() {
         <div className="access-card yellow">
           <h3>Provide Feedback</h3>
           <p>Share your experience and help us improve</p>
-          <a href="/feedback">Access &gt;</a>
+          <a href="/support">Access &gt;</a>
         </div>
         <div className="access-card pink">
           <h3>Community Forum</h3>

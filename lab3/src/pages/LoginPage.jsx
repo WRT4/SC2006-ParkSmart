@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
+  const [remember, setRemember] = useState(true);
 
   if (user) {
     return <Navigate to="/home" />;
@@ -200,10 +201,17 @@ export default function LoginPage() {
               </small>
             </div>
             <div className="flex gap-1.5">
-              <input type="checkbox" id="remember" name="remember" value="1" />
-              <label htmlFor="remember" checked>
-                Remember me
-              </label>
+              <input
+                type="checkbox"
+                id="remember"
+                name="remember"
+                defaultChecked={remember}
+                onChange={() => {
+                  setRemember(!remember);
+                }}
+                value="1"
+              />
+              <label htmlFor="remember">Remember me</label>
             </div>
             <button
               type="submit"

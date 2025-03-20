@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { Slider } from "@mui/material";
+import { Slider, Switch } from "@mui/material";
 
 export default function Filters({
-  paymentTypes,
-  setPaymentTypes,
   freeParking,
   setFreeParking,
-  nightParking,
-  setNightParking,
+  availFilter,
+  setAvailFilter,
   heightRestriction,
   setHeightRestriction,
+  nightParking,
+  setNightParking,
 }) {
-  const toggleFreeParking = (type) => {
-    setFreeParking((prev) => ({ ...prev, [type]: !prev[type] }));
+  const toggleAvailFilter = (type) => {
+    setAvailFilter((prev) => ({ ...prev, [type]: !prev[type] }));
   };
 
   return (
@@ -23,24 +23,20 @@ export default function Filters({
 
       <div className="mb-4 flex flex-col gap-1">
         <label className="block text-sm font-medium">Free Parking</label>
-        <div className="mt-1 space-y-2">
-          {Object.keys(freeParking).map((type) => (
-            <div key={type} className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id={type}
-                checked={freeParking[type]}
-                onChange={() => toggleFreeParking(type)}
-                className="h-4 w-4 cursor-pointer accent-blue-500"
-              />
-              <label
-                htmlFor={type}
-                className="cursor-pointer text-sm capitalize"
-              >
-                {type}
-              </label>
-            </div>
-          ))}
+        <div className="flex items-center">
+          <Switch
+            checked={freeParking}
+            onChange={(e) => {
+              setFreeParking(e.target.checked);
+            }}
+          ></Switch>
+          <p
+            className={
+              "text-sm " + `${freeParking ? "font-semibold" : "text-gray-600"}`
+            }
+          >
+            Only free parking
+          </p>
         </div>
       </div>
 
@@ -67,30 +63,19 @@ export default function Filters({
       </div>
 
       <div className="mb-4 flex flex-col gap-1">
-        <label className="block text-sm font-medium">Payment Type</label>
-        <div
-          onClick={() => {
-            setPaymentTypes("any");
-          }}
-          className={`cursor-pointer rounded-md p-2 text-sm text-gray-700 hover:bg-gray-200 active:bg-gray-300 ${paymentTypes === "any" ? "bg-gray-100 font-semibold" : ""}`}
-        >
-          Any
-        </div>
-        <div
-          onClick={() => {
-            setPaymentTypes("electronic");
-          }}
-          className={`cursor-pointer rounded-md p-2 text-sm text-gray-700 hover:bg-gray-200 active:bg-gray-300 ${paymentTypes === "electronic" ? "bg-gray-100 font-semibold" : ""}`}
-        >
-          Electronic
-        </div>
-        <div
-          onClick={() => {
-            setPaymentTypes("coupon");
-          }}
-          className={`cursor-pointer rounded-md p-2 text-sm text-gray-700 hover:bg-gray-200 active:bg-gray-300 ${paymentTypes === "coupon" ? "bg-gray-100 font-semibold" : ""}`}
-        >
-          Coupon
+        <label className="block text-sm font-medium">Availability</label>
+        <div className="mt-1 space-y-2">
+          {Object.keys(availFilter).map((type) => (
+            <div key={type} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={availFilter[type]}
+                onChange={() => toggleAvailFilter(type)}
+                className="form-checkbox cursor-pointer text-blue-500"
+              />
+              <span className="text-sm capitalize">{type}</span>
+            </div>
+          ))}
         </div>
       </div>
 

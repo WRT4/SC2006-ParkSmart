@@ -8,14 +8,18 @@ export default function DisplayResult({
   paymentType,
   operatingHours,
   freeParking,
+  availabilityLimit = 0.5,
 }) {
-  const availabilityLimit = 0.5;
   return (
     <div className="flex h-[350px] w-full max-w-[350px] flex-col rounded-md border-1 border-gray-200 p-4 shadow-md">
       <div className="grid justify-items-start gap-2 pb-3">
         <div className="grid w-full justify-items-center gap-2">
           <p className="font-medium">{title}</p>
           {(() => {
+            if (lotsAvailable && totalLots) {
+              lotsAvailable = parseInt(lotsAvailable);
+              totalLots = parseInt(totalLots);
+            }
             if (lotsAvailable / totalLots >= availabilityLimit) {
               return (
                 <p className="rounded-xl bg-green-200 px-2.5 py-1 text-sm text-green-600">
@@ -30,9 +34,16 @@ export default function DisplayResult({
                 </p>
               );
             }
+            if (lotsAvailable === 0) {
+              return (
+                <p className="rounded-xl bg-red-200 px-2.5 py-1 text-sm text-red-600">
+                  Full
+                </p>
+              );
+            }
             return (
               <p className="rounded-xl bg-red-200 px-2.5 py-1 text-sm text-red-600">
-                Full
+                Error
               </p>
             );
           })()}
@@ -72,7 +83,7 @@ export default function DisplayResult({
           <p
             className={`text-sm ${!lotsAvailable || !totalLots ? "text-red-600" : ""}`}
           >
-            {lotsAvailable && totalLots ? (
+            {lotsAvailable !== undefined && totalLots != undefined ? (
               <>
                 <span
                   className={

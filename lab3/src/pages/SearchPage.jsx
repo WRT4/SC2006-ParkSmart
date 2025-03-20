@@ -23,13 +23,15 @@ export default function SearchPage() {
   const mapUrl =
     "https://www.onemap.gov.sg/minimap/minimap.html?mapStyle=Default&zoomLevel=15";
   const mapSrc = lat && lng ? `${mapUrl}&latLng=${lat},${lng}` : mapUrl;
+  const availabilityLimit = 0.5;
 
-  const [paymentTypes, setPaymentTypes] = useState("any");
-  const [freeParking, setFreeParking] = useState({
-    "SUN & PH FR 1PM-10.30PM": true,
-    "SUN & PH FR 7AM-10.30PM": true,
-  });
+  const [freeParking, setFreeParking] = useState(false);
   const [nightParking, setNightParking] = useState("any");
+  const [availFilter, setAvailFilter] = useState({
+    available: true,
+    limited: true,
+    full: true,
+  });
   const [heightRestriction, setHeightRestriction] = useState(0);
 
   if (!user) {
@@ -37,27 +39,61 @@ export default function SearchPage() {
   }
 
   function filter(records) {
-    if (paymentTypes === "coupon") {
-      records = records.filter(
-        (record) => record.type_of_parking_system === "COUPON PARKING",
-      );
-    } else if (paymentTypes === "electronic") {
-      records = records.filter(
-        (record) => record.type_of_parking_system === "ELECTRONIC PARKING",
-      );
-    }
-    if (!freeParking["SUN & PH FR 1PM-10.30PM"]) {
-      records = records.filter(
-        (record) => record.free_parking !== "SUN & PH FR 1PM-10.30PM",
-      );
-    }
-    if (!freeParking["SUN & PH FR 7AM-10.30PM"]) {
-      records = records.filter(
-        (record) => record.free_parking !== "SUN & PH FR 7AM-10.30PM",
-      );
+    if (freeParking) {
+      records = records.filter((record) => record.free_parking !== "NO");
     }
     if (nightParking === "yes") {
       records = records.filter((record) => record.night_parking === "YES");
+    }
+
+    if (!availFilter.available) {
+      records = records.filter((record) => {
+        const carpark = avail.find(
+          (el) => el.carpark_number === record.car_park_no,
+        );
+        if (carpark) {
+          const lotsAvailable = carpark.carpark_info[0].lots_available;
+          const totalLots = carpark.carpark_info[0].total_lots;
+          if (lotsAvailable / totalLots >= availabilityLimit) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
+
+    if (!availFilter.limited) {
+      records = records.filter((record) => {
+        const carpark = avail.find(
+          (el) => el.carpark_number === record.car_park_no,
+        );
+        if (carpark) {
+          const lotsAvailable = carpark.carpark_info[0].lots_available;
+          const totalLots = carpark.carpark_info[0].total_lots;
+          if (
+            lotsAvailable / totalLots > 0 &&
+            lotsAvailable / totalLots < availabilityLimit
+          ) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
+
+    if (!availFilter.full) {
+      records = records.filter((record) => {
+        const carpark = avail.find(
+          (el) => el.carpark_number === record.car_park_no,
+        );
+        if (carpark) {
+          const lotsAvailable = carpark.carpark_info[0].lots_available;
+          if (parseInt(lotsAvailable) === 0) {
+            return false;
+          }
+        }
+        return true;
+      });
     }
 
     if (heightRestriction > 0) {
@@ -256,11 +292,11 @@ export default function SearchPage() {
         <div className="flex flex-col items-center gap-5 lg:flex-row">
           <div className="flex justify-center">
             <Filters
-              paymentTypes={paymentTypes}
-              setPaymentTypes={setPaymentTypes}
+              availFilter={availFilter}
+              setAvailFilter={setAvailFilter}
+              freeParking={freeParking}
               nightParking={nightParking}
               setNightParking={setNightParking}
-              freeParking={freeParking}
               setFreeParking={setFreeParking}
               heightRestriction={heightRestriction}
               setHeightRestriction={setHeightRestriction}

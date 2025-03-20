@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../auth/AuthWrapper";
 import imageCompression from "browser-image-compression";
+import '../styles/Forum.css';
 
 function Forum() {
   const [posts, setPosts] = useState([]);

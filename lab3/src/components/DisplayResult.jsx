@@ -11,8 +11,8 @@ export default function DisplayResult({
 }) {
   const availabilityLimit = 0.5;
   return (
-    <div className="w-full max-w-[350px] rounded-md border-1 border-gray-200 p-4 shadow-md">
-      <div className="grid justify-items-start gap-2 border-b-1 border-b-gray-200 pb-3">
+    <div className="flex h-[350px] w-full max-w-[350px] flex-col rounded-md border-1 border-gray-200 p-4 shadow-md">
+      <div className="grid justify-items-start gap-2 pb-3">
         <div className="grid w-full justify-items-center gap-2">
           <p className="font-medium">{title}</p>
           {(() => {
@@ -134,7 +134,7 @@ export default function DisplayResult({
           <p className="text-sm">{paymentType}</p>
         </div>
       </div>
-      <div className="flex items-center pt-2">
+      <div className="mt-auto flex items-center border-t-1 border-t-gray-200 pt-2">
         <div className="flex flex-col">
           <p className="text-start text-sm text-gray-600">Free Parking</p>
           <p

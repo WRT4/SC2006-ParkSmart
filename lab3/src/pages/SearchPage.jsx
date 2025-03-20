@@ -17,9 +17,8 @@ export default function SearchPage() {
   const { user } = useContext(AuthContext);
   const firstAvailCall = useRef(true);
   const firstLoad = useRef(true);
-  const timeoutId = useRef(null);
   const [limit, setLimit] = useState(10);
-
+  const navigate = useNavigate();
   const mapUrl =
     "https://www.onemap.gov.sg/minimap/minimap.html?mapStyle=Default&zoomLevel=15";
   const mapSrc = lat && lng ? `${mapUrl}&latLng=${lat},${lng}` : mapUrl;
@@ -60,6 +59,7 @@ export default function SearchPage() {
       setLat(position.coords.latitude);
       setLng(position.coords.longitude);
       fetchRecords(position.coords.latitude, position.coords.longitude);
+      fetchCarparkAvailability();
     });
   }
 
@@ -289,6 +289,88 @@ export default function SearchPage() {
           </div>
         </section>
       </main>
+      <section className="grid items-center justify-items-center gap-6 bg-gray-100 p-6 min-[900px]:grid-cols-3 [&>.card]:w-[min(100%,350px)]">
+        <div className="card grid gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md">
+          <div className="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="#2563eb"
+              className="bi bi-car-front-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+            </svg>
+            <p className="text-lg font-bold">Why Choose Us?</p>
+          </div>
+          <p className="text-sm text-gray-600">
+            Find carparks near your destination
+          </p>
+          <p className="text-sm text-gray-600">
+            View carpark types and facilities
+          </p>
+          <p className="text-sm text-gray-600">Check real-time availability</p>
+          <p className="text-sm text-gray-600">
+            Get night parking and height limits info
+          </p>
+        </div>
+        <div className="card grid gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md">
+          <div className="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="#2563eb"
+              className="bi bi-info-circle-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+            </svg>
+            <p className="text-lg font-bold">How It Works</p>
+          </div>
+          <p className="text-sm text-gray-600">
+            1. Search for your desired location.
+          </p>
+          <p className="text-sm text-gray-600">
+            2. Choose your preferred parking lot.
+          </p>
+          <p className="text-sm text-gray-600">
+            3. View Real Time Availability
+          </p>
+        </div>
+        <div className="card grid flex-row gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md">
+          <div className="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="#2563eb"
+              className="bi bi-telephone-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"
+              />
+            </svg>
+            <p className="text-lg font-bold">Need Help?</p>
+          </div>
+          <p className="text-sm text-gray-600">
+            Have a question or need assistance? Send us a message, and we'll be
+            happy to help!
+          </p>
+          <button
+            onClick={() => {
+              navigate("/support");
+            }}
+            type="button"
+            className="me-2 mb-2 cursor-pointer rounded-lg border border-blue-700 px-5 py-2.5 text-center text-sm font-medium text-blue-700 transition hover:bg-blue-800 hover:text-white focus:ring-4 focus:ring-blue-300 focus:outline-none dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
+          >
+            Contact Support
+          </button>
+        </div>
+      </section>
     </>
   );
 }

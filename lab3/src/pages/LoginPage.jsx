@@ -50,17 +50,19 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
-      <section className="grid grow justify-items-center gap-4 bg-sky-50 p-4">
+      <section className="grid grow bg-sky-50 p-4">
         <Title colorDark="text-black"></Title>
-        <img
-          src="./car.jpg"
-          alt="Image of a car"
-          className="w-full max-w-[350px] rounded-lg shadow-lg"
-        />
-        <p className="text-3xl font-bold">Welcome Back</p>
-        <p className="text-gray-600">
-          Login to access your account and continue your journey with us.
-        </p>
+        <div className="grid justify-items-center gap-4 p-4">
+          <img
+            src="./car.jpg"
+            alt="Image of a car"
+            className="w-full max-w-[350px] rounded-lg shadow-lg"
+          />
+          <p className="text-3xl font-bold md:text-4xl">Welcome Back</p>
+          <p className="text-gray-600">
+            Login to access your account and continue your journey with us.
+          </p>
+        </div>
         <footer className="inline-flex items-center gap-1 text-sm text-gray-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"

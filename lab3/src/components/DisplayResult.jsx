@@ -7,16 +7,35 @@ export default function DisplayResult({
   gantryHeight,
   paymentType,
   operatingHours,
-  rate,
+  freeParking,
 }) {
+  const availabilityLimit = 0.5;
   return (
-    <div className="max-w-[350px] rounded-md border-1 border-gray-200 p-4 shadow-md">
+    <div className="w-full max-w-[350px] rounded-md border-1 border-gray-200 p-4 shadow-md">
       <div className="grid justify-items-start gap-2 border-b-1 border-b-gray-200 pb-3">
         <div className="grid w-full justify-items-center gap-2">
           <p className="font-medium">{title}</p>
-          <p className="rounded-xl bg-green-200 px-2.5 py-1 text-sm text-green-600">
-            Available
-          </p>
+          {(() => {
+            if (lotsAvailable / totalLots >= availabilityLimit) {
+              return (
+                <p className="rounded-xl bg-green-200 px-2.5 py-1 text-sm text-green-600">
+                  Available
+                </p>
+              );
+            }
+            if (lotsAvailable > 0) {
+              return (
+                <p className="rounded-xl bg-amber-200 px-2.5 py-1 text-sm text-amber-600">
+                  Limited
+                </p>
+              );
+            }
+            return (
+              <p className="rounded-xl bg-red-200 px-2.5 py-1 text-sm text-red-600">
+                Full
+              </p>
+            );
+          })()}
         </div>
         <div className="">
           <div className="flex items-center gap-2">
@@ -33,7 +52,9 @@ export default function DisplayResult({
 
             <div className="grid justify-items-start">
               <p className="text-sm">{address}</p>
-              <p className="text-xs text-gray-600">{distance} away</p>
+              <p className="text-xs text-gray-600">
+                {Math.round((distance / 1000) * 10) / 10} km away
+              </p>
             </div>
           </div>
         </div>
@@ -48,8 +69,27 @@ export default function DisplayResult({
           >
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.5 4.002V12h1.283V9.164h1.668C10.033 9.164 11 8.08 11 6.586c0-1.482-.955-2.584-2.538-2.584zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97z" />
           </svg>
-          <p className="text-sm">
-            {lotsAvailable} / {totalLots} spots available
+          <p
+            className={`text-sm ${!lotsAvailable || !totalLots ? "text-red-600" : ""}`}
+          >
+            {lotsAvailable && totalLots ? (
+              <>
+                <span
+                  className={
+                    lotsAvailable / totalLots >= availabilityLimit
+                      ? "text-green-600"
+                      : lotsAvailable > 0
+                        ? "text-amber-600"
+                        : "text-red-600"
+                  }
+                >
+                  {lotsAvailable}
+                </span>{" "}
+                / <span className="font-bold">{totalLots}</span> spots available
+              </>
+            ) : (
+              "Unable to retrieve lot information"
+            )}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -96,12 +136,18 @@ export default function DisplayResult({
       </div>
       <div className="flex items-center pt-2">
         <div className="flex flex-col">
-          <p className="text-start text-sm text-gray-600">Hourly Rate</p>
-          <p className="text-start text-lg font-bold">${rate}</p>
+          <p className="text-start text-sm text-gray-600">Free Parking</p>
+          <p
+            className={`text-start text-lg font-bold ${
+              freeParking === "NO" ? "text-red-600" : "text-green-600"
+            }`}
+          >
+            {freeParking === "NO" ? "NO" : "YES"}
+          </p>
         </div>
         <button
           type="button"
-          className="end-2.5 bottom-2.5 ms-auto max-h-[2.5rem] rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="end-2.5 bottom-2.5 ms-auto max-h-[2.5rem] cursor-pointer rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           View Details
         </button>

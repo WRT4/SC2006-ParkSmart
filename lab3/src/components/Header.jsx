@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, signOut } from "firebase/auth";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../auth/AuthWrapper";
 
 import Title from "./Title";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -21,17 +22,21 @@ export default function Header() {
           </Link>
           <button
             className="mr-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 focus:outline-none lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-            onClick={() => {
-              const auth = getAuth();
-              signOut(auth)
-                .then(() => {
-                  // Sign-out successful.
-                  navigate("/login");
-                })
-                .catch((error) => {
-                  // An error happened.
-                  console.log(error);
+            onClick={async () => {
+              try {
+                localStorage.removeItem("token");
+                setUser(null);
+                navigate("/login");
+
+                const response = await fetch("http://localhost:5000/logout", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
                 });
+              } catch (err) {
+                console.log(err);
+              }
             }}
           >
             Sign out
@@ -40,7 +45,7 @@ export default function Header() {
           <button
             data-collapse-toggle="mobile-menu-2"
             type="button"
-            className="ml-1 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 focus:outline-none lg:hidden dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="ml-1 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 focus:outline-none lg:hidden dark:text-gray-50 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="mobile-menu-2"
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -82,7 +87,7 @@ export default function Header() {
             <li>
               <Link
                 to="/home"
-                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
                 aria-current="page"
               >
                 Home
@@ -91,7 +96,7 @@ export default function Header() {
             <li>
               <Link
                 to="/searchpage"
-                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
               >
                 Search
               </Link>
@@ -99,7 +104,7 @@ export default function Header() {
             <li>
               <Link
                 to="/profile"
-                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
               >
                 Profile
               </Link>
@@ -107,7 +112,7 @@ export default function Header() {
             <li>
               <Link
                 to="/support"
-                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
               >
                 Support
               </Link>

@@ -16,6 +16,7 @@ export default function SearchPage() {
   const [avail, setAvail] = useState([]);
   const { user } = useContext(AuthContext);
   const firstAvailCall = useRef(true);
+  const firstLoad = useRef(true);
   const timeoutId = useRef(null);
   const [limit, setLimit] = useState(10);
 
@@ -26,6 +27,7 @@ export default function SearchPage() {
   if (!user) {
     return <Navigate to="/login" />;
   }
+
   useEffect(() => {
     if (!query.trim()) {
       setSearchResults([]);
@@ -52,12 +54,19 @@ export default function SearchPage() {
     return () => clearTimeout(timeoutId); // Cleanup previous timeout
   }, [query]);
 
+  if (firstLoad.current) {
+    firstLoad.current = false;
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLat(position.coords.latitude);
+      setLng(position.coords.longitude);
+      fetchRecords(position.coords.latitude, position.coords.longitude);
+    });
+  }
+
   const fetchCarparkAvailability = () => {
     const url = `https://api.data.gov.sg/v1/transport/carpark-availability`;
     fetch(url, { method: "GET", mode: "cors" })
-      .then(async (response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         setAvail(data.items[0].carpark_data);
       })
@@ -80,18 +89,9 @@ export default function SearchPage() {
     }, 60000); // 60s debounce delay, API rate limit is 1000/hour
 
     return () => clearTimeout(timeoutId); // Cleanup previous timeout
-  }, [records]);
+  }, [firstLoad, records]);
 
-  function handleClick(e) {
-    e.stopPropagation();
-    const longitude = e.currentTarget.getAttribute("data-longitude");
-    const latitude = e.currentTarget.getAttribute("data-latitude");
-    const x = e.currentTarget.getAttribute("data-x");
-    const y = e.currentTarget.getAttribute("data-y");
-    setLat(latitude);
-    setLng(longitude);
-    setQuery("");
-
+  function fetchRecords(latitude, longitude) {
     fetch(
       "https://data.gov.sg/api/action/datastore_search?resource_id=d_23f946fa557947f93a8043bbef41dd09&limit=5000",
       {
@@ -113,7 +113,6 @@ export default function SearchPage() {
             { latitude, longitude },
             { latitude: lat, longitude: lon },
           );
-          // record.distance = WGSDist(latitude, longitude, lat, lon);
           const title = record.address
             .split(" ")
             .filter(
@@ -132,6 +131,19 @@ export default function SearchPage() {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function handleClick(e) {
+    e.stopPropagation();
+    const longitude = e.currentTarget.getAttribute("data-longitude");
+    const latitude = e.currentTarget.getAttribute("data-latitude");
+    const x = e.currentTarget.getAttribute("data-x");
+    const y = e.currentTarget.getAttribute("data-y");
+    setLat(latitude);
+    setLng(longitude);
+    setQuery("");
+
+    fetchRecords(latitude, longitude);
   }
 
   const handleSubmit = async (e) => {
@@ -210,20 +222,31 @@ export default function SearchPage() {
           className="h-[250px] w-[70vw] justify-self-center rounded-md shadow-md"
         ></iframe>
         <section className="grid gap-4 border-t-1 border-gray-200 p-4">
-          <p className="text-xl font-semibold">Available Parking Lots</p>
-          <Slider
-            aria-label="carparkAmount"
-            defaultValue={10}
-            aria-valuetext={`${limit} Carparks Showing`}
-            valueLabelDisplay="auto"
-            shiftStep={10}
-            step={5}
-            min={5}
-            max={100}
-            onChange={(e) => {
-              setLimit(e.target.value);
-            }}
-          ></Slider>
+          <div className="flex flex-col justify-items-center gap-4 md:flex-row md:items-center">
+            <p className="text-center text-xl font-semibold">
+              Available Parking Lots
+            </p>
+            <div className="flex flex-col items-center md:ms-auto">
+              <label htmlFor="slider">
+                Show <span className="font-bold">{limit}</span> Carparks
+              </label>
+              <Slider
+                className="max-w-[256px]"
+                aria-label="carparkAmount"
+                defaultValue={10}
+                aria-valuetext={`${limit} Carparks Showing`}
+                valueLabelDisplay="auto"
+                shiftStep={10}
+                step={5}
+                min={5}
+                max={100}
+                onChange={(e) => {
+                  setLimit(e.target.value);
+                }}
+                id={"slider"}
+              ></Slider>
+            </div>
+          </div>
           <div className="grid grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))] justify-items-center gap-4">
             {records.slice(0, limit).map((record) => (
               <DisplayResult

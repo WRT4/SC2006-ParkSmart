@@ -78,8 +78,10 @@ export default function Header() {
           </button>
         </div>
         <div
-          className={`w-full transform items-center justify-between overflow-hidden transition-all duration-300 ease-in-out lg:order-1 lg:flex lg:w-auto ${
-            isMenuOpen ? "max-h-screen scale-100" : "max-h-0 scale-95"
+          className={`w-full transform items-center justify-between overflow-hidden transition-all duration-300 ease-in-out lg:flex lg:w-auto ${
+            isMenuOpen
+              ? "max-h-screen scale-100"
+              : "max-h-0 scale-95 lg:max-h-full lg:scale-100"
           }`}
           id="mobile-menu-2"
         >

@@ -384,7 +384,7 @@ export default function SearchPage() {
           </div>
         </section>
       </main>
-      <section className="grid items-center justify-items-center gap-6 bg-gray-100 p-6 min-[900px]:grid-cols-3 [&>.card]:w-[min(100%,350px)]">
+      <section className="grid items-center justify-items-center gap-6 bg-gray-100 p-6 min-[900px]:grid-cols-3 [&>.card]:h-[200px] [&>.card]:w-[min(100%,350px)]">
         <div className="card grid gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md">
           <div className="flex items-center gap-2">
             <svg

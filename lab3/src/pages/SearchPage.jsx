@@ -4,14 +4,16 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import SearchResult from "../components/SearchResult";
 import SVY21 from "../utils/SVY21.js";
-import { orderByDistance, getDistance } from "geolib";
-import { sortByDistance } from "sort-by-distance";
+import DisplayResult from "../components/DisplayResult.jsx";
+// import { orderByDistance, getDistance } from "geolib";
+// import { sortByDistance } from "sort-by-distance";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
+  const [records, setRecords] = useState([]);
   const { user } = useContext(AuthContext);
 
   const mapUrl =
@@ -52,6 +54,8 @@ export default function SearchPage() {
     e.stopPropagation();
     const longitude = e.currentTarget.getAttribute("data-longitude");
     const latitude = e.currentTarget.getAttribute("data-latitude");
+    const x = e.currentTarget.getAttribute("data-x");
+    const y = e.currentTarget.getAttribute("data-y");
     setLat(latitude);
     setLng(longitude);
     setQuery("");
@@ -75,19 +79,25 @@ export default function SearchPage() {
           );
           record.latitude = lat;
           record.longitude = lon;
-          return { latitude, longitude };
-          // return record;
+          record.distance = Math.sqrt(
+            (x - record.x_coord) ** 2 + (y - record.y_coord) ** 2,
+          );
+          return record;
         });
 
-        const orderedRecords = orderByDistance(
-          { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
-          records,
-        );
-        console.log(latitude, longitude, records, orderedRecords);
-        console.log(
-          { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
-          records,
-        );
+        records.sort((a, b) => a.distance - b.distance);
+        console.log(records);
+        setRecords(records);
+
+        // const orderedRecords = orderByDistance(
+        //   { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
+        //   records,
+        // );
+        // console.log(latitude, longitude, records, orderedRecords);
+        // console.log(
+        //   { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
+        //   records,
+        // );
       })
       .catch((err) => {
         console.log(err);
@@ -101,7 +111,7 @@ export default function SearchPage() {
   return (
     <>
       <Header></Header>
-      <main className="grid gap-1 p-4">
+      <main className="grid gap-5 p-4">
         <section className="rounded-lg bg-blue-50 p-4">
           <form onSubmit={handleSubmit} className="relative mx-auto max-w-md">
             <label htmlFor="search-input" className="sr-only">
@@ -152,22 +162,32 @@ export default function SearchPage() {
                   address={result.ADDRESS}
                   lat={result.LATITUDE}
                   lng={result.LONGITUDE}
+                  x={result.X}
+                  y={result.Y}
                   handleClick={handleClick}
                 />
               ))}
             </section>
           </form>
         </section>
+        <iframe
+          src={mapSrc}
+          width="1000px"
+          height="1000px"
+          scrolling="no"
+          frameBorder="0"
+          allowFullScreen="allowfullscreen"
+          className="h-[250px] w-[70vw] justify-self-center rounded-md shadow-md"
+        ></iframe>
+        <section className="grid gap-4 border-t-1 border-gray-200 p-4">
+          <p className="text-xl font-semibold">Available Parking Lots</p>
+          <div className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] justify-items-center gap-4">
+            {records.slice(0, 5).map((record) => (
+              <DisplayResult></DisplayResult>
+            ))}
+          </div>
+        </section>
       </main>
-      <iframe
-        src={mapSrc}
-        width="1000px"
-        height="1000px"
-        scrolling="no"
-        frameBorder="0"
-        allowFullScreen="allowfullscreen"
-        className="h-[250px] w-[70vw] justify-self-center rounded-md shadow-md"
-      ></iframe>
     </>
   );
 }

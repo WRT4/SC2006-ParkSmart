@@ -201,7 +201,9 @@ export default function LoginPage() {
             </div>
             <div className="flex gap-1.5">
               <input type="checkbox" id="remember" name="remember" value="1" />
-              <label htmlFor="remember">Remember me</label>
+              <label htmlFor="remember" checked>
+                Remember me
+              </label>
             </div>
             <button
               type="submit"

@@ -6,6 +6,7 @@ import SearchResult from "../components/SearchResult";
 import DisplayResult from "../components/DisplayResult.jsx";
 import { getDistance } from "geolib";
 import { Slider } from "@mui/material";
+import Filters from "../components/Filters.jsx";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -23,8 +24,48 @@ export default function SearchPage() {
     "https://www.onemap.gov.sg/minimap/minimap.html?mapStyle=Default&zoomLevel=15";
   const mapSrc = lat && lng ? `${mapUrl}&latLng=${lat},${lng}` : mapUrl;
 
+  const [paymentTypes, setPaymentTypes] = useState("any");
+  const [freeParking, setFreeParking] = useState({
+    "SUN & PH FR 1PM-10.30PM": true,
+    "SUN & PH FR 7AM-10.30PM": true,
+  });
+  const [nightParking, setNightParking] = useState("any");
+  const [heightRestriction, setHeightRestriction] = useState(0);
+
   if (!user) {
     return <Navigate to="/login" />;
+  }
+
+  function filter(records) {
+    if (paymentTypes === "coupon") {
+      records = records.filter(
+        (record) => record.type_of_parking_system === "COUPON PARKING",
+      );
+    } else if (paymentTypes === "electronic") {
+      records = records.filter(
+        (record) => record.type_of_parking_system === "ELECTRONIC PARKING",
+      );
+    }
+    if (!freeParking["SUN & PH FR 1PM-10.30PM"]) {
+      records = records.filter(
+        (record) => record.free_parking !== "SUN & PH FR 1PM-10.30PM",
+      );
+    }
+    if (!freeParking["SUN & PH FR 7AM-10.30PM"]) {
+      records = records.filter(
+        (record) => record.free_parking !== "SUN & PH FR 7AM-10.30PM",
+      );
+    }
+    if (nightParking === "yes") {
+      records = records.filter((record) => record.night_parking === "YES");
+    }
+
+    if (heightRestriction > 0) {
+      records = records.filter(
+        (record) => parseFloat(record.gantry_height) >= heightRestriction,
+      );
+    }
+    return records;
   }
 
   useEffect(() => {
@@ -212,15 +253,29 @@ export default function SearchPage() {
             </section>
           </form>
         </section>
-        <iframe
-          src={mapSrc}
-          width="1000px"
-          height="1000px"
-          scrolling="no"
-          frameBorder="0"
-          allowFullScreen="allowfullscreen"
-          className="h-[250px] w-[70vw] justify-self-center rounded-md shadow-md"
-        ></iframe>
+        <div className="flex flex-col items-center gap-5 lg:flex-row">
+          <div className="flex justify-center">
+            <Filters
+              paymentTypes={paymentTypes}
+              setPaymentTypes={setPaymentTypes}
+              nightParking={nightParking}
+              setNightParking={setNightParking}
+              freeParking={freeParking}
+              setFreeParking={setFreeParking}
+              heightRestriction={heightRestriction}
+              setHeightRestriction={setHeightRestriction}
+            ></Filters>
+          </div>
+          <iframe
+            src={mapSrc}
+            width="1000px"
+            height="1000px"
+            scrolling="no"
+            frameBorder="0"
+            allowFullScreen="allowfullscreen"
+            className="h-[250px] w-[70vw] justify-self-center rounded-md shadow-md lg:h-[500px]"
+          ></iframe>
+        </div>
         <section className="grid gap-4 border-t-1 border-gray-200 p-4">
           <div className="flex flex-col justify-items-center gap-4 md:flex-row md:items-center">
             <p className="text-center text-xl font-semibold">
@@ -248,44 +303,48 @@ export default function SearchPage() {
             </div>
           </div>
           <div className="grid grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))] justify-items-center gap-4">
-            {records.slice(0, limit).map((record) => (
-              <DisplayResult
-                key={record.car_park_no}
-                distance={getDistance(
-                  { latitude: lat, longitude: lng },
-                  { latitude: record.latitude, longitude: record.longitude },
-                )}
-                title={record.title}
-                address={record.address}
-                // IIFE for conditional rendering
-                operatingHours={(() => {
-                  if (record.short_term_parking === "WHOLE DAY") {
-                    return "24 hours";
-                  }
-                  if (record.short_term_parking === "NO") {
-                    return "Seasonal Parking";
-                  }
-                  return record.short_term_parking;
-                })()}
-                gantryHeight={record.gantry_height}
-                paymentType={toTitleCase(record.type_of_parking_system)}
-                totalLots={(() => {
-                  const carpark = avail.find(
-                    (el) => el.carpark_number === record.car_park_no,
-                  );
-                  return carpark ? carpark.carpark_info[0].total_lots : carpark;
-                })()}
-                lotsAvailable={(() => {
-                  const carpark = avail.find(
-                    (el) => el.carpark_number === record.car_park_no,
-                  );
-                  return carpark
-                    ? carpark.carpark_info[0].lots_available
-                    : carpark;
-                })()}
-                freeParking={record.free_parking}
-              ></DisplayResult>
-            ))}
+            {filter(records)
+              .slice(0, limit)
+              .map((record) => (
+                <DisplayResult
+                  key={record.car_park_no}
+                  distance={getDistance(
+                    { latitude: lat, longitude: lng },
+                    { latitude: record.latitude, longitude: record.longitude },
+                  )}
+                  title={record.title}
+                  address={record.address}
+                  // IIFE for conditional rendering
+                  operatingHours={(() => {
+                    if (record.short_term_parking === "WHOLE DAY") {
+                      return "24 hours";
+                    }
+                    if (record.short_term_parking === "NO") {
+                      return "Seasonal Parking";
+                    }
+                    return record.short_term_parking;
+                  })()}
+                  gantryHeight={record.gantry_height}
+                  paymentType={toTitleCase(record.type_of_parking_system)}
+                  totalLots={(() => {
+                    const carpark = avail.find(
+                      (el) => el.carpark_number === record.car_park_no,
+                    );
+                    return carpark
+                      ? carpark.carpark_info[0].total_lots
+                      : carpark;
+                  })()}
+                  lotsAvailable={(() => {
+                    const carpark = avail.find(
+                      (el) => el.carpark_number === record.car_park_no,
+                    );
+                    return carpark
+                      ? carpark.carpark_info[0].lots_available
+                      : carpark;
+                  })()}
+                  freeParking={record.free_parking}
+                ></DisplayResult>
+              ))}
           </div>
         </section>
       </main>

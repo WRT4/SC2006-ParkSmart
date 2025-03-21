@@ -11,6 +11,6 @@ body,
   max-width: none;
 }
 
-body * {
+body [class*="dark:"] {
   @apply transition-colors duration-200;
 }

@@ -16,12 +16,12 @@ export default function Header() {
         <div className="flex items-center lg:order-2">
           <Link
             to="/license"
-            className="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 focus:outline-none lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+            className="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-400 focus:ring-4 focus:ring-gray-300 focus:outline-none active:text-[#777E8C] lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
           >
             License
           </Link>
           <button
-            className="mr-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 focus:outline-none lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+            className="mr-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-400 focus:ring-4 focus:ring-gray-300 focus:outline-none active:text-[#777E8C] lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
             onClick={async () => {
               try {
                 localStorage.removeItem("token");
@@ -52,7 +52,7 @@ export default function Header() {
           >
             <span className="sr-only">Open main menu</span>
             <svg
-              className={`h-6 w-6 transition-none ${isMenuOpen ? "hidden" : "block"}`}
+              className={`h-6 w-6 ${isMenuOpen ? "hidden" : "block"}`}
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ export default function Header() {
               ></path>
             </svg>
             <svg
-              className={`h-6 w-6 transition-none ${isMenuOpen ? "block" : "hidden"}`}
+              className={`h-6 w-6 ${isMenuOpen ? "block" : "hidden"}`}
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@ export default function Header() {
             <li>
               <Link
                 to="/home"
-                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:text-gray-400 active:text-[#777E8C] lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
                 aria-current="page"
               >
                 Home
@@ -98,7 +98,7 @@ export default function Header() {
             <li>
               <Link
                 to="/searchpage"
-                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:text-gray-400 active:text-[#777E8C] lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
               >
                 Search
               </Link>
@@ -106,7 +106,7 @@ export default function Header() {
             <li>
               <Link
                 to="/profile"
-                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:text-gray-400 active:text-[#777E8C] lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
               >
                 Profile
               </Link>
@@ -114,7 +114,7 @@ export default function Header() {
             <li>
               <Link
                 to="/support"
-                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:text-gray-400 active:text-[#777E8C] lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
               >
                 Support
               </Link>

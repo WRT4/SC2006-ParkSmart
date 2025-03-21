@@ -55,9 +55,21 @@ nav a {
   text-align: center;
 }
 
-.access-card.blue { background: #007bff; }
-.access-card.green { background: #28a745; }
-.access-card.purple { background: #6f42c1; }
-.access-card.yellow { background: #ffc107; }
-.access-card.pink { background: #e83e8c; }
-.access-card.light-blue { background: #17a2b8; } */
+.access-card.blue {
+  background: #007bff;
+}
+.access-card.green {
+  background: #28a745;
+}
+.access-card.purple {
+  background: #6f42c1;
+}
+.access-card.yellow {
+  background: #ffc107;
+}
+.access-card.pink {
+  background: #e83e8c;
+}
+.access-card.light-blue {
+  background: #17a2b8;
+} */

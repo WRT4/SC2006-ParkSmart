@@ -36,7 +36,10 @@ function Home() {
           Quick Access
         </p>
         <div className="grid w-full grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))] justify-items-center gap-6 min-[1000px]:max-w-[1090px] min-[1000px]:grid-cols-3">
-          <div className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-blue-50 p-4 shadow-md">
+          <Link
+            to="/profile"
+            className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-blue-50 p-4 shadow-md transition hover:bg-blue-100 active:bg-blue-200"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -51,10 +54,7 @@ function Home() {
             <p className="text-sm text-gray-600">
               View and manage your account settings and preferences.
             </p>
-            <Link
-              to="/profile"
-              className="inline-flex items-center text-sm text-blue-600"
-            >
+            <p className="inline-flex items-center text-sm text-blue-600">
               Access
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,9 +69,12 @@ function Home() {
                   d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
                 />
               </svg>
-            </Link>
-          </div>
-          <div className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-green-50 p-4 shadow-md">
+            </p>
+          </Link>
+          <Link
+            to="/searchpage"
+            className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-green-50 p-4 shadow-md transition hover:bg-green-100 active:bg-green-200"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -86,10 +89,7 @@ function Home() {
             <p className="text-sm text-gray-600">
               Find and navigate to available parking spaces.
             </p>
-            <Link
-              to="/searchpage"
-              className="inline-flex items-center text-sm text-blue-600"
-            >
+            <p className="inline-flex items-center text-sm text-blue-600">
               Access
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -104,9 +104,12 @@ function Home() {
                   d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
                 />
               </svg>
-            </Link>
-          </div>
-          <div className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-purple-50 p-4 shadow-md">
+            </p>
+          </Link>
+          <Link
+            to="/forum"
+            className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-purple-50 p-4 shadow-md transition hover:bg-purple-100 active:bg-purple-200"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -121,10 +124,7 @@ function Home() {
             <p className="text-sm text-gray-600">
               Connect with other users and share insights.
             </p>
-            <Link
-              to="/forum"
-              className="inline-flex items-center text-sm text-blue-600"
-            >
+            <p className="inline-flex items-center text-sm text-blue-600">
               Access
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -139,9 +139,12 @@ function Home() {
                   d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
                 />
               </svg>
-            </Link>
-          </div>
-          <div className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-yellow-50 p-4 shadow-md">
+            </p>
+          </Link>
+          <Link
+            to="/support"
+            className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-yellow-50 p-4 shadow-md transition hover:bg-yellow-100 active:bg-yellow-200"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -156,10 +159,7 @@ function Home() {
             <p className="text-sm text-gray-600">
               Share your experience and help us improve.
             </p>
-            <Link
-              to="/support"
-              className="inline-flex items-center text-sm text-blue-600"
-            >
+            <p className="inline-flex items-center text-sm text-blue-600">
               Access
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -174,9 +174,12 @@ function Home() {
                   d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
                 />
               </svg>
-            </Link>
-          </div>
-          <div className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-cyan-50 p-4 shadow-md">
+            </p>
+          </Link>
+          <Link
+            to="/about"
+            className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-cyan-50 p-4 shadow-md transition hover:bg-cyan-100 active:bg-cyan-200"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -191,10 +194,7 @@ function Home() {
             <p className="text-sm text-gray-600">
               Discover our mission and impact.
             </p>
-            <Link
-              to="/about"
-              className="inline-flex items-center text-sm text-blue-600"
-            >
+            <p className="inline-flex items-center text-sm text-blue-600">
               Access
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -209,9 +209,12 @@ function Home() {
                   d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
                 />
               </svg>
-            </Link>
-          </div>
-          <div className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-fuchsia-50 p-4 shadow-md">
+            </p>
+          </Link>
+          <Link
+            to="/license"
+            className="grid h-[175px] w-full max-w-[350px] gap-1 rounded-md bg-gray-50 p-4 shadow-md transition hover:bg-neutral-100 active:bg-neutral-200"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -226,10 +229,7 @@ function Home() {
             <p className="text-sm text-gray-600">
               View the terms and conditions governing the use of our services.
             </p>
-            <Link
-              to="/license"
-              className="inline-flex items-center text-sm text-blue-600"
-            >
+            <p className="inline-flex items-center text-sm text-blue-600">
               Access
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -244,8 +244,8 @@ function Home() {
                   d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
                 />
               </svg>
-            </Link>
-          </div>
+            </p>
+          </Link>
         </div>
       </section>
       <Footer></Footer>

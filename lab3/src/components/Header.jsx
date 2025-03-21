@@ -107,10 +107,10 @@ export default function Header() {
             </li>
             <li>
               <Link
-                to="/profile"
+                to="/forum"
                 className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:text-gray-400 active:text-[#777E8C] lg:border-0 lg:p-0 lg:hover:bg-transparent dark:border-gray-700 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
               >
-                Profile
+                Forum
               </Link>
             </li>
             <li>

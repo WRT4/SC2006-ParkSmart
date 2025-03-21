@@ -8,6 +8,7 @@ import { getDistance } from "geolib";
 import { Slider } from "@mui/material";
 import Filters from "../components/Filters.jsx";
 import Footer from "../components/Footer2.jsx";
+import ModeToggle from "../components/ModeToggle.jsx";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -232,8 +233,11 @@ export default function SearchPage() {
     <>
       <Header></Header>
       <main className="grid gap-5 p-4">
-        <section className="rounded-lg bg-blue-50 p-4">
-          <form onSubmit={handleSubmit} className="relative mx-auto max-w-md">
+        <section className="flex items-center justify-evenly rounded-lg bg-blue-50 p-4">
+          <form
+            onSubmit={handleSubmit}
+            className="relative max-w-md min-w-[300px]"
+          >
             <label htmlFor="search-input" className="sr-only">
               Search
             </label>
@@ -289,6 +293,7 @@ export default function SearchPage() {
               ))}
             </section>
           </form>
+          <ModeToggle></ModeToggle>
         </section>
         <div className="flex flex-col items-center gap-5 lg:flex-row">
           <div className="flex justify-center">

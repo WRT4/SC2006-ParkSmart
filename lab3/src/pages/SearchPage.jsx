@@ -233,10 +233,10 @@ export default function SearchPage() {
     <>
       <Header></Header>
       <main className="grid gap-5 p-4">
-        <section className="flex items-center justify-evenly rounded-lg bg-blue-50 p-4">
+        <section className="flex flex-col items-center justify-evenly gap-4 rounded-lg bg-blue-50 p-4 min-[400px]:flex-row">
           <form
             onSubmit={handleSubmit}
-            className="relative max-w-md min-w-[300px]"
+            className="relative w-full max-w-md min-w-[250px]"
           >
             <label htmlFor="search-input" className="sr-only">
               Search
@@ -293,7 +293,7 @@ export default function SearchPage() {
               ))}
             </section>
           </form>
-          <ModeToggle></ModeToggle>
+          <ModeToggle className=""></ModeToggle>
         </section>
         <div className="flex flex-col items-center gap-5 lg:flex-row">
           <div className="flex justify-center">

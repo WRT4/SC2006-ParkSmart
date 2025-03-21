@@ -52,7 +52,7 @@ export default function Header() {
           >
             <span className="sr-only">Open main menu</span>
             <svg
-              className={`h-6 w-6 ${isMenuOpen ? "hidden" : "block"}`}
+              className={`h-6 w-6 transition-none ${isMenuOpen ? "hidden" : "block"}`}
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ export default function Header() {
               ></path>
             </svg>
             <svg
-              className={`h-6 w-6 ${isMenuOpen ? "block" : "hidden"}`}
+              className={`h-6 w-6 transition-none ${isMenuOpen ? "block" : "hidden"}`}
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"

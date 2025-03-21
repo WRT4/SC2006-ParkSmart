@@ -1,9 +1,11 @@
 import { useDarkMode } from "../context/DarkModeProvider";
 
-export default function ModeToggle() {
+export default function ModeToggle({ className }) {
   const { darkMode, toggleDarkMode } = useDarkMode();
   return (
-    <div className="relative flex flex-col justify-center">
+    <div
+      className={"relative flex h-4 w-4" + (className ? " " + className : "")}
+    >
       <input
         type="checkbox"
         name="light-switch"

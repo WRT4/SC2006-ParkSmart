@@ -7,6 +7,7 @@ import DisplayResult from "../components/DisplayResult.jsx";
 import { getDistance } from "geolib";
 import { Slider } from "@mui/material";
 import Filters from "../components/Filters.jsx";
+import Footer from "../components/Footer2.jsx";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -466,6 +467,7 @@ export default function SearchPage() {
           </button>
         </div>
       </section>
+      <Footer></Footer>
     </>
   );
 }

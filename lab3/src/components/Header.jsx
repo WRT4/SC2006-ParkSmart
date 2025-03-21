@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../auth/AuthWrapper";
+import ModeToggle from "./ModeToggle";
 
 import Title from "./Title";
 
@@ -14,6 +15,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
         <Title colorLight="text-black" colorDark="text-white"></Title>
         <div className="flex items-center lg:order-2">
+          <ModeToggle className="mr-4 justify-self-end rounded-lg hover:text-gray-400 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:hover:bg-gray-700 dark:focus:ring-gray-800"></ModeToggle>
           <Link
             to="/license"
             className="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-400 focus:ring-4 focus:ring-gray-300 focus:outline-none active:text-[#777E8C] lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"

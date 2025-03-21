@@ -4,18 +4,21 @@ export default function ModeToggle({ className }) {
   const { darkMode, toggleDarkMode } = useDarkMode();
   return (
     <div
-      className={"relative flex h-4 w-4" + (className ? " " + className : "")}
+      className={`relative flex h-12 w-12 p-4 ${className ? className : ""}`}
     >
       <input
         type="checkbox"
         name="light-switch"
-        className="light-switch absolute h-4 w-4 cursor-pointer appearance-none"
+        className={`light-switch absolute top-0 left-0 h-12 w-12 cursor-pointer appearance-none p-4`}
         checked={darkMode}
         onChange={() => {
           toggleDarkMode();
         }}
       />
-      <label className="pointer-events-none absolute" htmlFor="light-switch">
+      <label
+        className={`pointer-events-none absolute top-0 left-0 p-4`}
+        htmlFor="light-switch"
+      >
         <svg
           className="dark:hidden"
           width="16"

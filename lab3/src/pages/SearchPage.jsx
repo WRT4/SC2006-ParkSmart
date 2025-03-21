@@ -7,8 +7,7 @@ import DisplayResult from "../components/DisplayResult.jsx";
 import { getDistance } from "geolib";
 import { Slider } from "@mui/material";
 import Filters from "../components/Filters.jsx";
-import Footer from "../components/Footer2.jsx";
-import ModeToggle from "../components/ModeToggle.jsx";
+import Footer from "../components/Footer.jsx";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -293,7 +292,6 @@ export default function SearchPage() {
               ))}
             </section>
           </form>
-          <ModeToggle className=""></ModeToggle>
         </section>
         <div className="flex flex-col items-center gap-5 lg:flex-row">
           <div className="flex justify-center">

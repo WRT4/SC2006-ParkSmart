@@ -1,5 +1,4 @@
 import MuiDialog from "@mui/material/Dialog";
-import MuiDialogTitle from "@mui/material/DialogTitle";
 
 export default function Dialog({
   open,

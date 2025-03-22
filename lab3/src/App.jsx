@@ -11,6 +11,7 @@ import EditPost from "./pages/EditPost";
 import FeedbackPage from "./pages/FeedbackPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProfilePage from "./pages/ProfilePage";
+import LicensePage from "./pages/LicensePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -61,6 +62,10 @@ function App() {
     {
       path: "profile",
       element: <ProfilePage />,
+    },
+    {
+      path: "license",
+      element: <LicensePage />,
     },
   ]);
 

@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import { AuthContext } from "../auth/AuthWrapper";
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect, useRef, useReducer } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import SearchResult from "../components/SearchResult";
 import DisplayResult from "../components/DisplayResult.jsx";
@@ -11,6 +11,7 @@ import Footer from "../components/Footer.jsx";
 import Dialog from "../components/Dialog.jsx";
 
 export default function SearchPage() {
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [lat, setLat] = useState("");
@@ -137,11 +138,13 @@ export default function SearchPage() {
   if (firstLoad.current) {
     firstLoad.current = false;
     navigator.geolocation.getCurrentPosition((position) => {
-      setLat(position.coords.latitude);
-      setLng(position.coords.longitude);
-      // fetchRecords(position.coords.latitude, position.coords.longitude);
-      // fetchCarparkAvailability();
-      firstLoadFetch(position.coords.latitude, position.coords.longitude);
+      if (document.querySelectorAll("[data-address]").length === 0) {
+        setLat(position.coords.latitude);
+        setLng(position.coords.longitude);
+        // fetchRecords(position.coords.latitude, position.coords.longitude);
+        // fetchCarparkAvailability();
+        firstLoadFetch(position.coords.latitude, position.coords.longitude);
+      }
     });
   }
 
@@ -182,8 +185,6 @@ export default function SearchPage() {
 
         records.sort((a, b) => a.distance - b.distance);
         setRecords(records);
-        // console.log("THIS IS HAPPENING!");
-
         return records;
       })
       .then((records) => {
@@ -192,8 +193,6 @@ export default function SearchPage() {
           .then((response) => response.json())
           .then((data) => {
             setAvail(data.items[0].carpark_data);
-            // console.log(data);
-            // console.log(data.items[0].carpark_data);
             if (records.length > 0) {
               setRecords(
                 records.map((record) => {
@@ -212,6 +211,7 @@ export default function SearchPage() {
                 }),
               );
             }
+            forceUpdate();
           })
           .catch((error) => {
             console.error("Error retrieving availability", error);
@@ -230,16 +230,18 @@ export default function SearchPage() {
         setAvail(data.items[0].carpark_data);
 
         if (records.length > 0) {
-          const test = records.map((record) => {
-            const carpark = avail.find(
-              (el) => el.carpark_number === record.car_park_no,
-            );
-            if (carpark) {
-              record.totalLots = carpark.carpark_info[0].total_lots;
-              record.lotsAvailable = carpark.carpark_info[0].lots_available;
-            }
-            return record;
-          });
+          setRecords(
+            records.map((record) => {
+              const carpark = avail.find(
+                (el) => el.carpark_number === record.car_park_no,
+              );
+              if (carpark) {
+                record.totalLots = carpark.carpark_info[0].total_lots;
+                record.lotsAvailable = carpark.carpark_info[0].lots_available;
+              }
+              return record;
+            }),
+          );
         }
       })
       .catch((error) => {

@@ -14,7 +14,7 @@ export default function DisplayResult({
   return (
     <div
       data-address={address}
-      className="flex h-[350px] w-full max-w-[350px] flex-col rounded-md border-1 border-gray-200 p-4 shadow-md"
+      className="flex w-full max-w-[350px] flex-col rounded-md border-1 border-gray-200 p-4 shadow-md"
     >
       <div className="grid justify-items-start gap-2 pb-3">
         <div className="grid w-full justify-items-center gap-2">

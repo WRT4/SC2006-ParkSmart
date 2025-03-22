@@ -1,0 +1,112 @@
+import { useState } from "react";
+import { Slider, Switch } from "@mui/material";
+
+export default function Filters({
+  freeParking,
+  setFreeParking,
+  availFilter,
+  setAvailFilter,
+  heightRestriction,
+  setHeightRestriction,
+  nightParking,
+  setNightParking,
+}) {
+  const toggleAvailFilter = (type) => {
+    setAvailFilter((prev) => ({ ...prev, [type]: !prev[type] }));
+  };
+
+  return (
+    <div className="w-72 rounded-xl bg-white p-4 shadow-md">
+      <div className="mb-4 flex items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="#2563eb"
+          className="bi bi-funnel-fill"
+          viewBox="0 0 16 16"
+        >
+          <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z" />
+        </svg>
+        <span className="font-bold text-blue-600">Filters</span>
+      </div>
+
+      <div className="mb-4 flex flex-col gap-1">
+        <label className="block text-sm font-medium">Free Parking</label>
+        <div className="flex items-center">
+          <Switch
+            checked={freeParking}
+            onChange={(e) => {
+              setFreeParking(e.target.checked);
+            }}
+          ></Switch>
+          <p
+            className={
+              "text-sm " + `${freeParking ? "font-semibold" : "text-gray-600"}`
+            }
+          >
+            Only free parking
+          </p>
+        </div>
+      </div>
+
+      <div className="mb-4 flex flex-col gap-1">
+        <label className="block text-sm font-medium">Night Parking</label>
+        <div className="flex flex-col">
+          <div
+            onClick={() => {
+              setNightParking("any");
+            }}
+            className={`cursor-pointer rounded-md p-2 text-sm text-gray-700 hover:bg-gray-200 active:bg-gray-300 ${nightParking === "any" ? "bg-gray-100 font-semibold" : ""}`}
+          >
+            Any
+          </div>
+          <div
+            onClick={() => {
+              setNightParking("yes");
+            }}
+            className={`cursor-pointer rounded-md p-2 text-sm text-gray-700 hover:bg-gray-200 active:bg-gray-300 ${nightParking === "yes" ? "bg-gray-100 font-semibold" : ""}`}
+          >
+            Available
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-4 flex flex-col gap-1">
+        <label className="block text-sm font-medium">Availability</label>
+        <div className="mt-1 space-y-2">
+          {Object.keys(availFilter).map((type) => (
+            <div key={type} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={availFilter[type]}
+                onChange={() => toggleAvailFilter(type)}
+                className="form-checkbox cursor-pointer text-blue-500"
+              />
+              <span className="text-sm capitalize">{type}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label className="block text-sm font-medium">Height Restriction</label>
+        <p className="text-sm text-gray-600">Select a minimum height (m).</p>
+        <Slider
+          className=""
+          aria-label="heightRestriction"
+          defaultValue={0}
+          aria-valuetext={`At least ${heightRestriction}m`}
+          valueLabelDisplay="auto"
+          step={1}
+          min={0}
+          max={9}
+          onChange={(e) => {
+            setHeightRestriction(e.target.value);
+          }}
+          id={"slider"}
+        ></Slider>
+      </div>
+    </div>
+  );
+}

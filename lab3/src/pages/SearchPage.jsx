@@ -8,6 +8,7 @@ import { getDistance } from "geolib";
 import { Slider } from "@mui/material";
 import Filters from "../components/Filters.jsx";
 import Footer from "../components/Footer.jsx";
+import Dialog from "../components/Dialog.jsx";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -25,6 +26,8 @@ export default function SearchPage() {
     "https://www.onemap.gov.sg/minimap/minimap.html?mapStyle=Default&zoomLevel=15";
   const mapSrc = lat && lng ? `${mapUrl}&latLng=${lat},${lng}` : mapUrl;
   const availabilityLimit = 0.5;
+  const [open, setOpen] = useState(false);
+  const [record, setRecord] = useState(null);
 
   const [freeParking, setFreeParking] = useState(false);
   const [nightParking, setNightParking] = useState("any");
@@ -136,9 +139,87 @@ export default function SearchPage() {
     navigator.geolocation.getCurrentPosition((position) => {
       setLat(position.coords.latitude);
       setLng(position.coords.longitude);
-      fetchRecords(position.coords.latitude, position.coords.longitude);
-      fetchCarparkAvailability();
+      // fetchRecords(position.coords.latitude, position.coords.longitude);
+      // fetchCarparkAvailability();
+      firstLoadFetch(position.coords.latitude, position.coords.longitude);
     });
+  }
+
+  function firstLoadFetch(latitude, longitude) {
+    fetch(
+      "https://data.gov.sg/api/action/datastore_search?resource_id=d_23f946fa557947f93a8043bbef41dd09&limit=5000",
+      {
+        method: "GET",
+      },
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        let records = data.result.records;
+        records = records.map((record) => {
+          record.x_coord = parseFloat(record.x_coord);
+          record.y_coord = parseFloat(record.y_coord);
+          const wgsCoord = SVYtoWGS(record.x_coord, record.y_coord);
+          const lat = wgsCoord.latitude;
+          const lon = wgsCoord.longitude;
+          record.latitude = lat;
+          record.longitude = lon;
+          record.distance = getDistance(
+            { latitude, longitude },
+            { latitude: lat, longitude: lon },
+          );
+          const title = record.address
+            .split(" ")
+            .filter(
+              (word) =>
+                word !== "BLK" &&
+                !(word.charAt(0) >= "0" && word.charAt(0) <= "9"),
+            )
+            .join(" ");
+          record.title = title;
+
+          return record;
+        });
+
+        records.sort((a, b) => a.distance - b.distance);
+        setRecords(records);
+        // console.log("THIS IS HAPPENING!");
+
+        return records;
+      })
+      .then((records) => {
+        const url = `https://api.data.gov.sg/v1/transport/carpark-availability`;
+        fetch(url, { method: "GET", mode: "cors" })
+          .then((response) => response.json())
+          .then((data) => {
+            setAvail(data.items[0].carpark_data);
+            // console.log(data);
+            // console.log(data.items[0].carpark_data);
+            if (records.length > 0) {
+              setRecords(
+                records.map((record) => {
+                  const carpark = data.items[0].carpark_data.find(
+                    (el) => el.carpark_number === record.car_park_no,
+                  );
+                  if (carpark) {
+                    record.totalLots = parseInt(
+                      carpark.carpark_info[0].total_lots,
+                    );
+                    record.lotsAvailable = parseInt(
+                      carpark.carpark_info[0].lots_available,
+                    );
+                  }
+                  return record;
+                }),
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error retrieving availability", error);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   const fetchCarparkAvailability = () => {
@@ -147,6 +228,19 @@ export default function SearchPage() {
       .then((response) => response.json())
       .then((data) => {
         setAvail(data.items[0].carpark_data);
+
+        if (records.length > 0) {
+          const test = records.map((record) => {
+            const carpark = avail.find(
+              (el) => el.carpark_number === record.car_park_no,
+            );
+            if (carpark) {
+              record.totalLots = carpark.carpark_info[0].total_lots;
+              record.lotsAvailable = carpark.carpark_info[0].lots_available;
+            }
+            return record;
+          });
+        }
       })
       .catch((error) => {
         console.error("Error retrieving availability", error);
@@ -200,6 +294,7 @@ export default function SearchPage() {
             )
             .join(" ");
           record.title = title;
+
           return record;
         });
 
@@ -276,7 +371,7 @@ export default function SearchPage() {
             </div>
             <section
               id="search-results"
-              className="absolute top-20 overflow-hidden rounded-lg border-1 border-[#dee2e6] bg-white shadow-md empty:border-0"
+              className="absolute top-20 z-20 overflow-hidden rounded-lg border-1 border-[#dee2e6] bg-white shadow-md empty:border-0"
             >
               {searchResults.slice(0, 5).map((result) => (
                 <SearchResult
@@ -293,7 +388,7 @@ export default function SearchPage() {
             </section>
           </form>
         </section>
-        <div className="flex flex-col items-center gap-5 lg:flex-row">
+        <div className="z-10 flex flex-col items-center gap-5 lg:flex-row">
           <div className="flex justify-center">
             <Filters
               availFilter={availFilter}
@@ -348,6 +443,17 @@ export default function SearchPage() {
               .map((record) => (
                 <DisplayResult
                   key={record.car_park_no}
+                  viewResult={(e) => {
+                    const address =
+                      e.target.parentNode.parentNode.getAttribute(
+                        "data-address",
+                      );
+                    setRecord(
+                      records.find((record) => record.address === address),
+                    );
+
+                    setOpen(true);
+                  }}
                   distance={getDistance(
                     { latitude: lat, longitude: lng },
                     { latitude: record.latitude, longitude: record.longitude },
@@ -470,6 +576,7 @@ export default function SearchPage() {
           </button>
         </div>
       </section>
+      <Dialog open={open} setOpen={setOpen} record={record}></Dialog>
       <Footer></Footer>
     </>
   );

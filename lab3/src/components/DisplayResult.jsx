@@ -9,9 +9,13 @@ export default function DisplayResult({
   operatingHours,
   freeParking,
   availabilityLimit = 0.5,
+  viewResult,
 }) {
   return (
-    <div className="flex h-[350px] w-full max-w-[350px] flex-col rounded-md border-1 border-gray-200 p-4 shadow-md">
+    <div
+      data-address={address}
+      className="flex h-[350px] w-full max-w-[350px] flex-col rounded-md border-1 border-gray-200 p-4 shadow-md"
+    >
       <div className="grid justify-items-start gap-2 pb-3">
         <div className="grid w-full justify-items-center gap-2">
           <p className="font-medium">{title}</p>
@@ -158,6 +162,7 @@ export default function DisplayResult({
         </div>
         <button
           type="button"
+          onClick={viewResult}
           className="end-2.5 bottom-2.5 ms-auto max-h-[2.5rem] cursor-pointer rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           View Details

@@ -11,11 +11,14 @@ export default function Dialog({
     setOpen(false);
   };
 
-  console.log(record);
-
   return (
     <>
-      <MuiDialog onClose={handleClose} open={open} className="relative">
+      <MuiDialog
+        onClose={handleClose}
+        open={open}
+        closeAfterTransition={false}
+        className="relative"
+      >
         <button
           onClick={handleClose}
           type="button"
@@ -43,7 +46,7 @@ export default function Dialog({
             return (
               <div
                 data-address={record.address}
-                className="flex w-full max-w-[350px] flex-col gap-3 rounded-md border-1 border-gray-200 p-4 shadow-md"
+                className="flex w-full max-w-[350px] flex-col gap-3 rounded-md border-1 border-gray-200 p-6 shadow-md md:w-[350px]"
               >
                 <div className="grid w-full justify-items-center gap-2">
                   <p className="font-medium">{record.title}</p>
@@ -232,7 +235,9 @@ export default function Dialog({
                     <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
                     <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
                   </svg>
-                  <p className="text-sm">Free Parking: {record.free_parking}</p>
+                  <p className="text-sm">
+                    Free Parking: {toTitleCase(record.free_parking)}
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <svg
@@ -240,7 +245,7 @@ export default function Dialog({
                     width="16"
                     height="16"
                     fill="#9ca3af"
-                    classNAme="bi bi-layers-fill"
+                    className="bi bi-layers-fill"
                     viewBox="0 0 16 16"
                   >
                     <path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z" />
@@ -256,7 +261,7 @@ export default function Dialog({
                     width="16"
                     height="16"
                     fill="#9ca3af"
-                    class="bi bi-option"
+                    className="bi bi-option"
                     viewBox="0 0 16 16"
                   >
                     <path d="M1 2.5a.5.5 0 0 1 .5-.5h3.797a.5.5 0 0 1 .439.26L11 13h3.5a.5.5 0 0 1 0 1h-3.797a.5.5 0 0 1-.439-.26L5 3H1.5a.5.5 0 0 1-.5-.5m10 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5" />

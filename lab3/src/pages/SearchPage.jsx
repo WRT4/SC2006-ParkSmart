@@ -231,15 +231,18 @@ export default function SearchPage() {
 
         if (records.length > 0) {
           setRecords(
-            records.map((record) => {
+            records.map((rec) => {
               const carpark = avail.find(
-                (el) => el.carpark_number === record.car_park_no,
+                (el) => el.carpark_number === rec.car_park_no,
               );
               if (carpark) {
-                record.totalLots = carpark.carpark_info[0].total_lots;
-                record.lotsAvailable = carpark.carpark_info[0].lots_available;
+                rec.totalLots = carpark.carpark_info[0].total_lots;
+                rec.lotsAvailable = carpark.carpark_info[0].lots_available;
               }
-              return record;
+              if (rec.address === record.address) {
+                setRecord(rec);
+              }
+              return rec;
             }),
           );
         }
@@ -450,10 +453,24 @@ export default function SearchPage() {
                       e.target.parentNode.parentNode.getAttribute(
                         "data-address",
                       );
+                    const newRecords = records.map((rec) => {
+                      const carpark = avail.find(
+                        (el) => el.carpark_number === rec.car_park_no,
+                      );
+                      if (carpark) {
+                        rec.totalLots = carpark.carpark_info[0].total_lots;
+                        rec.lotsAvailable =
+                          carpark.carpark_info[0].lots_available;
+                      }
+                      if (rec.address === record.address) {
+                        setRecord(rec);
+                      }
+                      return rec;
+                    });
+                    setRecords(newRecords);
                     setRecord(
-                      records.find((record) => record.address === address),
+                      newRecords.find((record) => record.address === address),
                     );
-
                     setOpen(true);
                   }}
                   distance={getDistance(

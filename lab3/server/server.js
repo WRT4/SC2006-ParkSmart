@@ -4,12 +4,12 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcrypt"); // For password hashing
 const jwt = require("jsonwebtoken"); // For token generation
-const multer = require('multer');
+const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-}).single('image'); // 'image' is the name of the form field in the frontend
+}).single("image"); // 'image' is the name of the form field in the frontend
 
 const app = express();
 app.use(express.json());
@@ -68,6 +68,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   carPlateNumber: { type: String },
+  name: { type: String, required: true },
 });
 
 const User = mongoose.model("User", UserSchema);
@@ -100,8 +101,7 @@ app.get("/api/feedbacks", async (req, res) => {
   try {
     const feedbacks = await Feedback.find().sort({ createdAt: -1 });
     res.json(feedbacks);
-  }
-  catch (err) {
+  } catch (err) {
     console.error("Error fetching feedbacks:", err);
     res.status(500).json({ message: "Internal Server Error" });
   }
@@ -150,7 +150,7 @@ app.post("/api/posts/:postId/comments/:commentId/report", async (req, res) => {
 
 // Signup route
 app.post("/api/auth/signup", async (req, res) => {
-  const { username, email, password, carPlateNumber } = req.body;
+  const { username, email, password, carPlateNumber, name } = req.body;
 
   // Check if the username already exists
   const temp = await User.findOne({ username: username });
@@ -167,11 +167,23 @@ app.post("/api/auth/signup", async (req, res) => {
   // Hash the password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = new User({ username, email, password: hashedPassword, carPlateNumber });
+  const newUser = new User({
+    username,
+    email,
+    password: hashedPassword,
+    carPlateNumber,
+    name,
+  });
   await newUser.save();
   // Generate JWT token for the user
   const token = jwt.sign(
-    { id: newUser.id, username: newUser.username, email: newUser.email, carPlateNumber: newUser.carPlateNumber },
+    {
+      id: newUser.id,
+      username: newUser.username,
+      email: newUser.email,
+      carPlateNumber: newUser.carPlateNumber,
+      name: newUser.name,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "1h" },
   );
@@ -206,7 +218,13 @@ app.post("/api/auth/login", async (req, res) => {
 
   // Generate JWT token for the user
   const token = jwt.sign(
-    { id: user.id, username: user.username, email: user.email, carPlateNumber: user.carPlateNumber },
+    {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      carPlateNumber: user.carPlateNumber,
+      name: user.name,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "1h" },
   );
@@ -238,13 +256,15 @@ app.post("/api/auth/verify", verifyToken, (req, res) => {
 });
 
 // Create a new post
-app.post('/api/posts', upload, async (req, res) => {
+app.post("/api/posts", upload, async (req, res) => {
   try {
     const { title, content, username } = req.body;
-    const image = req.file ? req.file.buffer.toString('base64') : null; // Convert image buffer to base64 if needed
+    const image = req.file ? req.file.buffer.toString("base64") : null; // Convert image buffer to base64 if needed
 
     if (!title || !content) {
-      return res.status(400).json({ message: 'Title and content are required' });
+      return res
+        .status(400)
+        .json({ message: "Title and content are required" });
     }
 
     const newPost = new Post({ title, content, username, image });
@@ -252,8 +272,8 @@ app.post('/api/posts', upload, async (req, res) => {
 
     res.status(201).json(newPost);
   } catch (err) {
-    console.error('Error creating post:', err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.error("Error creating post:", err);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -393,7 +413,9 @@ app.put("/api/posts/:id", upload, async (req, res) => {
     }
 
     if (!title || !content) {
-      return res.status(400).json({ message: 'Title and content are required' });
+      return res
+        .status(400)
+        .json({ message: "Title and content are required" });
     }
 
     post.title = title;
@@ -401,7 +423,7 @@ app.put("/api/posts/:id", upload, async (req, res) => {
 
     // Only update the image if a new one is uploaded
     if (req.file) {
-      const image = req.file.buffer.toString('base64');
+      const image = req.file.buffer.toString("base64");
       post.image = image; // Update the image field
     }
 
@@ -412,7 +434,6 @@ app.put("/api/posts/:id", upload, async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 
 // POST route to upload image as base64 string
 app.post("/api/posts/:id/upload-image", async (req, res) => {
@@ -452,87 +473,116 @@ app.put("/api/posts/:id/delete-image", (req, res) => {
 
 // Route to update user details
 // app.put('/api/users/update', verifyToken, async (req, res) => {
-  app.put('/api/users/update', async (req, res) => {
-    const { current_username, username, email, carPlateNumber} = req.body;
-    console.log("updating db", current_username, username, email, carPlateNumber)
-    
-    try {
+app.put("/api/users/update", async (req, res) => {
+  const { current_username, username, email, carPlateNumber, name } = req.body;
+  console.log(
+    "updating db",
+    current_username,
+    username,
+    email,
+    carPlateNumber,
+    name,
+  );
 
-        // Check if the user exists
-        const user = await User.findOne({'username' : current_username});
-        
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        } 
+  try {
+    // Check if the user exists
+    const user = await User.findOne({ username: current_username });
 
-        if (user.username != username) {
-          // Check if the username already exists
-          const temp = await User.findOne({ username: username });
-          if (temp) {
-            return res.status(400).json({ message: "Username already exists" });
-          }
-        }
-
-        if (user.email != email) {
-          // Check if the email already in use
-          const temp2 = await User.findOne({ email: email });
-          if (temp2) {
-            return res.status(400).json({ message: "Email already in use" });
-          }
-        }
-
-        // Update details
-        if (username) user.username = username;
-        if (email) user.email = email;
-        if (carPlateNumber) user.carPlateNumber = carPlateNumber;
-
-        await user.save();
-
-        // Send updated user data
-        res.json({ user });
-    } catch (err) {
-        console.error("Error updating user:", err);
-        res.status(500).json({ message: "Server error" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
+
+    if (user.username != username) {
+      // Check if the username already exists
+      const temp = await User.findOne({ username: username });
+      if (temp) {
+        return res.status(400).json({ message: "Username already exists" });
+      }
+    }
+
+    if (user.email != email) {
+      // Check if the email already in use
+      const temp2 = await User.findOne({ email: email });
+      if (temp2) {
+        return res.status(400).json({ message: "Email already in use" });
+      }
+    }
+
+    // Update details
+    if (username) user.username = username;
+    if (email) user.email = email;
+    if (carPlateNumber) user.carPlateNumber = carPlateNumber;
+    if (name) user.name = name;
+
+    await user.save();
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        carPlateNumber: user.carPlateNumber,
+        name: user.name,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+    // Send updated user data
+    res.json({ user, token });
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 // Change Password Route
 app.put("/api/auth/change-password", async (req, res) => {
-    console.log("entered server");
-    const { user, currentPassword, newPassword } = req.body;
-    console.log(user, currentPassword, newPassword);
-    
+  console.log("entered server");
+  const { user, currentPassword, newPassword } = req.body;
+  console.log(user, currentPassword, newPassword);
 
-    if (!currentPassword || !newPassword) {
-        console.log("entered if");
-        return res.status(400).json({ message: "Both old and new passwords are required" });
+  if (!currentPassword || !newPassword) {
+    console.log("entered if");
+    return res
+      .status(400)
+      .json({ message: "Both old and new passwords are required" });
+  }
+
+  try {
+    const user_obj = await User.findOne({ username: user.username });
+
+    // Compare old password with stored password
+    const isMatch = await bcrypt.compare(currentPassword, user_obj.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Old password is incorrect" });
     }
 
-    try {
+    // Hash the new password before saving
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
-        const user_obj = await User.findOne({'username' : user.username});
+    // Update password
+    user_obj.password = hashedNewPassword;
 
-        // Compare old password with stored password
-        const isMatch = await bcrypt.compare(currentPassword, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: "Old password is incorrect" });
-        }
+    // Save the updated user
+    await user_obj.save();
 
-        // Hash the new password before saving
-        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-
-        // Update password
-        user_obj.password = hashedNewPassword;
-
-        // Save the updated user
-        await user_obj.save();
-
-        res.json({ message: "Password updated successfully" });
-        console.log(user_obj);
-    } catch (error) {
-        console.error("Error changing password:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
+    const token = jwt.sign(
+      {
+        id: user_obj.id,
+        username: user_obj.username,
+        email: user_obj.email,
+        carPlateNumber: user_obj.carPlateNumber,
+        name: user_obj.name,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+    // Send updated user data
+    res.json({ user: user_obj, token });
+    console.log(user_obj);
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 // Start the server

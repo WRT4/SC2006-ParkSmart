@@ -10,6 +10,7 @@ export default function SignUpPage() {
   const [carPlateNumber, setCarPlateNumber] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [passwordVisbility, setPasswordVisibility] = useState(false);
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
@@ -27,7 +28,13 @@ export default function SignUpPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, username, carPlateNumber }), // Send username along with email and password
+        body: JSON.stringify({
+          email,
+          password,
+          username,
+          carPlateNumber,
+          name,
+        }), // Send username along with email and password
       });
 
       const data = await response.json();
@@ -134,6 +141,31 @@ export default function SignUpPage() {
                 ></input>
               </div>
               <p className="text-sm text-gray-600">Format: ABC-1234</p>
+            </div>
+            <div className="grid gap-1">
+              <label htmlFor="name">Name</label>
+              <div className="relative inline-flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="#9ca3af"
+                  className="bi bi-person-fill absolute left-2"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                </svg>
+                <input
+                  className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                  placeholder="Enter name"
+                  type="text"
+                  id="name"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  required
+                ></input>
+              </div>
             </div>
             <div className="grid gap-1">
               <label htmlFor="username">Username</label>

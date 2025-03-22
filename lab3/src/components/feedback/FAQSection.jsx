@@ -1,6 +1,6 @@
 // components/feedback/FAQSection.js
-import React, { useState } from 'react';
-import './FAQSection.css';
+import React, { useState } from "react";
+import "./FAQSection.css";
 
 // FAQ item component
 const FAQItem = ({ question, answer }) => {
@@ -10,7 +10,7 @@ const FAQItem = ({ question, answer }) => {
     <div className="faq-item">
       <div className="faq-question" onClick={() => setIsOpen(!isOpen)}>
         <h3>{question}</h3>
-        <span className="toggle-icon">{isOpen ? '−' : '+'}</span>
+        <span className="toggle-icon">{isOpen ? "−" : "+"}</span>
       </div>
       {isOpen && (
         <div className="faq-answer">
@@ -27,31 +27,32 @@ const FAQSection = () => {
   const faqData = [
     {
       id: 1,
-      question: 'How do I reserve a parking spot?',
-      answer: 'Simply open the CarPark Tracker app, enter your destination, choose your preferred parking spot, and complete the booking with your payment method.'
+      question: "How frequently is the carpark availability data updated?",
+      answer:
+        "Availability is updated every minute, subject to the responsiveness and availability of the API.",
     },
     {
       id: 2,
-      question: 'What payment methods do you accept?',
-      answer: 'We accept all major credit cards, Apple Pay, Google Pay, and PayPal for your convenience.'
+      question:
+        "Do you store user data, and why do you request location access?",
+      answer:
+        "We securely store user credentials using industry-standard encryption methods like bcrypt. We request location access solely to enhance user experience, allowing us to default to your current location when you access the search page. This location data is not stored.",
     },
     {
       id: 3,
-      question: 'Can I cancel my reservation?',
-      answer: 'Yes, you can cancel your reservation up to 1 hour before your scheduled parking time for a full refund.'
-    }
+      question:
+        "Why does the carpark availability data sometimes return errors?",
+      answer:
+        "Not all carparks are included in the carpark availability API, particularly older ones, which may result in missing or incomplete availability data for those carparks.",
+    },
   ];
 
   return (
     <section className="faq-section">
       <h2>Frequently Asked Questions</h2>
-      
-      {faqData.map(faq => (
-        <FAQItem 
-          key={faq.id} 
-          question={faq.question} 
-          answer={faq.answer} 
-        />
+
+      {faqData.map((faq) => (
+        <FAQItem key={faq.id} question={faq.question} answer={faq.answer} />
       ))}
     </section>
   );

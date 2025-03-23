@@ -11,12 +11,78 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
 }).single("image"); // 'image' is the name of the form field in the frontend
 
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
+
+function setEnvValue(key, value) {
+  // read file from hdd & split if from a linebreak to a array
+  const ENV_VARS = fs.readFileSync(".env", "utf8").split(os.EOL);
+
+  // find the env we want based on the key
+  const target = ENV_VARS.indexOf(
+    ENV_VARS.find((line) => {
+      // (?<!#\s*)   Negative lookbehind to avoid matching comments (lines that starts with #).
+      //             There is a double slash in the RegExp constructor to escape it.
+      // (?==)       Positive lookahead to check if there is an equal sign right after the key.
+      //             This is to prevent matching keys prefixed with the key of the env var to update.
+      const keyValRegex = new RegExp(`(?<!#\\s*)${key}(?==)`);
+
+      return line.match(keyValRegex);
+    }),
+  );
+
+  // if key-value pair exists in the .env file,
+  if (target !== -1) {
+    // replace the key/value with the new value
+    ENV_VARS.splice(target, 1, `${key}=${value}`);
+  } else {
+    // if it doesn't exist, add it instead
+    ENV_VARS.push(`${key}=${value}`);
+  }
+
+  // write everything back to the file system
+  fs.writeFileSync(".env", ENV_VARS.join(os.EOL));
+}
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 // Increase limit for JSON payloads
 app.use(express.json({ limit: "10mb" })); // Increase the limit as needed (e.g., 10mb)
+
+// Reauthenticate API token
+
+const url = "https://www.onemap.gov.sg/api/auth/post/getToken";
+
+// Prepare the data payload
+const data = JSON.stringify({
+  email: process.env.ONEMAP_EMAIL,
+  password: process.env.ONEMAP_PASSWORD,
+});
+
+fetch(url, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: data,
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json(); // Parse response as JSON
+  })
+  .then((data) => {
+    console.log(data); // Log the response data to the console
+    // process.env.ONEMAP_API_KEY = data.access_token;
+    setEnvValue("ONEMAP_API_KEY", data.access_token);
+  })
+  .catch((error) => {
+    console.error("Error:", error); // Log any errors
+  });
 
 // Connect to MongoDB
 

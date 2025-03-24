@@ -5,13 +5,13 @@ import HomePage from "./pages/HomePage";
 import Index from "./pages/Index";
 import SearchPage from "./pages/SearchPage";
 import LoadingPage from "./pages/LoadingPage";
-import Forum from "./pages/Forum";
 import PostDetail from "./pages/PostDetail";
 import EditPost from "./pages/EditPost";
 import FeedbackPage from "./pages/FeedbackPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProfilePage from "./pages/ProfilePage";
 import LicensePage from "./pages/LicensePage";
+import Forum from "./pages/Forum";
 
 function App() {
   const router = createBrowserRouter([

@@ -481,15 +481,16 @@ const ProfileSettings = () => {
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full cursor-not-allowed rounded-md border border-gray-400 bg-gray-200 px-8 py-1 text-gray-500 focus:outline-1 focus:outline-gray-600"
                     placeholder="Choose a username"
                     type="text"
                     id="username"
                     defaultValue={user.username}
-                    onChange={(e) => {
-                      setUsername(e.target.value);
-                    }}
-                    required
+                    // onChange={(e) => {
+                    //   setUsername(e.target.value);
+                    // }}
+                    disabled
+                    // required
                   ></input>
                 </div>
               </div>

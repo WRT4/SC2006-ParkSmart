@@ -2,13 +2,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../auth/AuthWrapper";
 import ModeToggle from "./ModeToggle";
-
+import { LangContext } from "../lang/LangWrapper";
+import { useTranslation } from "react-i18next";
 import Title from "./Title";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const { setUser } = useContext(AuthContext);
+  const { lang, setLang } = useContext(LangContext);
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    setLang(lng);
+    localStorage.setItem("language", lng); // Store selected language
+  };
 
   return (
     <nav className="border-gray-200 bg-white px-4 py-2.5 lg:px-6 dark:bg-gray-800">
@@ -16,12 +26,83 @@ export default function Header() {
         <Title colorLight="text-black" colorDark="text-white"></Title>
         <div className="flex items-center lg:order-2">
           <ModeToggle className="mr-4 justify-self-end rounded-lg hover:text-gray-400 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:hover:bg-gray-700 dark:focus:ring-gray-800"></ModeToggle>
-          <Link
+          {/* <Link
             to="/license"
             className="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-400 focus:ring-4 focus:ring-gray-300 focus:outline-none active:text-[#777E8C] lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
           >
             License
-          </Link>
+          </Link> */}
+          {/*  */}
+
+          <div className="relative inline-block text-left">
+            <button
+              type="button"
+              className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50"
+              onClick={() => setIsLanguageOpen(!isLanguageOpen)}
+            >
+              {lang.toUpperCase()}
+              <svg
+                className="-mr-1 size-5 text-gray-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+
+            {isLanguageOpen && (
+              <div
+                className="absolute left-0 z-10 mt-2 w-max origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden"
+                onBlur={() => setIsLanguageOpen(false)}
+                tabIndex={0} // Ensures `onBlur` works properly
+              >
+                <div className="py-1">
+                  <button
+                    onClick={() => {
+                      changeLanguage("en");
+                      setIsLanguageOpen(false);
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700"
+                  >
+                    English
+                  </button>
+                  <button
+                    onClick={() => {
+                      changeLanguage("zh");
+                      setIsLanguageOpen(false);
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700"
+                  >
+                    中文 (Chinese)
+                  </button>
+                  <button
+                    onClick={() => {
+                      changeLanguage("ms");
+                      setIsLanguageOpen(false);
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700"
+                  >
+                    Bahasa Melayu
+                  </button>
+                  <button
+                    onClick={() => {
+                      changeLanguage("hi");
+                      setIsLanguageOpen(false);
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700"
+                  >
+                    हिन्दी (Hindi)
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+          {/*  */}
           <button
             className="mr-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-400 focus:ring-4 focus:ring-gray-300 focus:outline-none active:text-[#777E8C] lg:px-5 lg:py-2.5 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800"
             onClick={async () => {
@@ -41,7 +122,7 @@ export default function Header() {
               }
             }}
           >
-            Sign out
+            {t("signOut")}
           </button>
 
           <button

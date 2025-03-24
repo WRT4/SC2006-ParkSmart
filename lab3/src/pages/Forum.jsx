@@ -140,14 +140,14 @@ export default function Forum() {
                           : URL.createObjectURL(image)
                       }
                       alt="Post Preview"
-                      style={{ width: "200px", marginTop: "10px" }}
+                      className="mt-2 w-[200px] justify-self-center"
                     />
                   )}{" "}
                   {/* Display the image preview */}
                 </div>
                 <button
                   type="submit"
-                  className="w-full cursor-pointer rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600"
+                  className="w-full cursor-pointer rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600 active:bg-blue-700"
                 >
                   Create Post
                 </button>

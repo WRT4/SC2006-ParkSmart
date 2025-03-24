@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ForumCard(post) {
-  post = post.post;
+  if (post.post) {
+    post = post.post;
+  }
   return (
     <div className="flex items-center justify-center">
-      <div className="grid gap-4 rounded-2xl bg-white p-6 shadow-xl">
+      <div className="grid w-full gap-4 rounded-2xl bg-white p-6 shadow-xl">
         <p className="text-2xl font-semibold">{post.title}</p>
         <p>{post.content}</p>
         {post.image && (

@@ -492,7 +492,6 @@ app.put("/api/posts/:id", upload, async (req, res) => {
       const image = req.file.buffer.toString("base64");
       post.image = image; // Update the image field
     }
-
     await post.save();
     res.json(post);
   } catch (err) {

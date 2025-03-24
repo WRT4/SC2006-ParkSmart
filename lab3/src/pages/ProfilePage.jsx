@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../auth/AuthWrapper";
-import "../styles/ProfilePage.css";
 import { useNavigate, Navigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";

@@ -6,7 +6,6 @@ import Index from "./pages/Index";
 import SearchPage from "./pages/SearchPage";
 import LoadingPage from "./pages/LoadingPage";
 import PostDetail from "./pages/PostDetail";
-import PostDetail2 from "./pages/PostDetail2";
 import EditPost from "./pages/EditPost";
 import FeedbackPage from "./pages/FeedbackPage";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -46,7 +45,7 @@ function App() {
     },
     {
       path: "forum/post/:id",
-      element: <PostDetail2 />,
+      element: <PostDetail />,
     },
     {
       path: "forum/post/:id/edit",

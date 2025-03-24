@@ -369,6 +369,7 @@ app.post("/api/posts/:id/comments", async (req, res) => {
 
     // Create a new comment object with username and text
     const newComment = {
+      _id: new mongoose.Types.ObjectId(),
       username, // Add the username
       text,
       date: new Date(), // Optionally, you can add a date for when the comment was posted
@@ -379,7 +380,6 @@ app.post("/api/posts/:id/comments", async (req, res) => {
 
     // Save the updated post with the new comment
     const updatedPost = await post.save();
-
     // Send the updated post or just the new comment back as the response
     res.json(newComment); // Send the new comment as the response
   } catch (err) {

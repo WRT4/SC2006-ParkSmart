@@ -5,17 +5,17 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { AuthContext } from "../auth/AuthWrapper";
 import imageCompression from "browser-image-compression";
+import Comment from "../components/Comment";
 
 function PostDetail2() {
   const { id } = useParams();
   const navigate = useNavigate(); // For programmatic navigation
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingPost, setIsEditingPost] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(""); // New state for image
-
   //
   //
   const [editingCommentId, setEditingCommentId] = useState(null); // Track the comment being edited
@@ -42,7 +42,7 @@ function PostDetail2() {
       setTitle(title ? title : post.title);
       setContent(content ? content : post.content);
     }
-  }, [isEditing]);
+  }, [isEditingPost]);
 
   const addComment = () => {
     // Post the new comment to the backend
@@ -80,7 +80,7 @@ function PostDetail2() {
       navigate(`/forum/post/${id}`);
       return;
     }
-    setIsEditing(true);
+    setIsEditingPost(true);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
@@ -98,7 +98,7 @@ function PostDetail2() {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        setIsEditing(false);
+        setIsEditingPost(false);
       });
   };
 
@@ -124,14 +124,23 @@ function PostDetail2() {
   };
 
   // Edit Comment Functionality
-  const editComment = (commentId, currentText) => {
+  const editComment = (e) => {
+    const commentId =
+      e.currentTarget.parentNode.parentNode.parentNode.getAttribute("data-id");
+    const comment = post.comments.find((comment) => comment._id === commentId);
+    if (user.username !== comment.username) {
+      alert("You can only edit your own comments.");
+      return;
+    }
     // Start editing the comment by setting the current text
     setEditingCommentId(commentId);
-    setEditedCommentText(currentText); // Populate the input with the current comment text
+    setEditedCommentText(comment.text); // Populate the input with the current comment text
   };
 
   // Save the edited comment
-  const saveComment = (commentId) => {
+  const saveComment = (e) => {
+    const commentId =
+      e.currentTarget.parentNode.parentNode.getAttribute("data-id");
     if (!editedCommentText.trim()) {
       alert("Comment cannot be empty.");
       return;
@@ -159,8 +168,11 @@ function PostDetail2() {
       });
   };
 
-  const deleteComment = (commentId) => {
-    if (user.username !== post.username) {
+  const deleteComment = (e) => {
+    const commentId =
+      e.currentTarget.parentNode.parentNode.parentNode.getAttribute("data-id");
+    const comment = post.comments.find((comment) => comment._id === commentId);
+    if (user.username !== comment.username) {
       alert("You can only delete your own comments.");
       return;
     }
@@ -260,7 +272,7 @@ function PostDetail2() {
   return (
     <>
       <Header></Header>
-      {isEditing ? (
+      {isEditingPost ? (
         <form
           className="flex items-center justify-center"
           onSubmit={(e) => {
@@ -342,7 +354,7 @@ function PostDetail2() {
               </button>
               <button
                 onClick={(e) => {
-                  setIsEditing(false);
+                  setIsEditingPost(false);
                 }}
                 type="button"
                 className="w-full cursor-pointer rounded-lg bg-gray-500 py-2 text-white transition hover:bg-gray-600 active:bg-gray-700"
@@ -353,24 +365,12 @@ function PostDetail2() {
           </div>
         </form>
       ) : (
-        <div className="flex items-center justify-center bg-gray-100 p-4">
-          <div className="grid gap-4 rounded-2xl bg-white p-6 shadow-xl">
+        <div className="flex flex-col items-center justify-center gap-6 bg-gray-100 p-4">
+          <div className="grid w-full max-w-[800px] gap-4 rounded-2xl bg-white p-6 shadow-xl">
             <p className="text-2xl font-semibold">
               {title ? title : post.title}
             </p>
             <p>{content ? content : post.content}</p>
-            {/* {post.image && (
-              <img
-                src={
-                  post.image.startsWith("data:") ||
-                  post.image.startsWith("http")
-                    ? post.image
-                    : `data:image/jpeg;base64,${post.image}`
-                }
-                alt="Post Image"
-                className="mt-2 w-[200px] justify-self-center"
-              />
-            )}{" "} */}
             {image ? (
               <img
                 src={
@@ -405,7 +405,7 @@ function PostDetail2() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => {
-                        setIsEditing(true);
+                        setIsEditingPost(true);
                       }}
                       type="button"
                       className="cursor-pointer rounded-lg bg-blue-500 p-2 whitespace-nowrap text-white transition hover:bg-blue-600 active:bg-blue-700 min-[370px]:px-4 min-[370px]:py-2"
@@ -421,13 +421,135 @@ function PostDetail2() {
                     </button>
                   </div>
                   <p className="ml-2 text-center text-sm text-gray-600">
-                    {post.comments.length} comments
+                    {post.comments.filter((comment) => !comment.deleted).length}{" "}
+                    comment
+                    {(post.comments.filter((comment) => !comment.deleted)
+                      .length > 1 ||
+                      post.comments.filter((comment) => !comment.deleted)
+                        .length === 0) &&
+                      "s"}
                   </p>
                 </div>
               </>
             ) : (
               <p className="text-end text-sm text-gray-600">
-                {post.comments.length} comments
+                {post.comments.filter((comment) => !comment.deleted).length}{" "}
+                comment
+                {(post.comments.filter((comment) => !comment.deleted).length >
+                  1 ||
+                  post.comments.filter((comment) => !comment.deleted).length ===
+                    0) &&
+                  "s"}
+              </p>
+            )}
+            {user && user.username !== post.username && (
+              <div>
+                <button
+                  onClick={() => setReportingPost(true)}
+                  className="hover cursor-pointer p-1 text-gray-400 outline-black hover:bg-gray-200 hover:text-red-600 hover:outline-1 active:bg-gray-300 active:text-red-700 active:outline-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-flag-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001" />
+                  </svg>
+                </button>
+              </div>
+            )}
+            {/* Show report input for post if reportingPost is true */}
+            {reportingPost && (
+              <div className="grid gap-2">
+                <textarea
+                  rows="4"
+                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  value={reportText}
+                  onChange={(e) => setReportText(e.target.value)}
+                  placeholder="Enter your reason for reporting the post"
+                ></textarea>
+                <div className="flex max-w-[400px] gap-2">
+                  <button
+                    type="button"
+                    onClick={reportPost}
+                    className="w-full cursor-pointer rounded-lg bg-blue-500 py-2 text-sm text-white transition hover:bg-blue-600 active:bg-blue-700"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    onClick={() => setReportingPost(false)}
+                    type="button"
+                    className="w-full cursor-pointer rounded-lg bg-gray-500 py-2 text-sm text-white transition hover:bg-gray-600 active:bg-gray-700"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="grid w-full max-w-[800px] gap-4 rounded-2xl bg-white p-6 shadow-xl">
+            <p className="text-center text-2xl font-semibold">Comments</p>
+            {post.comments && post.comments.length > 0 ? (
+              post.comments
+                .filter((c) => !c.deleted) // Filter out deleted comments
+                .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date (ascending)
+                .map((c) => (
+                  <Comment
+                    key={c._id}
+                    comment={c}
+                    editingCommentId={editingCommentId}
+                    editedCommentText={editedCommentText}
+                    setEditedCommentText={setEditedCommentText}
+                    reportingCommentId={reportingCommentId}
+                    setReportingCommentId={setReportingCommentId}
+                    user={user}
+                    deleteComment={deleteComment}
+                    editComment={editComment}
+                    setEditingCommentId={setEditingCommentId}
+                    saveComment={saveComment}
+                    reportText={reportText}
+                    setReportText={setReportText}
+                    reportComment={reportComment}
+                  ></Comment>
+                ))
+            ) : (
+              <p className="text-center">No comments yet.</p>
+            )}
+            {user ? (
+              <form
+                className="flex w-full flex-col items-center gap-0.5 sm:gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  addComment();
+                }}
+              >
+                <label
+                  htmlFor="comment"
+                  className="mb-2 block text-sm font-medium text-gray-900 min-[400px]:text-base dark:text-white"
+                >
+                  Your comment
+                </label>
+                <textarea
+                  id="comment"
+                  rows="4"
+                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  placeholder="Leave a comment..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                ></textarea>
+                <button
+                  type="submit"
+                  className="w-full max-w-[400px] cursor-pointer rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600 active:bg-blue-700"
+                >
+                  Submit
+                </button>
+              </form>
+            ) : (
+              <p className="text-center text-red-600">
+                Please log in to comment.
               </p>
             )}
           </div>

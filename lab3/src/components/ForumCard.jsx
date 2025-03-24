@@ -33,7 +33,11 @@ export default function ForumCard(post) {
             View Post
           </Link>
           <p className="text-sm text-gray-600">
-            {post.comments.length} comments
+            {post.comments.filter((comment) => !comment.deleted).length} comment
+            {(post.comments.filter((comment) => !comment.deleted).length > 1 ||
+              post.comments.filter((comment) => !comment.deleted).length ===
+                0) &&
+              "s"}
           </p>
         </div>
       </div>

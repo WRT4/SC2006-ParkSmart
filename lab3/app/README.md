@@ -30,7 +30,7 @@ cd 2006-FDAE-D2
 ### 2. Install dependencies
 
 ```
-cd lab3
+cd lab3/app
 npm i
 ```
 

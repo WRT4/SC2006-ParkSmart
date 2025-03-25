@@ -40,10 +40,14 @@ Local MongoDB: Ensure you have MongoDB running locally on your machine. If you d
 
 ### 4. Set up environment variables
 
+If you do not have the .env file in the repository, enter the following commands.
+
 ```
-echo MONGO_URI="mongodb://localhost:27017/sc2006" > .env
-echo JWT_SECRET=123456 >> .env
-echo JWT_EXPIRATION=1h >> .env
+MONGO_URI="mongodb://localhost:27017/sc2006"
+ONEMAP_EMAIL="brandon02.lee@gmail.com"
+ONEMAP_PASSWORD="WQ!*PJwF7a#k*@"
+JWT_SECRET=123456
+JWT_EXPIRATION=1h
 ```
 
 Note that `sc2006` in the mongo URI depends on what you named the database when setting up MongoDB.

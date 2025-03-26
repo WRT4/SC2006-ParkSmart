@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -14,35 +13,36 @@ const upload = multer({
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
+// Define the path to the .env file located in the root directory (outside the server folder)
+const envFilePath = path.resolve(__dirname, "..", ".env");
+require("dotenv").config({ path: envFilePath });
 
 function setEnvValue(key, value) {
-  // read file from hdd & split if from a linebreak to a array
-  const ENV_VARS = fs.readFileSync(".env", "utf8").split(os.EOL);
+  // Read the contents of the .env file
+  const ENV_VARS = fs.readFileSync(envFilePath, "utf8").split(os.EOL);
 
-  // find the env we want based on the key
+  // Find the env we want based on the key
   const target = ENV_VARS.indexOf(
     ENV_VARS.find((line) => {
-      // (?<!#\s*)   Negative lookbehind to avoid matching comments (lines that starts with #).
-      //             There is a double slash in the RegExp constructor to escape it.
+      // (?<!#\s*)   Negative lookbehind to avoid matching comments (lines that start with #).
       // (?==)       Positive lookahead to check if there is an equal sign right after the key.
-      //             This is to prevent matching keys prefixed with the key of the env var to update.
+      // This is to prevent matching keys prefixed with the key of the env var to update.
       const keyValRegex = new RegExp(`(?<!#\\s*)${key}(?==)`);
-
       return line.match(keyValRegex);
     }),
   );
 
-  // if key-value pair exists in the .env file,
+  // If key-value pair exists in the .env file
   if (target !== -1) {
-    // replace the key/value with the new value
+    // Replace the key/value with the new value
     ENV_VARS.splice(target, 1, `${key}=${value}`);
   } else {
-    // if it doesn't exist, add it instead
+    // If it doesn't exist, add it instead
     ENV_VARS.push(`${key}=${value}`);
   }
 
-  // write everything back to the file system
-  fs.writeFileSync(".env", ENV_VARS.join(os.EOL));
+  // Write everything back to the file system in the root directory
+  fs.writeFileSync(envFilePath, ENV_VARS.join(os.EOL)); // Use the updated envFilePath
 }
 
 const app = express();

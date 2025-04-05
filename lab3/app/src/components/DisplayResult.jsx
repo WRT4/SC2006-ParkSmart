@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export default function DisplayResult({
   title,
   address,
@@ -11,6 +13,8 @@ export default function DisplayResult({
   availabilityLimit = 0.5,
   viewResult,
 }) {
+  const { t } = useTranslation();
+
   return (
     <div
       data-address={address}
@@ -27,27 +31,27 @@ export default function DisplayResult({
             if (lotsAvailable / totalLots >= availabilityLimit) {
               return (
                 <p className="rounded-xl bg-green-200 px-2.5 py-1 text-sm text-green-600">
-                  Available
+                  {t("search__available")}
                 </p>
               );
             }
             if (lotsAvailable > 0) {
               return (
                 <p className="rounded-xl bg-amber-200 px-2.5 py-1 text-sm text-amber-600">
-                  Limited
+                  {t("search__limited")}
                 </p>
               );
             }
             if (lotsAvailable === 0) {
               return (
                 <p className="rounded-xl bg-red-200 px-2.5 py-1 text-sm text-red-600">
-                  Full
+                  {t("search__full")}
                 </p>
               );
             }
             return (
               <p className="rounded-xl bg-red-200 px-2.5 py-1 text-sm text-red-600">
-                Error
+                {t("search__error")}
               </p>
             );
           })()}
@@ -68,7 +72,8 @@ export default function DisplayResult({
             <div className="grid justify-items-start">
               <p className="text-sm">{address}</p>
               <p className="text-xs text-gray-600">
-                {Math.round((distance / 1000) * 10) / 10} km away
+                {Math.round((distance / 1000) * 10) / 10}
+                {t("search__distanceAway")}
               </p>
             </div>
           </div>
@@ -100,7 +105,8 @@ export default function DisplayResult({
                 >
                   {lotsAvailable}
                 </span>{" "}
-                / <span className="font-bold">{totalLots}</span> spots available
+                / <span className="font-bold">{totalLots}</span>
+                {t("search__spotsAvailable")}
               </>
             ) : (
               "Unable to retrieve lot information"
@@ -132,7 +138,10 @@ export default function DisplayResult({
           >
             <path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708z" />
           </svg>
-          <p className="text-sm">Height limit: {gantryHeight}m</p>
+          <p className="text-sm">
+            {t("search__heightLimit")}: {gantryHeight}
+            {t("metres")}
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <svg
@@ -151,13 +160,15 @@ export default function DisplayResult({
       </div>
       <div className="mt-auto flex items-center border-t-1 border-t-gray-200 pt-2">
         <div className="flex flex-col">
-          <p className="text-start text-sm text-gray-600">Free Parking</p>
+          <p className="text-start text-sm text-gray-600">
+            {t("search__freeParking")}
+          </p>
           <p
             className={`text-start text-lg font-bold ${
               freeParking === "NO" ? "text-red-600" : "text-green-600"
             }`}
           >
-            {freeParking === "NO" ? "NO" : "YES"}
+            {freeParking === "NO" ? t("search__no") : t("search__yes")}
           </p>
         </div>
         <button
@@ -165,7 +176,7 @@ export default function DisplayResult({
           onClick={viewResult}
           className="end-2.5 bottom-2.5 ms-auto max-h-[2.5rem] cursor-pointer rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          View Details
+          {t("search__viewDetailsButton")}
         </button>
       </div>
     </div>

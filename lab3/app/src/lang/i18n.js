@@ -37,7 +37,7 @@ const resources = {
       login__loginHeader: "Login",
       login__enterCredentials: "Enter your credentials to access your account.",
       login__emailAddress: "Email Address",
-      login__enterEmail: "Enter your feedback__email",
+      login__enterEmail: "Enter your email",
       login__password: "Password",
       login__enterPassword: "Enter your password",
       login__rememberMe: "Remember me",
@@ -52,13 +52,13 @@ const resources = {
       //signup page
       signup__joinParkingCommunity: "Join Our Parking Community",
       signup__connectEasyAccessBody:
-        "Connect and have easy home__access to carparks in Singapore",
+        "Connect and have easy access to carparks in Singapore",
       signup__alreadyHaveAccount: "Already have an account? ",
       signup__signIn: "Sign in",
       signup__createAccountHeader: "Create Account",
       signup__fillInDetailsBody: "Fill in your details to get started.",
       signup__emailAddress: "Email Address",
-      signup__enterEmail: "Enter your feedback__email",
+      signup__enterEmail: "Enter your email",
       signup__carPlateNumber: "Car Plate Number",
       signup__enterCarPlate: "Enter plate number",
       signup__format: "Format: ABC-1234",
@@ -134,7 +134,7 @@ const resources = {
         "Find quick answers to common questions about parking and our service.",
       feedback__emailSupport: "Email Support",
       feedback__getInTouch:
-        "Get in touch with our suport team via feedback__email for detailed assistance.",
+        "Get in touch with our suport team via email for detailed assistance.",
       feedback__phoneSupport: "Phone Support",
       feedback__speakDirectly:
         "Speak directly with our customer service representatives.",
@@ -142,7 +142,7 @@ const resources = {
       feedback__howFrequentDataUpdatedQ:
         "How frequently is the carpark availability data uploaded?",
       feedback__howFrequentDataUpdatedA:
-        "Availability is updated every minute, feedback__subject to the responsiveness and availability of the API.",
+        "Availability is updated every minute, subject to the responsiveness and availability of the API.",
       feedback__storeUserDataAndLocationAccessQ:
         "Do you store user data, and why do your request location access?",
       feedback__storeUserDataAndLocationAccessA:
@@ -157,7 +157,7 @@ const resources = {
       feedback__name: "Name",
       feedback__email: "Email",
       feedback__subject: "Subject",
-      feedback__selectSubject: "Select a feedback__subject",
+      feedback__selectSubject: "Select a subject",
       feedback__message: "Message",
       feedback__rateService: "How would you rate our service? (1-5)",
       feedback__submitFeedbackButton: "Submit Feedback",

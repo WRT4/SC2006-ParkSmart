@@ -33,7 +33,7 @@ const resources = {
       //login page
       login__welcomeBack: "Welcome Back",
       login__loginToAccessAccount:
-        "Login to home__access your account and continue your journey with us.",
+        "Login to access your account and continue your journey with us.",
       login__loginHeader: "Login",
       login__enterCredentials: "Enter your credentials to access your account.",
       login__emailAddress: "Email Address",

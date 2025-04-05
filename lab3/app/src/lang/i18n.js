@@ -28,9 +28,10 @@ const resources = {
       //login page
       login__welcomeBack: "Welcome Back",
       login__loginToAccessAccount:
-        "Login to access your account and continue your journey with us.",
+        "Login to home__access your account and continue your journey with us.",
       login__loginHeader: "Login",
-      login__enterCredentials: "Enter your credentials to access your account.",
+      login__enterCredentials:
+        "Enter your credentials to home__access your account.",
       login__emailAddress: "Email Address",
       login__enterEmail: "Enter your email",
       login__password: "Password",
@@ -47,7 +48,7 @@ const resources = {
       //signup page
       signup__joinParkingCommunity: "Join Our Parking Community",
       signup__connectEasyAccessBody:
-        "Connect and have easy access to carparks in Singapore",
+        "Connect and have easy home__access to carparks in Singapore",
       signup__alreadyHaveAccount: "Already have an account? ",
       signup__signIn: "Sign in",
       signup__createAccountHeader: "Create Account",
@@ -75,6 +76,27 @@ const resources = {
       signup__privacyPolicy: "Privacy Policy.",
       signup__createAccountButton: "Create Account",
       signup__error: "An error occurred. Please try again later.",
+
+      //homepage
+      home__welcomeToParkSmart: "Welcome to ParkSmart, ",
+      home__manageParkingExpEfficiently:
+        "Manage your parking experience efficiently with our smart parking solutions.",
+      home__quickAccess: "Quick Access",
+      home__myProfile: "My Profile",
+      home__viewAndManage:
+        "View and manage your account settings and preferences.",
+      home__carparkSearch: "Carpark Search",
+      home__findAndNavigate: "Find and navigate to available parking spaces.",
+      home__forum: "Forum",
+      home__connectAndShare: "Connect with other users and share insights.",
+      home__provideFeedback: "Provide Feedback",
+      home__shareExperience: "Share your experience and help us improve.",
+      home__about: "About",
+      home__discoverOurMission: "Discover our mission and impact.",
+      home__license: "License",
+      home__termsAndConditions:
+        "View the terms and conditions governing the use of our services.",
+      home__access: "Access",
     },
   },
   zh: {
@@ -138,6 +160,25 @@ const resources = {
       signup__privacyPolicy: "隐私政策。",
       signup__createAccountButton: "创建账户",
       signup__error: "发生错误。请稍后重试。",
+
+      //homepage
+      home__welcomeToParkSmart: "欢迎来到ParkSmart，",
+      home__manageParkingExpEfficiently:
+        "通过我们的智能停车解决方案高效管理您的停车体验。",
+      home__quickAccess: "快捷访问",
+      home__myProfile: "我的资料",
+      home__viewAndManage: "查看并管理您的帐户设置和偏好。",
+      home__carparkSearch: "停车场搜索",
+      home__findAndNavigate: "找到并导航到可用的停车位。",
+      home__forum: "论坛",
+      home__connectAndShare: "与其他用户连接并分享见解。",
+      home__provideFeedback: "提供反馈",
+      home__shareExperience: "分享您的经验，帮助我们改进。",
+      home__about: "关于",
+      home__discoverOurMission: "发现我们的使命和影响。",
+      home__license: "许可证",
+      home__termsAndConditions: "查看使用我们服务的条款和条件。",
+      home__access: "访问",
     },
   },
   ms: {
@@ -209,6 +250,29 @@ const resources = {
       signup__privacyPolicy: "Dasar Privasi.",
       signup__createAccountButton: "Cipta Akaun",
       signup__error: "Ralat berlaku. Sila cuba lagi kemudian.",
+
+      //homepage
+      home__welcomeToParkSmart: "Selamat datang ke ParkSmart,",
+      home__manageParkingExpEfficiently:
+        "Urus pengalaman tempat letak kereta anda dengan efisien melalui penyelesaian tempat letak kereta pintar kami.",
+      home__quickAccess: "Akses Pantas",
+      home__myProfile: "Profil Saya",
+      home__viewAndManage: "Lihat dan uruskan tetapan akaun dan pilihan anda.",
+      home__carparkSearch: "Carian Tempat Letak Kereta",
+      home__findAndNavigate:
+        "Cari dan navigasi ke ruang letak kereta yang tersedia.",
+      home__forum: "Forum",
+      home__connectAndShare:
+        "Sambung dengan pengguna lain dan kongsi pandangan.",
+      home__provideFeedback: "Berikan Maklum Balas",
+      home__shareExperience:
+        "Kongsi pengalaman anda dan bantu kami menambah baik.",
+      home__about: "Tentang",
+      home__discoverOurMission: "Terokai misi dan impak kami.",
+      home__license: "Lesen",
+      home__termsAndConditions:
+        "Lihat terma dan syarat penggunaan perkhidmatan kami.",
+      home__access: "Akses",
     },
   },
 
@@ -279,6 +343,29 @@ const resources = {
       signup__privacyPolicy: "गोपनीयता नीति.",
       signup__createAccountButton: "खाता बनाएं",
       signup__error: "ஒரு பிழை ஏற்பட்டது. பிறகு முயற்சிக்கவும்.",
+
+      //homepage
+      home__welcomeToParkSmart: "ParkSmart में आपका स्वागत है,",
+      home__manageParkingExpEfficiently:
+        "हमारी स्मार्ट पार्किंग समाधान के साथ अपनी पार्किंग अनुभव को कुशलतापूर्वक प्रबंधित करें।",
+      home__quickAccess: "त्वरित पहुँच",
+      home__myProfile: "मेरी प्रोफ़ाइल",
+      home__viewAndManage:
+        "अपनी खाता सेटिंग्स और प्राथमिकताओं को देखें और प्रबंधित करें।",
+      home__carparkSearch: "कार पार्क खोजें",
+      home__findAndNavigate: "उपलब्ध पार्किंग स्थानों को खोजें और नेविगेट करें",
+      home__forum: "फ़ोरम",
+      home__connectAndShare:
+        "अन्य उपयोगकर्ताओं से कनेक्ट करें और विचार साझा करें।",
+      home__provideFeedback: "प्रतिक्रिया दें",
+      home__shareExperience:
+        "अपने अनुभव को साझा करें और हमें सुधारने में मदद करें।",
+      home__about: "हमारे बारे में",
+      home__discoverOurMission: "हमारे मिशन और प्रभाव की खोज करें।",
+      home__license: "लाइसेंस",
+      home__termsAndConditions:
+        "हमारी सेवाओं के उपयोग के लिए नियम और शर्तें देखें।",
+      home__access: "पहुँच",
     },
   },
 };

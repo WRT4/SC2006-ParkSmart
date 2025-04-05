@@ -87,7 +87,7 @@ fetch(url, {
 // Connect to MongoDB
 
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(process.env.CLOUD_MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -96,7 +96,20 @@ mongoose
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err);
-    process.exit(1); // Exit if the connection fails
+    console.log("Attempting to connect to local MongoDB...");
+
+    mongoose
+      .connect(process.env.LOCAL_MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then(() => {
+        console.log("MongoDB Connected Locally!");
+      })
+      .catch((err) => {
+        console.error("MongoDB connection error:", err);
+        process.exit(1); // Exit if the connection fails
+      });
   });
 
 // Configure cors

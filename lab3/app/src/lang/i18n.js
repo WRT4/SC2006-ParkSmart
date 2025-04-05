@@ -35,8 +35,7 @@ const resources = {
       login__loginToAccessAccount:
         "Login to home__access your account and continue your journey with us.",
       login__loginHeader: "Login",
-      login__enterCredentials:
-        "Enter your credentials to home__access your account.",
+      login__enterCredentials: "Enter your credentials to access your account.",
       login__emailAddress: "Email Address",
       login__enterEmail: "Enter your feedback__email",
       login__password: "Password",

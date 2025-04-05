@@ -1,8 +1,11 @@
 import { Typography } from "@material-tailwind/react";
 import Title from "./Title";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="w-full bg-gray-50 p-8 dark:bg-gray-800">
       <div className="flex flex-col place-content-evenly items-center gap-4 min-[580px]:flex-row">
@@ -14,7 +17,7 @@ export default function Footer() {
                 color="blue-gray"
                 className="font-normal hover:text-blue-700 focus:text-blue-500 active:text-blue-500 dark:text-gray-50 dark:hover:text-gray-300 dark:focus:text-gray-400 dark:active:text-gray-400"
               >
-                About Us
+                {t("footer__aboutUs")}
               </Typography>
             </Link>
             <Link to="/license">
@@ -22,7 +25,7 @@ export default function Footer() {
                 color="blue-gray"
                 className="font-normal hover:text-blue-700 focus:text-blue-500 active:text-blue-500 dark:text-gray-50 dark:hover:text-gray-300 dark:focus:text-gray-400 dark:active:text-gray-400"
               >
-                License
+                {t("footer__license")}
               </Typography>
             </Link>
             <Link to="/forum">
@@ -30,7 +33,7 @@ export default function Footer() {
                 color="blue-gray"
                 className="font-normal hover:text-blue-700 focus:text-blue-500 active:text-blue-500 dark:text-gray-50 dark:hover:text-gray-300 dark:focus:text-gray-400 dark:active:text-gray-400"
               >
-                Forum
+                {t("footer__forum")}
               </Typography>
             </Link>
             <Link to="/support">
@@ -38,7 +41,7 @@ export default function Footer() {
                 color="blue-gray"
                 className="font-normal hover:text-blue-700 focus:text-blue-500 active:text-blue-500 dark:text-gray-50 dark:hover:text-gray-300 dark:focus:text-gray-400 dark:active:text-gray-400"
               >
-                Contact Us
+                {t("footer__contactUs")}
               </Typography>
             </Link>
           </ul>

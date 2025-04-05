@@ -39,9 +39,10 @@ export default function SearchPage() {
   });
   const [heightRestriction, setHeightRestriction] = useState(0);
 
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
+  // Allow users not signed in to search
+  // if (!user) {
+  //   return <Navigate to="/login" />;
+  // }
 
   function filter(records) {
     if (freeParking) {

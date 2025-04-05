@@ -12,6 +12,7 @@ export function LangWrapper({ children }) {
     const lang = localStorage.getItem("language");
     if (lang) {
       i18n.changeLanguage(lang);
+      setLang(lang);
     }
   }, [lang]);
 

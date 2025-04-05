@@ -11,7 +11,6 @@ import Footer from "../components/Footer";
 const FeedbackPage = () => {
   return (
     <>
-      {" "}
       <Header></Header>
       <main>
         <HeroSection />

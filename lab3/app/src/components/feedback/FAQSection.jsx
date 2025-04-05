@@ -1,9 +1,12 @@
 // components/feedback/FAQSection.js
 import React, { useState } from "react";
 import "./FAQSection.css";
+import { useTranslation } from "react-i18next";
 
 // FAQ item component
 const FAQItem = ({ question, answer }) => {
+  const { t } = useTranslation();
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -23,33 +26,30 @@ const FAQItem = ({ question, answer }) => {
 
 // Main FAQ Section component
 const FAQSection = () => {
+  const { t } = useTranslation();
+
   // FAQ data
   const faqData = [
     {
       id: 1,
-      question: "How frequently is the carpark availability data updated?",
-      answer:
-        "Availability is updated every minute, subject to the responsiveness and availability of the API.",
+      question: t("feedback__howFrequentDataUpdatedQ"),
+      answer: t("feedback__howFrequentDataUpdatedA"),
     },
     {
       id: 2,
-      question:
-        "Do you store user data, and why do you request location access?",
-      answer:
-        "We securely store user credentials using industry-standard encryption methods like bcrypt. We request location access solely to enhance user experience, allowing us to default to your current location when you access the search page. This location data is not stored.",
+      question: t("feedback__storeUserDataAndLocationAccessQ"),
+      answer: t("feedback__storeUserDataAndLocationAccessA"),
     },
     {
       id: 3,
-      question:
-        "Why does the carpark availability data sometimes return errors?",
-      answer:
-        "Not all carparks are included in the carpark availability API, particularly older ones, which may result in missing or incomplete availability data for those carparks.",
+      question: t("feedback__carparkAvailabilityErrorQ"),
+      answer: t("feedback__carparkAvailabilityErrorA"),
     },
   ];
 
   return (
     <section className="faq-section">
-      <h2>Frequently Asked Questions</h2>
+      <h2>{t("feedback__frequentlyAskedQns")}</h2>
 
       {faqData.map((faq) => (
         <FAQItem key={faq.id} question={faq.question} answer={faq.answer} />

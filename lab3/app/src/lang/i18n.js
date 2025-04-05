@@ -36,7 +36,7 @@ const resources = {
       login__enterCredentials:
         "Enter your credentials to home__access your account.",
       login__emailAddress: "Email Address",
-      login__enterEmail: "Enter your email",
+      login__enterEmail: "Enter your feedback__email",
       login__password: "Password",
       login__enterPassword: "Enter your password",
       login__rememberMe: "Remember me",
@@ -57,7 +57,7 @@ const resources = {
       signup__createAccountHeader: "Create Account",
       signup__fillInDetailsBody: "Fill in your details to get started.",
       signup__emailAddress: "Email Address",
-      signup__enterEmail: "Enter your email",
+      signup__enterEmail: "Enter your feedback__email",
       signup__carPlateNumber: "Car Plate Number",
       signup__enterCarPlate: "Enter plate number",
       signup__format: "Format: ABC-1234",
@@ -123,6 +123,47 @@ const resources = {
       profile__editPassword: "Edit Password",
       profile__currentPassword: "Current Password",
       profile__currentPasswordPlaceholder: "Current password",
+
+      //feedback page
+      feedback__howCanWeHelpYou: "How can we help you?",
+      feedback__searchArticles: "Search for help articles...",
+      feedback__searchButton: "Search",
+      feedback__fAQs: "FAQs",
+      feedback__findQuickAnswers:
+        "Find quick answers to common questions about parking and our service.",
+      feedback__emailSupport: "Email Support",
+      feedback__getInTouch:
+        "Get in touch with our suport team via feedback__email for detailed assistance.",
+      feedback__phoneSupport: "Phone Support",
+      feedback__speakDirectly:
+        "Speak directly with our customer service representatives.",
+      feedback__frequentlyAskedQns: "Frequently Asked Questions",
+      feedback__howFrequentDataUpdatedQ:
+        "How frequently is the carpark availability data uploaded?",
+      feedback__howFrequentDataUpdatedA:
+        "Availability is updated every minute, feedback__subject to the responsiveness and availability of the API.",
+      feedback__storeUserDataAndLocationAccessQ:
+        "Do you store user data, and why do your request location access?",
+      feedback__storeUserDataAndLocationAccessA:
+        "We securely store user credentials using industry-standard encryption methods like bcrypt. We request location access solely to enhance user experience, allowing us to default to your current location when you access the search page. This location data is not stored.",
+      feedback__carparkAvailabilityErrorQ:
+        "Why does the carpark availability data sometimes return errors?",
+      feedback__carparkAvailabilityErrorA:
+        "Not all carparks are included in the carpark availability API, particularly older ones, which may result in missing or incomplete availability data for those carparks.",
+      feedback__sendUsFeedback: "Send Us Your Feedback",
+      feedback__weValueInput:
+        "We value your input! Please share your thoughts, suggestions or concerns with us.",
+      feedback__name: "Name",
+      feedback__email: "Email",
+      feedback__subject: "Subject",
+      feedback__selectSubject: "Select a feedback__subject",
+      feedback__message: "Message",
+      feedback__rateService: "How would you rate our service? (1-5)",
+      feedback__submitFeedbackButton: "Submit Feedback",
+      feedback__question: "Question",
+      feedback__suggestion: "Suggestion",
+      feedback__problem: "Report a Problem",
+      feedback__other: "Other",
     },
   },
   zh: {
@@ -231,6 +272,44 @@ const resources = {
       profile__editPassword: "编辑密码",
       profile__currentPassword: "当前密码",
       profile__currentPasswordPlaceholder: "当前密码",
+
+      //feedback page
+      feedback__howCanWeHelpYou: "我们怎么帮助您？",
+      feedback__searchArticles: "搜索帮助文章..",
+      feedback__searchButton: "搜索",
+      feedback__fAQs: "常见问题",
+      feedback__findQuickAnswers:
+        "找到关于停车和我们服务的常见问题的快速答案。",
+      feedback__emailSupport: "电子邮件支持",
+      feedback__getInTouch: "通过电子邮件与我们的支持团队联系，获取详细帮助",
+      feedback__phoneSupport: "电话支持",
+      feedback__speakDirectly: "直接与我们的客户服务代表通话。",
+      feedback__frequentlyAskedQns: "常见问题",
+      feedback__howFrequentDataUpdatedQ: "停车场可用数据多久更新一次？",
+      feedback__storeUserDataAndLocationAccessQ:
+        "您是否存储用户数据？为何请求位置访问？",
+      feedback__carparkAvailabilityErrorQ:
+        "为什么停车场可用数据有时会出现错误？",
+      feedback__howFrequentDataUpdatedA:
+        "可用性每分钟更新一次，取决于 API 的响应能力和可用性",
+      feedback__storeUserDataAndLocationAccessA:
+        "我们使用行业标准加密方法（如 bcrypt）安全地存储用户凭据。我们请求位置访问只是为了提升用户体验，当您访问搜索页面时，我们可以默认使用您的当前位置。此位置数据不会被存储。",
+      feedback__carparkAvailabilityErrorA:
+        "并非所有停车场都包含在停车场可用性 API 中，尤其是较旧的停车场，这可能会导致这些停车场的可用性数据缺失或不完整。",
+      feedback__sendUsFeedback: "向我们反馈",
+      feedback__weValueInput:
+        "我们重视您的意见！请分享您的想法、建议或关注点。",
+      feedback__name: "姓名",
+      feedback__email: "电子邮件",
+      feedback__subject: "主题",
+      feedback__selectSubject: "选择主题",
+      feedback__message: "信息",
+      feedback__rateService: "您如何评价我们的服务？（1-5）",
+      feedback__submitFeedbackButton: "提交反馈",
+      feedback__question: "问题",
+      feedback__suggestion: "建议",
+      feedback__problem: "报告问题",
+      feedback__other: "其他",
     },
   },
   ms: {
@@ -352,6 +431,47 @@ const resources = {
       profile__editPassword: "Edit Kata Laluan",
       profile__currentPassword: "Kata Laluan Semasa",
       profile__currentPasswordPlaceholder: "Kata laluan semasa",
+
+      //feedback page
+      feedback__howCanWeHelpYou: "Bagaimana kami boleh membantu anda?",
+      feedback__searchArticles: "Cari artikel bantuan..",
+      feedback__searchButton: "Cari",
+      feedback__fAQs: "Soalan Lazim",
+      feedback__findQuickAnswers:
+        "Dapatkan jawapan cepat untuk soalan umum mengenai tempat letak kereta dan perkhidmatan kami.",
+      feedback__emailSupport: "Sokongan E-mel",
+      feedback__getInTouch:
+        "Hubungi pasukan sokongan kami melalui e-mel untuk bantuan terperinci",
+      feedback__phoneSupport: "Sokongan Telefon",
+      feedback__speakDirectly:
+        "Bercakap terus dengan wakil khidmat pelanggan kami.",
+      feedback__frequentlyAskedQns: "Soalan Lazim",
+      feedback__howFrequentDataUpdatedQ:
+        "Seberapa kerap data ketersediaan tempat letak kereta dimuat naik?",
+      feedback__storeUserDataAndLocationAccessQ:
+        "Adakah anda menyimpan data pengguna, dan kenapa anda memerlukan akses lokasi?",
+      feedback__carparkAvailabilityErrorQ:
+        "Kenapa data ketersediaan tempat letak kereta kadang-kadang memberikan ralat?",
+      feedback__howFrequentDataUpdatedA:
+        "Ketersediaan dikemas kini setiap minit, tertakluk pada responsif dan ketersediaan API.",
+      feedback__storeUserDataAndLocationAccessA:
+        "Kami menyimpan bukti kelayakan pengguna dengan selamat menggunakan kaedah penyulitan standard industri seperti bcrypt. Kami meminta akses lokasi semata-mata untuk meningkatkan pengalaman pengguna, membolehkan kami membuat lalai ke lokasi semasa anda apabila anda mengakses halaman carian. Data lokasi ini tidak disimpan.",
+      feedback__carparkAvailabilityErrorA:
+        "Tidak semua tempat letak kereta disertakan dalam API ketersediaan tempat letak kereta, terutamanya yang lebih lama, yang mungkin menyebabkan data ketersediaan hilang atau tidak lengkap untuk tempat letak kereta tersebut.",
+      feedback__sendUsFeedback: "Hantar Maklum Balas",
+      feedback__weValueInput:
+        "Kami menghargai input anda! Sila kongsikan pendapat, cadangan, atau kebimbangan anda dengan kami.",
+      feedback__name: "Nama",
+      feedback__email: "E-mel",
+      feedback__subject: "Subjek",
+      feedback__selectSubject: "Pilih subjek",
+      feedback__message: "Mesej",
+      feedback__rateService: "Bagaimana anda menilai perkhidmatan kami? (1-5)",
+      feedback__submitFeedbackButton: "Hantar Maklum Balas",
+      feedback__question: "Soalan",
+      feedback__suggestion: "Cadangan",
+      feedback__problem: "Laporkan Masalah",
+      feedback__other: "Lain-lain",
     },
   },
 
@@ -471,6 +591,47 @@ const resources = {
       profile__editPassword: "पासवर्ड संपादित करें",
       profile__currentPassword: "वर्तमान पासवर्ड",
       profile__currentPasswordPlaceholder: "वर्तमान पासवर्ड",
+
+      //feedback page
+      feedback__howCanWeHelpYou: "हम आपकी कैसे सहायता कर सकते हैं?",
+      feedback__searchArticles: "सहायता लेखों के लिए खोजें..",
+      feedback__searchButton: "खोजें",
+      feedback__fAQs: "सामान्य प्रश्न",
+      feedback__findQuickAnswers:
+        "पार्किंग और हमारी सेवा से संबंधित सामान्य प्रश्नों के त्वरित उत्तर प्राप्त करें।",
+      feedback__emailSupport: "ईमेल समर्थन",
+      feedback__getInTouch:
+        "विस्तृत सहायता के लिए हमारे समर्थन टीम से संपर्क करें",
+      feedback__phoneSupport: "फ़ोन समर्थन",
+      feedback__speakDirectly:
+        "हमारे ग्राहक सेवा प्रतिनिधियों से सीधे बात करें।",
+      feedback__frequentlyAskedQns: "अक्सर पूछे गए प्रश्न",
+      feedback__howFrequentDataUpdatedQ:
+        "कार पार्क की उपलब्धता डेटा कितनी बार अपडेट होती है?",
+      feedback__storeUserDataAndLocationAccessQ:
+        "क्या आप उपयोगकर्ता डेटा स्टोर करते हैं, और आप स्थान एक्सेस क्यों माँगते हैं?",
+      feedback__carparkAvailabilityErrorQ:
+        "कभी-कभी कार पार्क उपलब्धता डेटा में त्रुटियाँ क्यों होती हैं?",
+      feedback__howFrequentDataUpdatedA:
+        "एपीआई की प्रतिक्रियाशीलता और उपलब्धता के अधीन, उपलब्धता को हर मिनट अपडेट किया जाता है।",
+      feedback__storeUserDataAndLocationAccessA:
+        "हम bcrypt जैसे उद्योग-मानक एन्क्रिप्शन विधियों का उपयोग करके उपयोगकर्ता क्रेडेंशियल को सुरक्षित रूप से संग्रहीत करते हैं। हम केवल उपयोगकर्ता अनुभव को बेहतर बनाने के लिए स्थान एक्सेस का अनुरोध करते हैं, जिससे जब आप खोज पृष्ठ पर पहुँचते हैं तो हमें आपके वर्तमान स्थान पर डिफ़ॉल्ट रूप से जाने की अनुमति मिलती है। यह स्थान डेटा संग्रहीत नहीं किया जाता है।",
+      feedback__carparkAvailabilityErrorA:
+        "सभी कारपार्क, विशेष रूप से पुराने कारपार्क, कारपार्क उपलब्धता API में शामिल नहीं हैं, जिसके परिणामस्वरूप उन कारपार्कों के लिए उपलब्धता डेटा गायब या अपूर्ण हो सकता है।",
+      feedback__sendUsFeedback: "हमें अपनी प्रतिक्रिया भेजें",
+      feedback__weValueInput:
+        "हम आपकी राय को महत्व देते हैं! कृपया हमें अपनी विचार, सुझाव या चिंताएँ बताएं।",
+      feedback__name: "नाम",
+      feedback__email: "ईमेल",
+      feedback__subject: "विषय",
+      feedback__selectSubject: "विषय चुनें",
+      feedback__message: "संदेश",
+      feedback__rateService: "आप हमारी सेवा को किस तरह से रेट करेंगे? (1-5)",
+      feedback__submitFeedbackButton: "प्रतिक्रिया सबमिट करें",
+      feedback__question: "सवाल",
+      feedback__suggestion: "सुझाव",
+      feedback__problem: "एक समस्या का आख्या",
+      feedback__other: "अन्य",
     },
   },
 };

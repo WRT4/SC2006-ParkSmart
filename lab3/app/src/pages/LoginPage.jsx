@@ -57,7 +57,7 @@ export default function LoginPage() {
     <>
       <Header></Header>
       <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
-        <section className="flex grow flex-col gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-32">
+        <section className="flex grow flex-col gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-32 dark:bg-gray-800 dark:text-white">
           {/* <Title colorDark="text-black"></Title> */}
           <div className="flex flex-col items-center gap-8 p-4 lg:gap-16">
             <img
@@ -68,11 +68,11 @@ export default function LoginPage() {
             <p className="text-3xl font-bold md:text-4xl 2xl:text-5xl">
               {t("login__welcomeBack")}
             </p>
-            <p className="lg: text-center text-gray-600 2xl:text-xl">
+            <p className="lg: text-center text-gray-600 2xl:text-xl dark:text-gray-300">
               {t("login__loginToAccessAccount")}
             </p>
           </div>
-          <footer className="inline-flex h-fit items-center gap-1 text-sm text-gray-600 2xl:text-base">
+          <footer className="inline-flex h-fit items-center gap-1 text-sm text-gray-600 2xl:text-base dark:text-gray-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -86,7 +86,7 @@ export default function LoginPage() {
             &copy; 2025 ParkSmart. All rights reserved.
           </footer>
         </section>
-        <div className="flex grow items-center justify-center">
+        <div className="flex grow items-center justify-center dark:bg-gray-800 dark:text-white">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -98,7 +98,9 @@ export default function LoginPage() {
               <h1 className="text-3xl font-semibold">
                 {t("login__loginHeader")}
               </h1>
-              <p className="text-gray-600">{t("login__enterCredentials")}</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                {t("login__enterCredentials")}
+              </p>
             </section>
             <main className="grid gap-4">
               <div className="grid gap-1">
@@ -115,7 +117,7 @@ export default function LoginPage() {
                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("login__emailAddress")}
                     type="email"
                     id="email"
@@ -142,7 +144,7 @@ export default function LoginPage() {
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("login__enterPassword")}
                     id="password"
                     type={passwordVisbility ? "text" : "password"}
@@ -230,7 +232,10 @@ export default function LoginPage() {
             </main>
             <small>
               {t("login__noAccount")}
-              <Link to="/signup" className="font-bold text-blue-600">
+              <Link
+                to="/signup"
+                className="font-bold text-blue-600 dark:text-blue-400"
+              >
                 {t("login__signUp")}
               </Link>
             </small>

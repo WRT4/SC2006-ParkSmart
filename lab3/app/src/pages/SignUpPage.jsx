@@ -58,13 +58,13 @@ export default function SignUpPage() {
     <>
       <Header></Header>
       <div className="signup flex min-h-full min-w-full flex-col min-[600px]:flex-row">
-        <section className="flex grow flex-col items-center gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-10">
+        <section className="flex grow flex-col items-center gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-10 dark:bg-gray-800 dark:text-white">
           {/* <Title colorDark="text-black"></Title> */}
 
           <p className="2xl:text-4x; max-w-[350px] text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl min-[600px]:text-start">
             {t("signup__joinParkingCommunity")}
           </p>
-          <p className="max-w-[350px] text-sm text-gray-600 min-[450px]:text-base min-[600px]:text-start 2xl:text-xl">
+          <p className="max-w-[350px] text-sm text-gray-600 min-[450px]:text-base min-[600px]:text-start 2xl:text-xl dark:text-gray-300">
             {t("signup__connectEasyAccessBody")}
           </p>
           <img
@@ -72,14 +72,17 @@ export default function SignUpPage() {
             alt="Image of a car"
             className="w-full max-w-[350px] rounded-lg shadow-lg"
           />
-          <footer className="text-sm text-gray-600 2xl:text-base">
+          <footer className="text-sm text-gray-600 2xl:text-base dark:text-gray-300">
             {t("signup__alreadyHaveAccount")}
-            <Link to="/login" className="font-bold text-blue-600">
+            <Link
+              to="/login"
+              className="font-bold text-blue-600 dark:text-blue-400"
+            >
               {t("signup__signIn")}
             </Link>
           </footer>
         </section>
-        <div className="flex grow items-center justify-center">
+        <div className="flex grow items-center justify-center dark:bg-gray-800 dark:text-white">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -91,7 +94,9 @@ export default function SignUpPage() {
               <h1 className="text-3xl font-semibold">
                 {t("signup__createAccountHeader")}
               </h1>
-              <p className="text-gray-600">{t("signup__fillInDetailsBody")}</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                {t("signup__fillInDetailsBody")}
+              </p>
             </section>
             <main className="grid gap-4">
               <div className="grid gap-1">
@@ -108,7 +113,7 @@ export default function SignUpPage() {
                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 placeholder:text-gray-600 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("signup__enterEmail")}
                     type="email"
                     id="email"
@@ -138,7 +143,7 @@ export default function SignUpPage() {
                     <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM4.82 3a1.5 1.5 0 0 0-1.379.91l-.792 1.847a1.8 1.8 0 0 1-.853.904.8.8 0 0 0-.43.564L1.03 8.904a1.5 1.5 0 0 0-.03.294v.413c0 .796.62 1.448 1.408 1.484 1.555.07 3.786.155 5.592.155s4.037-.084 5.592-.155A1.48 1.48 0 0 0 15 9.611v-.413q0-.148-.03-.294l-.335-1.68a.8.8 0 0 0-.43-.563 1.8 1.8 0 0 1-.853-.904l-.792-1.848A1.5 1.5 0 0 0 11.18 3z" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 placeholder:text-gray-600 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("signup__enterCarPlate")}
                     type="text"
                     id="carplate-number"
@@ -148,7 +153,9 @@ export default function SignUpPage() {
                     required
                   ></input>
                 </div>
-                <p className="text-sm text-gray-600">{t("signup__format")}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {t("signup__format")}
+                </p>
               </div>
               <div className="grid gap-1">
                 <label htmlFor="name">{t("signup__name")}</label>
@@ -164,7 +171,7 @@ export default function SignUpPage() {
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 placeholder:text-gray-600 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("signup__enterName")}
                     type="text"
                     id="name"
@@ -189,7 +196,7 @@ export default function SignUpPage() {
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 placeholder:text-gray-600 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("signup__enterUsername")}
                     type="text"
                     id="username"
@@ -214,7 +221,7 @@ export default function SignUpPage() {
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 placeholder:text-gray-600 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("signup__createPassword")}
                     type={passwordVisbility ? "text" : "password"}
                     id="password"
@@ -295,11 +302,11 @@ export default function SignUpPage() {
                 />
                 <label htmlFor="termsAccepted">
                   {t("signup__agree")}
-                  <span className="font-bold text-blue-600">
+                  <span className="font-bold text-blue-600 dark:text-blue-400">
                     {t("signup__termsOfService")}
                   </span>
                   {t("signup__and")}
-                  <span className="font-bold text-blue-600">
+                  <span className="font-bold text-blue-600 dark:text-blue-400">
                     {t("signup__privacyPolicy")}
                   </span>
                 </label>

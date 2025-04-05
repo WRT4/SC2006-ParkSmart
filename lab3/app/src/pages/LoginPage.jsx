@@ -117,7 +117,7 @@ export default function LoginPage() {
                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 placeholder:text-gray-600 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("login__emailAddress")}
                     type="email"
                     id="email"
@@ -144,7 +144,7 @@ export default function LoginPage() {
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 placeholder:text-gray-600 focus:outline-1 focus:outline-gray-600 dark:placeholder:text-gray-300"
                     placeholder={t("login__enterPassword")}
                     id="password"
                     type={passwordVisbility ? "text" : "password"}

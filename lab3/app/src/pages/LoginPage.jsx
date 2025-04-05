@@ -4,6 +4,7 @@ import { AuthContext } from "../auth/AuthWrapper";
 import Title from "../components/Title";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
   const [remember, setRemember] = useState(true);
+  const { t } = useTranslation();
 
   if (user) {
     return <Navigate to="/home" />;
@@ -64,10 +66,10 @@ export default function LoginPage() {
               className="w-full max-w-[350px] rounded-lg shadow-lg"
             />
             <p className="text-3xl font-bold md:text-4xl 2xl:text-5xl">
-              Welcome Back
+              {t("login__welcomeBack")}
             </p>
             <p className="lg: text-center text-gray-600 2xl:text-xl">
-              Login to access your account and continue your journey with us.
+              {t("login__loginToAccessAccount")}
             </p>
           </div>
           <footer className="inline-flex h-fit items-center gap-1 text-sm text-gray-600 2xl:text-base">
@@ -93,14 +95,14 @@ export default function LoginPage() {
             className="grid max-w-[400px] grow gap-5 self-center p-4 text-start min-[600px]:max-w-[600px]"
           >
             <section className="grid gap-4">
-              <h1 className="text-3xl font-semibold">Login</h1>
-              <p className="text-gray-600">
-                Enter your credentials to access your account.
-              </p>
+              <h1 className="text-3xl font-semibold">
+                {t("login__loginHeader")}
+              </h1>
+              <p className="text-gray-600">{t("login__enterCredentials")}</p>
             </section>
             <main className="grid gap-4">
               <div className="grid gap-1">
-                <label htmlFor="email">Email Address</label>
+                <label htmlFor="email">{t("login__emailAddress")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +116,7 @@ export default function LoginPage() {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Enter your email"
+                    placeholder={t("login__emailAddress")}
                     type="email"
                     id="email"
                     pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
@@ -127,7 +129,7 @@ export default function LoginPage() {
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{t("login__password")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +143,7 @@ export default function LoginPage() {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Enter your password"
+                    placeholder={t("login__enterPassword")}
                     id="password"
                     type={passwordVisbility ? "text" : "password"}
                     onChange={(e) => {
@@ -198,12 +200,12 @@ export default function LoginPage() {
                   </button>
                 </div>
                 <small className="incorrect hidden text-red-600">
-                  Credentials are incorrect. Please try again.
+                  {t("login__incorrectCredentials")}
                 </small>
                 <small
                   className={"error text-red-600" + (error ? "" : " hidden")}
                 >
-                  Please check that you have filled up all fields correctly.
+                  {t("login__checkFields")}
                 </small>
               </div>
               <div className="flex gap-1.5">
@@ -217,19 +219,19 @@ export default function LoginPage() {
                   }}
                   value="1"
                 />
-                <label htmlFor="remember">Remember me</label>
+                <label htmlFor="remember">{t("login__rememberMe")}</label>
               </div>
               <button
                 type="submit"
-                className="rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"
+                className="cursor-pointer rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"
               >
-                Login
+                {t("login__loginButton")}
               </button>
             </main>
             <small>
-              Don't have an account?{" "}
+              {t("login__noAccount")}
               <Link to="/signup" className="font-bold text-blue-600">
-                Sign up
+                {t("login__signUp")}
               </Link>
             </small>
           </form>

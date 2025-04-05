@@ -5,6 +5,7 @@ import PasswordChecklist from "react-password-checklist";
 import "../styles/SignUpPage.css";
 import Title from "../components/Title";
 import Header from "../components/Header";
+import { useTranslation } from "react-i18next";
 import Footer from "../components/Footer";
 
 export default function SignUpPage() {
@@ -17,6 +18,7 @@ export default function SignUpPage() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
   const [errorState, setErrorState] = useState(false);
+  const { t } = useTranslation();
 
   if (user) {
     return <Navigate to="/home" />;
@@ -60,10 +62,10 @@ export default function SignUpPage() {
           {/* <Title colorDark="text-black"></Title> */}
 
           <p className="2xl:text-4x; max-w-[350px] text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl min-[600px]:text-start">
-            Join Our Parking Community
+            {t("signup__joinParkingCommunity")}
           </p>
           <p className="max-w-[350px] text-sm text-gray-600 min-[450px]:text-base min-[600px]:text-start 2xl:text-xl">
-            Connect and have easy access to carparks in Singapore
+            {t("signup__connectEasyAccessBody")}
           </p>
           <img
             src="./car.jpg"
@@ -71,9 +73,9 @@ export default function SignUpPage() {
             className="w-full max-w-[350px] rounded-lg shadow-lg"
           />
           <footer className="text-sm text-gray-600 2xl:text-base">
-            Already have an account?{" "}
+            {t("signup__alreadyHaveAccount")}
             <Link to="/login" className="font-bold text-blue-600">
-              Sign in
+              {t("signup__signIn")}
             </Link>
           </footer>
         </section>
@@ -86,14 +88,14 @@ export default function SignUpPage() {
             className="grid max-w-[400px] gap-5 self-center p-4 text-start min-[600px]:max-w-[600px]"
           >
             <section className="grid gap-2">
-              <h1 className="text-3xl font-semibold">Create Account</h1>
-              <p className="text-gray-600">
-                Fill in your details to get started.
-              </p>
+              <h1 className="text-3xl font-semibold">
+                {t("signup__createAccountHeader")}
+              </h1>
+              <p className="text-gray-600">{t("signup__fillInDetailsBody")}</p>
             </section>
             <main className="grid gap-4">
               <div className="grid gap-1">
-                <label htmlFor="email">Email Address</label>
+                <label htmlFor="email">{t("signup__emailAddress")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +109,7 @@ export default function SignUpPage() {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Enter your email"
+                    placeholder={t("signup__enterEmail")}
                     type="email"
                     id="email"
                     pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
@@ -120,7 +122,9 @@ export default function SignUpPage() {
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="carplate-number">Car Plate Number</label>
+                <label htmlFor="carplate-number">
+                  {t("signup__carPlateNumber")}
+                </label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +139,7 @@ export default function SignUpPage() {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Enter plate number"
+                    placeholder={t("signup__enterCarPlate")}
                     type="text"
                     id="carplate-number"
                     onChange={(e) => {
@@ -144,10 +148,10 @@ export default function SignUpPage() {
                     required
                   ></input>
                 </div>
-                <p className="text-sm text-gray-600">Format: ABC-1234</p>
+                <p className="text-sm text-gray-600">{t("signup__format")}</p>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">{t("signup__name")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +165,7 @@ export default function SignUpPage() {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Enter name"
+                    placeholder={t("signup__enterName")}
                     type="text"
                     id="name"
                     onChange={(e) => {
@@ -172,7 +176,7 @@ export default function SignUpPage() {
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">{t("signup__username")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +190,7 @@ export default function SignUpPage() {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Choose a username"
+                    placeholder={t("signup__enterUsername")}
                     type="text"
                     id="username"
                     onChange={(e) => {
@@ -197,7 +201,7 @@ export default function SignUpPage() {
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{t("signup__password")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -211,7 +215,7 @@ export default function SignUpPage() {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Create a password"
+                    placeholder={t("signup__createPassword")}
                     type={passwordVisbility ? "text" : "password"}
                     id="password"
                     pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
@@ -273,12 +277,10 @@ export default function SignUpPage() {
                   minLength={8}
                   value={password}
                   messages={{
-                    minLength: "Password must be at least 8 characters long.",
-                    specialChar:
-                      "Password must include at least one special character.",
-                    number: "Password must contain at least one number.",
-                    capital:
-                      "Password must have at least one uppercase letter.",
+                    minLength: t("signup__p8Characters"),
+                    specialChar: t("signup__pSpecialCharacter"),
+                    number: t("signup__pOneNumber"),
+                    capital: t("signup__pOneUppercase"),
                   }}
                   style={{ fontSize: "0.875rem" }}
                 />
@@ -292,15 +294,14 @@ export default function SignUpPage() {
                   required
                 />
                 <label htmlFor="termsAccepted">
-                  I agree to the{" "}
+                  {t("signup__agree")}
                   <span className="font-bold text-blue-600">
-                    Terms of Service
-                  </span>{" "}
-                  and{" "}
-                  <span className="font-bold text-blue-600">
-                    Privacy Policy
+                    {t("signup__termsOfService")}
                   </span>
-                  .
+                  {t("signup__and")}
+                  <span className="font-bold text-blue-600">
+                    {t("signup__privacyPolicy")}
+                  </span>
                 </label>
               </div>
               <small className={errorState ? "text-red-600" : "hidden"}>
@@ -308,9 +309,9 @@ export default function SignUpPage() {
               </small>
               <button
                 type="submit"
-                className="rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"
+                className="cursor-pointer rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"
               >
-                Create Account
+                {t("signup__createAccountButton")}
               </button>
             </main>
           </form>

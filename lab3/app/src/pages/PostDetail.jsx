@@ -6,8 +6,12 @@ import Footer from "../components/Footer";
 import { AuthContext } from "../auth/AuthWrapper";
 import imageCompression from "browser-image-compression";
 import Comment from "../components/Comment";
+import { LangContext } from "../lang/LangWrapper";
+import { useTranslation } from "react-i18next";
 
 export default function PostDetail() {
+  const { t } = useTranslation();
+
   const { id } = useParams();
   const navigate = useNavigate(); // For programmatic navigation
   const [post, setPost] = useState(null);
@@ -16,14 +20,14 @@ export default function PostDetail() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(""); // New state for image
-  //
-  //
+
   const [editingCommentId, setEditingCommentId] = useState(null); // Track the comment being edited
   const [editedCommentText, setEditedCommentText] = useState(""); // Store the edited text
   const { user } = useContext(AuthContext);
   const [reportText, setReportText] = useState(""); // State to hold report text
   const [reportingPost, setReportingPost] = useState(false); // Track if reporting post
   const [reportingCommentId, setReportingCommentId] = useState(null); // Track comment being reported
+  const { lang, setLang } = useContext(LangContext);
 
   useEffect(() => {
     // Fetch the specific post by its ID
@@ -51,7 +55,7 @@ export default function PostDetail() {
       return;
     }
     if (comment.trim() === "") {
-      alert("Comment cannot be empty.");
+      alert(t("forum__commentCannotEmpty"));
       return;
     }
     // Post the new comment to the backend
@@ -70,7 +74,7 @@ export default function PostDetail() {
       })
       .catch((err) => {
         console.error(err);
-        alert("Something went wrong. Please try again.");
+        alert(t("forum__somethingWentWrong"));
       });
   };
 
@@ -108,9 +112,7 @@ export default function PostDetail() {
       return;
     }
     // Confirm deletion with the user
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this post?",
-    );
+    const confirmDelete = window.confirm(t("forum__confirmDelete"));
     if (confirmDelete) {
       // Delete the post from the backend
       axios
@@ -142,7 +144,7 @@ export default function PostDetail() {
     const commentId =
       e.currentTarget.parentNode.parentNode.getAttribute("data-id");
     if (!editedCommentText.trim()) {
-      alert("Comment cannot be empty.");
+      alert(t("forum__commentCannotEmpty"));
       return;
     }
 
@@ -164,7 +166,7 @@ export default function PostDetail() {
       })
       .catch((err) => {
         console.error(err);
-        alert("Something went wrong. Please try again.");
+        alert(t("forum__somethingWentWrong"));
       });
   };
 
@@ -177,9 +179,7 @@ export default function PostDetail() {
       return;
     }
     // Confirm deletion with the user
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this comment?",
-    );
+    const confirmDelete = window.confirm(t("forum__confirmDeleteComment"));
     if (confirmDelete) {
       // Delete the comment from the backend
       axios
@@ -197,7 +197,7 @@ export default function PostDetail() {
 
   const reportPost = () => {
     if (!reportText.trim()) {
-      alert("Please provide a reason for reporting.");
+      alert(t("forum__pleaseProvideReportReason"));
       return;
     }
     axios
@@ -206,19 +206,19 @@ export default function PostDetail() {
         report: reportText,
       })
       .then((res) => {
-        alert("Post reported successfully");
+        alert(t("forum__postSuccessfulReport"));
         setReportingPost(false); // Hide the report box
         setReportText(""); // Reset the report text
       })
       .catch((err) => {
         console.error(err);
-        alert("Something went wrong. Please try again.");
+        alert(t("forum__somethingWentWrong"));
       });
   };
 
   const reportComment = (commentId) => {
     if (!reportText.trim()) {
-      alert("Please provide a reason for reporting.");
+      alert(t("forum__pleaseProvideReportReason"));
       return;
     }
     axios
@@ -230,13 +230,13 @@ export default function PostDetail() {
         },
       )
       .then((res) => {
-        alert("Comment reported successfully");
+        alert(t("forum__successfulCommentReport"));
         setReportingCommentId(null); // Hide the report box
         setReportText(""); // Reset the report text
       })
       .catch((err) => {
         console.error(err);
-        alert("Something went wrong. Please try again.");
+        alert(t("forum__somethingWentWrong"));
       });
   };
 
@@ -395,8 +395,9 @@ export default function PostDetail() {
             )}{" "}
             {/* Image display */}
             <p className="text-sm text-gray-600">
-              Posted by: {post.username},{/* Display the username */}{" "}
-              {timeSince(new Date(post.date).getTime())}
+              {t("forum__postedBy")}
+              {post.username},{/* Display the username */}{" "}
+              {timeSince(new Date(post.date).getTime(), t)}
             </p>
             {/* Conditionally render Edit and Delete buttons */}
             {user && user.username === post.username ? (
@@ -410,23 +411,24 @@ export default function PostDetail() {
                       type="button"
                       className="cursor-pointer rounded-lg bg-blue-500 p-2 whitespace-nowrap text-white transition hover:bg-blue-600 active:bg-blue-700 min-[370px]:px-4 min-[370px]:py-2"
                     >
-                      Edit Post
+                      {t("forum__editPost")}
                     </button>
                     <button
                       onClick={deletePost}
                       type="button"
                       className="cursor-pointer rounded-lg bg-red-500 p-2 whitespace-nowrap text-white transition hover:bg-red-600 active:bg-red-700 min-[370px]:px-4 min-[370px]:py-2"
                     >
-                      Delete Post
+                      {t("forum__deletePost")}
                     </button>
                   </div>
                   <p className="ml-2 text-center text-sm text-gray-600">
                     {post.comments.filter((comment) => !comment.deleted).length}{" "}
-                    comment
-                    {(post.comments.filter((comment) => !comment.deleted)
-                      .length > 1 ||
-                      post.comments.filter((comment) => !comment.deleted)
-                        .length === 0) &&
+                    {t("forum__comment")}
+                    {lang === "en" &&
+                      (post.comments.filter((comment) => !comment.deleted)
+                        .length > 1 ||
+                        post.comments.filter((comment) => !comment.deleted)
+                          .length === 0) &&
                       "s"}
                   </p>
                 </div>
@@ -434,11 +436,12 @@ export default function PostDetail() {
             ) : (
               <p className="text-end text-sm text-gray-600">
                 {post.comments.filter((comment) => !comment.deleted).length}{" "}
-                comment
-                {(post.comments.filter((comment) => !comment.deleted).length >
-                  1 ||
-                  post.comments.filter((comment) => !comment.deleted).length ===
-                    0) &&
+                {t("forum__comment")}
+                {lang === "en" &&
+                  (post.comments.filter((comment) => !comment.deleted).length >
+                    1 ||
+                    post.comments.filter((comment) => !comment.deleted)
+                      .length === 0) &&
                   "s"}
               </p>
             )}
@@ -469,7 +472,7 @@ export default function PostDetail() {
                   className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   value={reportText}
                   onChange={(e) => setReportText(e.target.value)}
-                  placeholder="Enter your reason for reporting the post"
+                  placeholder={t("forum__reason")}
                 ></textarea>
                 <div className="flex max-w-[400px] gap-2">
                   <button
@@ -477,21 +480,23 @@ export default function PostDetail() {
                     onClick={reportPost}
                     className="w-full cursor-pointer rounded-lg bg-blue-500 py-2 text-sm text-white transition hover:bg-blue-600 active:bg-blue-700"
                   >
-                    Submit
+                    {t("submit")}
                   </button>
                   <button
                     onClick={() => setReportingPost(false)}
                     type="button"
                     className="w-full cursor-pointer rounded-lg bg-gray-500 py-2 text-sm text-white transition hover:bg-gray-600 active:bg-gray-700"
                   >
-                    Cancel
+                    {t("cancel")}
                   </button>
                 </div>
               </div>
             )}
           </div>
           <div className="grid w-full max-w-[800px] gap-4 rounded-2xl bg-white p-6 shadow-xl">
-            <p className="text-center text-2xl font-semibold">Comments</p>
+            <p className="text-center text-2xl font-semibold">
+              {t("forum__commentTitle")}
+            </p>
             {post.comments && post.comments.length > 0 ? (
               post.comments
                 .filter((c) => !c.deleted) // Filter out deleted comments
@@ -516,7 +521,7 @@ export default function PostDetail() {
                   ></Comment>
                 ))
             ) : (
-              <p className="text-center">No comments yet.</p>
+              <p className="text-center">{t("forum__noComments")}</p>
             )}
             {user ? (
               <form
@@ -528,15 +533,15 @@ export default function PostDetail() {
               >
                 <label
                   htmlFor="comment"
-                  className="mb-2 block text-sm font-medium text-gray-900 min-[400px]:text-base dark:text-white"
+                  className="mb-2 block text-sm font-medium text-gray-900 min-[400px]:text-base dark:text-black"
                 >
-                  Your comment
+                  {t("forum__yourComment")}
                 </label>
                 <textarea
                   id="comment"
                   rows="4"
                   className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                  placeholder="Leave a comment..."
+                  placeholder={t("forum__leaveComment")}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                 ></textarea>
@@ -544,12 +549,12 @@ export default function PostDetail() {
                   type="submit"
                   className="w-full max-w-[400px] cursor-pointer rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600 active:bg-blue-700"
                 >
-                  Submit
+                  {t("submit")}
                 </button>
               </form>
             ) : (
               <p className="text-center text-red-600">
-                Please log in to comment.
+                {t("forum__pleaseLoginComment")}
               </p>
             )}
           </div>
@@ -561,28 +566,28 @@ export default function PostDetail() {
   );
 }
 
-function timeSince(timeStamp) {
+function timeSince(timeStamp, t) {
   const seconds = new Date().getTime();
   const difference = (seconds - timeStamp) / 1000;
   let output = ``;
   if (difference < 60) {
     // Less than a minute has passed:
-    output = `${Math.floor(difference)} seconds ago`;
+    output = `${Math.floor(difference)} ${t("forum__secondsAgo")}`;
   } else if (difference < 3600) {
     // Less than an hour has passed:
-    output = `${Math.floor(difference / 60)} minutes ago`;
+    output = `${Math.floor(difference / 60)} ${t("forum__minutesAgo")}`;
   } else if (difference < 86400) {
     // Less than a day has passed:
-    output = `${Math.floor(difference / 3600)} hours ago`;
+    output = `${Math.floor(difference / 3600)} ${t("forum__hoursAgo")}`;
   } else if (difference < 2620800) {
     // Less than a month has passed:
-    output = `${Math.floor(difference / 86400)} days ago`;
+    output = `${Math.floor(difference / 86400)} ${t("forum__daysAgo")}`;
   } else if (difference < 31449600) {
     // Less than a year has passed:
-    output = `${Math.floor(difference / 2620800)} months ago`;
+    output = `${Math.floor(difference / 2620800)} ${t("forum__monthsAgo")}`;
   } else {
     // More than a year has passed:
-    output = `${Math.floor(difference / 31449600)} years ago`;
+    output = `${Math.floor(difference / 31449600)} ${t("forum__yearsAgo")}`;
   }
   return output;
 }

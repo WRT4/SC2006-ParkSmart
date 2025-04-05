@@ -13,6 +13,7 @@ export function LangWrapper({ children }) {
     if (lang) {
       i18n.changeLanguage(lang);
       setLang(lang);
+      document.documentElement.setAttribute("lang", lang);
     }
   }, [lang]);
 

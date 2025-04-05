@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export default function Comment({
   editingCommentId,
   editedCommentText,
@@ -14,6 +16,8 @@ export default function Comment({
   setReportText,
   reportComment,
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="grid gap-2 bg-gray-100 p-4" data-id={comment._id}>
       <p>
@@ -25,7 +29,7 @@ export default function Comment({
           <textarea
             rows="4"
             className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-            placeholder="Edit your comment..."
+            placeholder={t("forum__editYourComment")}
             defaultValue={editedCommentText}
             onChange={(e) => setEditedCommentText(e.target.value)}
           ></textarea>
@@ -35,7 +39,7 @@ export default function Comment({
               onClick={saveComment}
               className="w-full cursor-pointer rounded-lg bg-blue-500 py-2 text-sm text-white transition hover:bg-blue-600 active:bg-blue-700"
             >
-              Save
+              {t("save")}
             </button>
             <button
               onClick={(e) => {
@@ -44,7 +48,7 @@ export default function Comment({
               type="button"
               className="w-full cursor-pointer rounded-lg bg-gray-500 py-2 text-sm text-white transition hover:bg-gray-600 active:bg-gray-700"
             >
-              Cancel
+              {t("cancel")}
             </button>
           </div>
         </>
@@ -87,12 +91,12 @@ export default function Comment({
             </button>
           </div>
           <p className="text-end text-sm text-gray-600">
-            {timeSince(new Date(comment.date).getTime())}
+            {timeSince(new Date(comment.date).getTime(), t)}
           </p>
         </div>
       ) : (
         <p className="text-end text-sm text-gray-600">
-          {timeSince(new Date(comment.date).getTime())}
+          {timeSince(new Date(comment.date).getTime(), t)}
         </p>
       )}
       {user && user.username !== comment.username && (
@@ -148,28 +152,28 @@ export default function Comment({
   );
 }
 
-function timeSince(timeStamp) {
+function timeSince(timeStamp, t) {
   const seconds = new Date().getTime();
   const difference = (seconds - timeStamp) / 1000;
   let output = ``;
   if (difference < 60) {
     // Less than a minute has passed:
-    output = `${Math.floor(difference)} seconds ago`;
+    output = `${Math.floor(difference)} ${t("forum__secondsAgo")}`;
   } else if (difference < 3600) {
     // Less than an hour has passed:
-    output = `${Math.floor(difference / 60)} minutes ago`;
+    output = `${Math.floor(difference / 60)} ${t("forum__minutesAgo")}`;
   } else if (difference < 86400) {
     // Less than a day has passed:
-    output = `${Math.floor(difference / 3600)} hours ago`;
+    output = `${Math.floor(difference / 3600)} ${t("forum__hoursAgo")}`;
   } else if (difference < 2620800) {
     // Less than a month has passed:
-    output = `${Math.floor(difference / 86400)} days ago`;
+    output = `${Math.floor(difference / 86400)} ${t("forum__daysAgo")}`;
   } else if (difference < 31449600) {
     // Less than a year has passed:
-    output = `${Math.floor(difference / 2620800)} months ago`;
+    output = `${Math.floor(difference / 2620800)} ${t("forum__monthsAgo")}`;
   } else {
     // More than a year has passed:
-    output = `${Math.floor(difference / 31449600)} years ago`;
+    output = `${Math.floor(difference / 31449600)} ${t("forum__yearsAgo")}`;
   }
   return output;
 }

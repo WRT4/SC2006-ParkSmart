@@ -58,7 +58,7 @@ export default function Header() {
 
             {isLanguageOpen && (
               <div
-                className="absolute left-0 z-10 mt-2 w-max origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden"
+                className="absolute left-0 isolate z-10 mt-2 w-max origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden"
                 onBlur={() => setIsLanguageOpen(false)}
                 tabIndex={0} // Ensures `onBlur` works properly
               >

@@ -396,7 +396,7 @@ export default function SearchPage() {
             </section>
           </form>
         </section>
-        <div className="z-10 flex flex-col items-center gap-5 lg:flex-row">
+        <div className="flex flex-col items-center gap-5 lg:flex-row">
           <div className="flex justify-center">
             <Filters
               availFilter={availFilter}

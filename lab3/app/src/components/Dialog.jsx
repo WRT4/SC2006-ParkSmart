@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import MuiDialog from "@mui/material/Dialog";
 
 export default function Dialog({
@@ -6,6 +7,8 @@ export default function Dialog({
   record,
   availabilityLimit = 0.5,
 }) {
+  const { t } = useTranslation();
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -57,28 +60,28 @@ export default function Dialog({
                       ) {
                         return (
                           <p className="rounded-xl bg-green-200 px-2.5 py-1 text-sm text-green-600">
-                            Available
+                            {t("search__available")}
                           </p>
                         );
                       }
                       if (record.lotsAvailable > 0) {
                         return (
                           <p className="rounded-xl bg-amber-200 px-2.5 py-1 text-sm text-amber-600">
-                            Limited
+                            {t("search__limited")}
                           </p>
                         );
                       }
                       if (record.lotsAvailable === 0) {
                         return (
                           <p className="rounded-xl bg-red-200 px-2.5 py-1 text-sm text-red-600">
-                            Full
+                            {t("search__full")}
                           </p>
                         );
                       }
                     }
                     return (
                       <p className="rounded-xl bg-red-200 px-2.5 py-1 text-sm text-red-600">
-                        Error
+                        {t("search__error")}
                       </p>
                     );
                   })()}
@@ -99,7 +102,8 @@ export default function Dialog({
                     <div className="grid justify-items-start">
                       <p className="text-sm">{toTitleCase(record.address)}</p>
                       <p className="text-xs text-gray-600">
-                        {Math.round((record.distance / 1000) * 10) / 10} km away
+                        {Math.round((record.distance / 1000) * 10) / 10}
+                        {t("search__distanceAway")}
                       </p>
                     </div>
                   </div>
@@ -134,7 +138,7 @@ export default function Dialog({
                           {record.lotsAvailable}
                         </span>{" "}
                         / <span className="font-bold">{record.totalLots}</span>{" "}
-                        spots available
+                        {t("search__spotsAvailable")}
                       </>
                     ) : (
                       "Unable to retrieve lot information"
@@ -154,7 +158,8 @@ export default function Dialog({
                   </svg>
 
                   <p className="text-sm">
-                    Short Term Parking: {toTitleCase(record.short_term_parking)}
+                    {t("search__shortTermParking")}
+                    {toTitleCase(record.short_term_parking)}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -169,7 +174,8 @@ export default function Dialog({
                     <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278" />
                   </svg>
                   <p className="text-sm">
-                    Night Parking: {toTitleCase(record.night_parking)}
+                    {t("search__nightParking")}:{" "}
+                    {toTitleCase(record.night_parking)}
                   </p>
                 </div>
 
@@ -198,7 +204,7 @@ export default function Dialog({
                     <path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708z" />
                   </svg>
                   <p className="text-sm">
-                    Height limit: {record.gantry_height}m
+                    {t("search__heightLimit")}: {record.gantry_height}m
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -235,7 +241,8 @@ export default function Dialog({
                     <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
                   </svg>
                   <p className="text-sm">
-                    Free Parking: {toTitleCase(record.free_parking)}
+                    {t("search__freeParking")}:{" "}
+                    {toTitleCase(record.free_parking)}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -251,7 +258,7 @@ export default function Dialog({
                     <path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z" />
                   </svg>
                   <p className="text-sm">
-                    Car Park Decks: {record.car_park_decks}
+                    {t("search__carparkDecks")}: {record.car_park_decks}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -266,7 +273,8 @@ export default function Dialog({
                     <path d="M1 2.5a.5.5 0 0 1 .5-.5h3.797a.5.5 0 0 1 .439.26L11 13h3.5a.5.5 0 0 1 0 1h-3.797a.5.5 0 0 1-.439-.26L5 3H1.5a.5.5 0 0 1-.5-.5m10 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5" />
                   </svg>
                   <p className="text-sm">
-                    Basement: {record.car_park_basement === "Y" ? "Yes" : "No"}
+                    {t("search__basement")}:{" "}
+                    {record.car_park_basement === "Y" ? "Yes" : "No"}
                   </p>
                 </div>
               </div>

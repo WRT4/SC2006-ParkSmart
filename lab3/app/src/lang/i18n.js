@@ -246,6 +246,9 @@ const resources = {
       search__haveQuestion:
         "Have a question or need assistance? Send us a message, and we'll be happy to help!",
       search__contactSupport: "Contact Support",
+      search__shortTermParking: "Short Term Parking: ",
+      search__carparkDecks: "Car Park Decks",
+      search__basement: "Basement",
     },
   },
   zh: {
@@ -472,6 +475,9 @@ const resources = {
       search__haveQuestion:
         "有疑问或需要帮助？给我们留言，我们很乐意为您提供帮助！",
       search__contactSupport: "联系支持人员",
+      search__shortTermParking: "短期停车: ",
+      search__carparkDecks: "停车场甲板",
+      search__basement: "地下室",
     },
   },
   ms: {
@@ -717,6 +723,9 @@ const resources = {
       search__haveQuestion:
         "Ada soalan atau perlukan bantuan? Hantar mesej kepada kami, dan kami berbesar hati untuk membantu!",
       search__contactSupport: "Hubungi Sokongan",
+      search__shortTermParking: "Tempat Letak Kereta Jangka Pendek: ",
+      search__carparkDecks: "Dek Tempat Letak Kereta",
+      search__basement: "Pangsapuri Bawah Tanah",
     },
   },
 
@@ -959,6 +968,9 @@ const resources = {
       search__haveQuestion:
         "क्या आपके पास कोई प्रश्न है या आपको सहायता की आवश्यकता है? हमें संदेश भेजें, और हमें आपकी सहायता करने में खुशी होगी!",
       search__contactSupport: "समर्थन से संपर्क करें",
+      search__shortTermParking: "संक्षिप्त अवधि पार्किंग: ",
+      search__carparkDecks: "पार्किंग डेक",
+      search__basement: "बेसमेंट",
     },
   },
 };

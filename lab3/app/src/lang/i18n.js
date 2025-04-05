@@ -10,6 +10,9 @@ import LanguageDetector from "i18next-browser-languagedetector";
 const resources = {
   en: {
     translation: {
+      save: "Save",
+      cancel: "Cancel",
+
       // header
       header__home: "Home",
       header__search: "Search",
@@ -97,10 +100,36 @@ const resources = {
       home__termsAndConditions:
         "View the terms and conditions governing the use of our services.",
       home__access: "Access",
+
+      //profile page
+      profile__profileSettingsHeader: "Profile Settings",
+      profile__userID: "User ID: ",
+      profile__carPlate: "Car Plate: ",
+      profile__emailAddress: "Email Address: ",
+      profile__lastLogin: "Last login: ",
+      profile__todayAt: "Today at ",
+      profile__changeButton: "Change",
+      profile__securitySettings: "Security Settings",
+      profile__changePassword: "Change Password",
+      profile__updatePasswordRegularly: "Update your password regularly",
+      profile__twoFactorAuth: "Two-factor Authentication",
+      profile__addExtraLayerSecurity: "Add an extra layer of security",
+      profile__enableButton: "Enable",
+      profile__accountActions: "Account actions",
+      profile__logout: "Logout",
+      profile__deleteAccount: "Delete Account",
+      profile__editProfile: "Edit Profile",
+      profile__saveChanges: "Save Changes",
+      profile__editPassword: "Edit Password",
+      profile__currentPassword: "Current Password",
+      profile__currentPasswordPlaceholder: "Current password",
     },
   },
   zh: {
     translation: {
+      save: "保存",
+      cancel: "取消",
+
       // header
       header__home: "首页",
       header__search: "搜索",
@@ -179,10 +208,36 @@ const resources = {
       home__license: "许可证",
       home__termsAndConditions: "查看使用我们服务的条款和条件。",
       home__access: "访问",
+
+      //profile page
+      profile__profileSettingsHeader: "个人资料设置",
+      profile__userID: "用户ID: ",
+      profile__carPlate: "车牌: ",
+      profile__emailAddress: "电子邮件地址: ",
+      profile__lastLogin: "最后登录: ",
+      profile__todayAt: "今天在 ",
+      profile__changeButton: "更改",
+      profile__securitySettings: "安全设置",
+      profile__changePassword: "更改密码",
+      profile__updatePasswordRegularly: "定期更新您的密码",
+      profile__twoFactorAuth: "双因素认证",
+      profile__addExtraLayerSecurity: "增加额外的安全层",
+      profile__enableButton: "启用",
+      profile__accountActions: "账户操作",
+      profile__logout: "登出",
+      profile__deleteAccount: "删除账户",
+      profile__editProfile: "编辑个人资料",
+      profile__saveChanges: "保存更改",
+      profile__editPassword: "编辑密码",
+      profile__currentPassword: "当前密码",
+      profile__currentPasswordPlaceholder: "当前密码",
     },
   },
   ms: {
     translation: {
+      save: "Simpan",
+      cancel: "Batal",
+
       // header
       header__home: "Laman Utama",
       header__search: "Cari",
@@ -273,11 +328,38 @@ const resources = {
       home__termsAndConditions:
         "Lihat terma dan syarat penggunaan perkhidmatan kami.",
       home__access: "Akses",
+
+      //profile page
+      profile__profileSettingsHeader: "Tetapan Profil",
+      profile__userID: "ID Pengguna: ",
+      profile__carPlate: "Plat Kereta: ",
+      profile__emailAddress: "Alamat E-mel: ",
+      profile__lastLogin: "Log Masuk Terakhir: ",
+      profile__todayAt: "Hari ini pada ",
+      profile__changeButton: "Tukar",
+      profile__securitySettings: "Tetapan Keselamatan",
+      profile__changePassword: "Tukar Kata Laluan",
+      profile__updatePasswordRegularly:
+        "Kemas kini kata laluan anda secara berkala",
+      profile__twoFactorAuth: "Pengesahan Dua Faktor",
+      profile__addExtraLayerSecurity: "Tambah lapisan keselamatan tambahan",
+      profile__enableButton: "Dayakan",
+      profile__accountActions: "Tindakan Akaun",
+      profile__logout: "Log Keluar",
+      profile__deleteAccount: "Padam Akaun",
+      profile__editProfile: "Edit Profil",
+      profile__saveChanges: "Simpan Perubahan",
+      profile__editPassword: "Edit Kata Laluan",
+      profile__currentPassword: "Kata Laluan Semasa",
+      profile__currentPasswordPlaceholder: "Kata laluan semasa",
     },
   },
 
   hi: {
     translation: {
+      save: "सहेजें",
+      cancel: "रद्द करें",
+
       // header
       header__home: "मुखपृष्ठ",
       header__search: "खोजें",
@@ -366,6 +448,29 @@ const resources = {
       home__termsAndConditions:
         "हमारी सेवाओं के उपयोग के लिए नियम और शर्तें देखें।",
       home__access: "पहुँच",
+
+      //profile page
+      profile__profileSettingsHeader: "प्रोफ़ाइल सेटिंग्स",
+      profile__userID: "उपयोगकर्ता आईडी: ",
+      profile__carPlate: "कार प्लेट: ",
+      profile__emailAddress: "ईमेल पता: ",
+      profile__lastLogin: "अंतिम लॉगिन: ",
+      profile__todayAt: "आज at ",
+      profile__changeButton: "बदलिए",
+      profile__securitySettings: "सुरक्षा सेटिंग्स",
+      profile__changePassword: "पासवर्ड बदलें",
+      profile__updatePasswordRegularly: "अपना पासवर्ड नियमित रूप से अपडेट करें",
+      profile__twoFactorAuth: "दो-कारक प्रमाणीकरण",
+      profile__addExtraLayerSecurity: "सुरक्षा का एक अतिरिक्त स्तर जोड़ें",
+      profile__enableButton: "सक्रिय करें",
+      profile__accountActions: "खाता क्रियाएँ",
+      profile__logout: "लॉगआउट",
+      profile__deleteAccount: "खाता हटाएँ",
+      profile__editProfile: "प्रोफ़ाइल संपादित करें",
+      profile__saveChanges: "परिवर्तनों को सुरक्षित करें",
+      profile__editPassword: "पासवर्ड संपादित करें",
+      profile__currentPassword: "वर्तमान पासवर्ड",
+      profile__currentPasswordPlaceholder: "वर्तमान पासवर्ड",
     },
   },
 };

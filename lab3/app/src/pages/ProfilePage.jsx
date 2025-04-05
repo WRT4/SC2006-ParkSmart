@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Dialog from "@mui/material/Dialog";
 import PasswordChecklist from "react-password-checklist";
+import { useTranslation } from "react-i18next";
 
 const ProfileSettings = () => {
   const { user, setUser } = useContext(AuthContext); // Get user from AuthContext
@@ -26,6 +27,7 @@ const ProfileSettings = () => {
   const [usernameError, setUsernameError] = useState(""); // Store username error
   const [emailError, setEmailError] = useState(""); // Store email error
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   if (!user) {
     return <Navigate to="/login" />;
@@ -132,7 +134,9 @@ const ProfileSettings = () => {
     <>
       <Header></Header>
       <div className="mx-auto max-w-2xl bg-gray-50 p-6">
-        <h1 className="mb-6 text-2xl font-bold">Profile Settings</h1>
+        <h1 className="mb-6 text-2xl font-bold">
+          {t("profile__profileSettingsHeader")}
+        </h1>
 
         {/* Profile Card */}
         <div className="mb-6 rounded-lg bg-white p-6 shadow-sm">
@@ -153,7 +157,7 @@ const ProfileSettings = () => {
                 {user.name}
               </h2>
               <p className="mt-1 text-center text-sm text-gray-500 min-[400px]:text-start">
-                User ID: {user.username}
+                {t("profile__userID") + user.username}
               </p>
               <div className="mt-2 flex items-center">
                 <span className="mr-6 inline-flex items-center text-sm text-gray-600">
@@ -167,7 +171,7 @@ const ProfileSettings = () => {
                   >
                     <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
                   </svg>
-                  Car Plate:{" "}
+                  {t("profile__carPlate")}
                   <span className="ml-1 text-blue-600">
                     {user.carPlateNumber}
                   </span>
@@ -186,7 +190,7 @@ const ProfileSettings = () => {
                   >
                     <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
                   </svg>
-                  Email Address:
+                  {t("profile__emailAddress")}
                   <span className="ml-1 text-gray-600">{user.email}</span>
                 </span>
               </div>
@@ -203,7 +207,7 @@ const ProfileSettings = () => {
                   >
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
                   </svg>
-                  Last login: Today at{" "}
+                  {t("profile__lastLogin") + t("profile__todayAt")}
                   {new Date().toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -219,14 +223,16 @@ const ProfileSettings = () => {
               }}
               className="mt-4 cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
             >
-              Change
+              {t("profile__changeButton")}
             </button>
           </div>
         </div>
 
         {/* Security Settings */}
         <div className="mb-6 rounded-lg bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-lg font-semibold">Security Settings</h2>
+          <h2 className="mb-4 text-lg font-semibold">
+            {t("profile__securitySettings")}
+          </h2>
 
           <div className="flex flex-col items-center justify-between gap-2 border-b py-4 min-[380px]:flex-row">
             <div className="flex items-start">
@@ -241,9 +247,9 @@ const ProfileSettings = () => {
                 <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2M2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
               </svg>
               <div>
-                <h3 className="font-medium">Change Password</h3>
+                <h3 className="font-medium">{t("profile__changePassword")}</h3>
                 <p className="text-sm text-gray-500">
-                  Update your password regularly
+                  {t("profile__updatePasswordRegularly")}
                 </p>
               </div>
             </div>
@@ -253,7 +259,7 @@ const ProfileSettings = () => {
               }}
               className="cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
             >
-              Change
+              {t("profile__changeButton")}
             </button>
           </div>
 
@@ -273,21 +279,23 @@ const ProfileSettings = () => {
                 />
               </svg>
               <div>
-                <h3 className="font-medium">Two-Factor Authentication</h3>
+                <h3 className="font-medium">{t("profile__twoFactorAuth")}</h3>
                 <p className="text-sm text-gray-500">
-                  Add an extra layer of security
+                  {t("profile__addExtraLayerSecurity")}
                 </p>
               </div>
             </div>
             <button className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-800 transition hover:bg-gray-100 active:bg-gray-200">
-              Enable
+              {t("profile__enableButton")}
             </button>
           </div>
         </div>
 
         {/* Account Actions */}
         <div className="rounded-lg bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-lg font-semibold">Account Actions</h2>
+          <h2 className="mb-4 text-lg font-semibold">
+            {t("profile__accountActions")}
+          </h2>
 
           <button
             onClick={async () => {
@@ -325,7 +333,7 @@ const ProfileSettings = () => {
                 d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
               />
             </svg>
-            Logout
+            {t("profile__logout")}
           </button>
 
           <button className="flex w-full cursor-pointer items-center justify-center rounded-md border border-red-300 p-3 font-medium text-red-500 transition hover:bg-red-500 hover:text-white active:bg-red-600 active:text-white">
@@ -339,7 +347,7 @@ const ProfileSettings = () => {
             >
               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
             </svg>
-            Delete Account
+            {t("profile__deleteAccount")}
           </button>
         </div>
       </div>
@@ -372,7 +380,7 @@ const ProfileSettings = () => {
           </svg>
         </button>
         <section className="grid gap-4 p-4">
-          <p className="text-xl font-bold">Edit Profile</p>
+          <p className="text-xl font-bold">{t("profile__editProfile")}</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -382,7 +390,7 @@ const ProfileSettings = () => {
             <div className="grid gap-2">
               <div className="grid gap-1">
                 <label htmlFor="name" className="">
-                  Name
+                  {t("signup__name")}
                 </label>
                 <div className="relative inline-flex items-center">
                   <svg
@@ -397,7 +405,7 @@ const ProfileSettings = () => {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Enter your name"
+                    placeholder={t("signup__enterName")}
                     type="text"
                     id="name"
                     onChange={(e) => {
@@ -410,7 +418,7 @@ const ProfileSettings = () => {
               </div>
               <div className="grid gap-1">
                 <label htmlFor="email" className="">
-                  Email Address
+                  {t("signup__emailAddress")}
                 </label>
                 <div className="relative inline-flex items-center">
                   <svg
@@ -425,7 +433,7 @@ const ProfileSettings = () => {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Enter your email"
+                    placeholder={t("signup__enterEmail")}
                     type="email"
                     id="email"
                     pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
@@ -439,7 +447,9 @@ const ProfileSettings = () => {
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="carplate-number">Car Plate Number</label>
+                <label htmlFor="carplate-number">
+                  {t("signup__carPlateNumber")}
+                </label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -454,7 +464,7 @@ const ProfileSettings = () => {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Enter plate number"
+                    placeholder={t("signup__enterCarPlate")}
                     type="text"
                     id="carplate-number"
                     onChange={(e) => {
@@ -467,7 +477,7 @@ const ProfileSettings = () => {
                 <p className="text-sm text-gray-600">Format: ABC-1234</p>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">{t("signup__username")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -481,7 +491,7 @@ const ProfileSettings = () => {
                   </svg>
                   <input
                     className="w-full cursor-not-allowed rounded-md border border-gray-400 bg-gray-200 px-8 py-1 text-gray-500 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Choose a username"
+                    placeholder={t("signup__enterUsername")}
                     type="text"
                     id="username"
                     defaultValue={user.username}
@@ -498,13 +508,13 @@ const ProfileSettings = () => {
                   type="submit"
                   className="grow basis-0 cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
                 >
-                  Save Changes
+                  {t("profile__saveChanges")}
                 </button>
                 <button
                   onClick={handleEditCancel}
                   className="grow basis-0 cursor-pointer rounded-md bg-gray-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-600 active:bg-gray-700"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
               </div>
             </div>
@@ -540,7 +550,7 @@ const ProfileSettings = () => {
           </svg>
         </button>
         <section className="grid gap-4 p-4">
-          <p className="text-xl font-bold">Edit Password</p>
+          <p className="text-xl font-bold">{t("profile__editPassword")}</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -549,7 +559,9 @@ const ProfileSettings = () => {
           >
             <div className="grid gap-2">
               <div className="currentPassword grid gap-1">
-                <label htmlFor="currentPassword">Current Password</label>
+                <label htmlFor="currentPassword">
+                  {t("profile__currentPassword")}
+                </label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -563,7 +575,7 @@ const ProfileSettings = () => {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Current password"
+                    placeholder={t("profile__currentPasswordPlaceholder")}
                     type={currentPasswordVisbility ? "text" : "password"}
                     id="currentPassword"
                     onChange={(e) => {
@@ -625,7 +637,7 @@ const ProfileSettings = () => {
                 </div>
               </div>
               <div className="newPassword grid gap-1">
-                <label htmlFor="newPassword">Password</label>
+                <label htmlFor="newPassword">{t("signup__password")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -639,7 +651,7 @@ const ProfileSettings = () => {
                   </svg>
                   <input
                     className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
-                    placeholder="Create a password"
+                    placeholder={t("signup__createPassword")}
                     type={newPasswordVisbility ? "text" : "password"}
                     id="newPassword"
                     pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
@@ -705,12 +717,10 @@ const ProfileSettings = () => {
                   minLength={8}
                   value={newPassword}
                   messages={{
-                    minLength: "Password must be at least 8 characters long.",
-                    specialChar:
-                      "Password must include at least one special character.",
-                    number: "Password must contain at least one number.",
-                    capital:
-                      "Password must have at least one uppercase letter.",
+                    minLength: t("signup__p8Characters"),
+                    specialChar: t("signup__pSpecialCharacter"),
+                    number: t("signup__pOneNumber"),
+                    capital: t("signup__pOneUppercase"),
                   }}
                   style={{ fontSize: "0.875rem" }}
                 />
@@ -720,14 +730,14 @@ const ProfileSettings = () => {
                   type="submit"
                   className="grow basis-0 cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
                 >
-                  Save Changes
+                  {t("profile__saveChanges")}
                 </button>
                 <button
                   onClick={handlePasswordCancel}
                   type="button"
                   className="grow basis-0 cursor-pointer rounded-md bg-gray-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-600 active:bg-gray-700"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
               </div>
             </div>

@@ -4,6 +4,8 @@ import FeedbackStats from '../components/admin/FeedbackStats';
 import FeedbackTable from '../components/admin/FeedbackTable';
 import axios from "axios";
 import '../styles/AdminDashboard.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const AdminDashboard = () => {
   const [feedbackData, setFeedbackData] = useState([]);
@@ -39,28 +41,32 @@ const AdminDashboard = () => {
 
 
   return (
-    <main>
-      <section className="admin-section">
-        <h1>Feedback Dashboard</h1>
-        
-        {loading ? (
-          <p>Loading feedback data...</p>
-        ) : error ? (
-          <p className="error-message">{error}</p>
-        ) : (
-          <>
-            <FeedbackStats 
-              totalCount={totalCount} 
-              avgRating={avgRating} 
-            />
-            
-            <FeedbackTable 
-              feedbackData={feedbackData} 
-            />
-          </>
-        )}
-      </section>
-    </main>
+    <>
+      <Header />
+      <main className="min-h-screen bg-gray-50 dark:bg-gray-800">
+        <section className="admin-section mx-auto max-w-6xl px-4 py-8">
+          <h1 className="mb-8 text-center text-3xl font-bold text-gray-800 dark:text-white">Feedback Dashboard</h1>
+          
+          {loading ? (
+            <p className="text-center text-gray-700 dark:text-gray-300">Loading feedback data...</p>
+          ) : error ? (
+            <p className="error-message text-center text-red-600 dark:text-red-400">{error}</p>
+          ) : (
+            <>
+              <FeedbackStats 
+                totalCount={totalCount} 
+                avgRating={avgRating} 
+              />
+              
+              <FeedbackTable 
+                feedbackData={feedbackData} 
+              />
+            </>
+          )}
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 };
 

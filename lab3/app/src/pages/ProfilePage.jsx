@@ -133,224 +133,229 @@ const ProfileSettings = () => {
   return (
     <>
       <Header></Header>
-      <div className="mx-auto max-w-2xl bg-gray-50 p-6">
-        <h1 className="mb-6 text-2xl font-bold">
-          {t("profile__profileSettingsHeader")}
-        </h1>
+      {/* Full width container with dark mode background */}
+      <div className="min-h-screen w-full bg-gray-100 dark:bg-gray-800">
+        <div className="mx-auto max-w-2xl px-4 py-6">
+          <h1 className="mb-6 text-2xl font-bold dark:text-white">
+            {t("profile__profileSettingsHeader")}
+          </h1>
 
-        {/* Profile Card */}
-        <div className="mb-6 rounded-lg bg-white p-6 shadow-sm">
-          <div className="grid justify-items-center gap-3 min-[400px]:flex min-[400px]:gap-6">
-            <div className="">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 text-gray-400">
-                {user.profileImage ? (
-                  <img src={user.profileImage} alt={username} />
-                ) : (
-                  <span className="text-2xl">
-                    {name.charAt(0).toUpperCase()}
-                  </span>
-                )}
+          {/* Profile Card */}
+          <div className="mb-6 rounded-lg bg-white p-6 shadow-sm dark:bg-gray-700">
+            <div className="grid justify-items-center gap-3 min-[400px]:flex min-[400px]:gap-6">
+              <div className="">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 text-gray-400 dark:bg-gray-600 dark:text-gray-300">
+                  {user.profileImage ? (
+                    <img src={user.profileImage} alt={username} />
+                  ) : (
+                    <span className="text-2xl">
+                      {name.charAt(0).toUpperCase()}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div>
-              <h2 className="text-center text-xl font-medium min-[400px]:text-start">
-                {user.name}
-              </h2>
-              <p className="mt-1 text-center text-sm text-gray-500 min-[400px]:text-start">
-                {t("profile__userID") + user.username}
-              </p>
-              <div className="mt-2 flex items-center">
-                <span className="mr-6 inline-flex items-center text-sm text-gray-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="#9ca3af"
-                    className="bi bi-car-front-fill mr-2 min-h-4 min-w-4"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
-                  </svg>
-                  {t("profile__carPlate")}
-                  <span className="ml-1 text-blue-600">
-                    {user.carPlateNumber}
-                  </span>
-                </span>
-              </div>
-
-              <div className="mt-2 flex items-center">
-                <span className="mr-6 inline-flex items-center text-sm text-gray-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="#9ca3af"
-                    className="bi bi-envelope-fill mr-2 min-h-4 min-w-4"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
-                  </svg>
-                  {t("profile__emailAddress")}
-                  <span className="ml-1 text-gray-600">{user.email}</span>
-                </span>
-              </div>
-
-              <div className="mt-2 flex items-center">
-                <span className="inline-flex items-center text-sm text-gray-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="#9ca3af"
-                    className="bi bi-clock-fill mr-2 min-h-4 min-w-4"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
-                  </svg>
-                  {t("profile__lastLogin") + t("profile__todayAt")}
-                  {new Date().toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center min-[400px]:justify-end">
-            <button
-              onClick={() => {
-                setIsEditing(true);
-              }}
-              className="mt-4 cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
-            >
-              {t("profile__changeButton")}
-            </button>
-          </div>
-        </div>
-
-        {/* Security Settings */}
-        <div className="mb-6 rounded-lg bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-lg font-semibold">
-            {t("profile__securitySettings")}
-          </h2>
-
-          <div className="flex flex-col items-center justify-between gap-2 border-b py-4 min-[380px]:flex-row">
-            <div className="flex items-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                fill="#9ca3af"
-                className="bi bi-key-fill mt-1 mr-3"
-                viewBox="0 0 16 16"
-              >
-                <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2M2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-              </svg>
               <div>
-                <h3 className="font-medium">{t("profile__changePassword")}</h3>
-                <p className="text-sm text-gray-500">
-                  {t("profile__updatePasswordRegularly")}
+                <h2 className="text-center text-xl font-medium min-[400px]:text-start dark:text-white">
+                  {user.name}
+                </h2>
+                <p className="mt-1 text-center text-sm text-gray-500 min-[400px]:text-start dark:text-gray-300">
+                  {t("profile__userID") + user.username}
                 </p>
+                <div className="mt-2 flex items-center">
+                  <span className="mr-6 inline-flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#9ca3af"
+                      className="bi bi-car-front-fill mr-2 min-h-4 min-w-4"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+                    </svg>
+                    {t("profile__carPlate")}
+                    <span className="ml-1 text-blue-600 dark:text-blue-400">
+                      {user.carPlateNumber}
+                    </span>
+                  </span>
+                </div>
+
+                <div className="mt-2 flex items-center">
+                  <span className="mr-6 inline-flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#9ca3af"
+                      className="bi bi-envelope-fill mr-2 min-h-4 min-w-4"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
+                    </svg>
+                    {t("profile__emailAddress")}
+                    <span className="ml-1 text-gray-600 dark:text-gray-300">{user.email}</span>
+                  </span>
+                </div>
+
+                <div className="mt-2 flex items-center">
+                  <span className="inline-flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#9ca3af"
+                      className="bi bi-clock-fill mr-2 min-h-4 min-w-4"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+                    </svg>
+                    {t("profile__lastLogin") + t("profile__todayAt")}
+                    {new Date().toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </div>
               </div>
             </div>
-            <button
-              onClick={() => {
-                setIsChangingPassword(true);
-              }}
-              className="cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
-            >
-              {t("profile__changeButton")}
-            </button>
+            <div className="flex justify-center min-[400px]:justify-end">
+              <button
+                onClick={() => {
+                  setIsEditing(true);
+                }}
+                className="mt-4 cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
+              >
+                {t("profile__changeButton")}
+              </button>
+            </div>
           </div>
 
-          <div className="flex flex-col items-center justify-between gap-2 py-4 min-[380px]:flex-row">
-            <div className="flex items-start">
+          {/* Security Settings */}
+          <div className="mb-6 rounded-lg bg-white p-6 shadow-sm dark:bg-gray-700">
+            <h2 className="mb-4 text-lg font-semibold dark:text-white">
+              {t("profile__securitySettings")}
+            </h2>
+
+            <div className="flex flex-col items-center justify-between gap-2 border-b border-gray-200 py-4 min-[380px]:flex-row dark:border-gray-600">
+              <div className="flex items-start">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  fill="#9ca3af"
+                  className="bi bi-key-fill mt-1 mr-3"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2M2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                </svg>
+                <div>
+                  <h3 className="font-medium dark:text-white">{t("profile__changePassword")}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                    {t("profile__updatePasswordRegularly")}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setIsChangingPassword(true);
+                }}
+                className="cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
+              >
+                {t("profile__changeButton")}
+              </button>
+            </div>
+
+            <div className="flex flex-col items-center justify-between gap-2 py-4 min-[380px]:flex-row">
+              <div className="flex items-start">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  fill="#9ca3af"
+                  className="bi bi-shield-fill-check mt-1 mr-3"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.8 11.8 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7 7 0 0 0 1.048-.625 11.8 11.8 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.54 1.54 0 0 0-1.044-1.263 63 63 0 0 0-2.887-.87C9.843.266 8.69 0 8 0m2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793z"
+                  />
+                </svg>
+                <div>
+                  <h3 className="font-medium dark:text-white">{t("profile__twoFactorAuth")}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                    {t("profile__addExtraLayerSecurity")}
+                  </p>
+                </div>
+              </div>
+              <button className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-800 transition hover:bg-gray-100 active:bg-gray-200 dark:border-gray-600 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500 dark:active:bg-gray-400">
+                {t("profile__enableButton")}
+              </button>
+            </div>
+          </div>
+
+          {/* Account Actions */}
+          <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-700">
+            <h2 className="mb-4 text-lg font-semibold dark:text-white">
+              {t("profile__accountActions")}
+            </h2>
+
+            <button
+              onClick={async () => {
+                try {
+                  localStorage.removeItem("token");
+                  setUser(null);
+                  navigate("/login");
+
+                  const response = await fetch("http://localhost:5000/logout", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  });
+                } catch (err) {
+                  console.log(err);
+                }
+              }}
+              className="mb-4 flex w-full cursor-pointer items-center justify-center rounded-md bg-blue-500 p-3 font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                fill="#9ca3af"
-                className="bi bi-shield-fill-check mt-1 mr-3"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-box-arrow-right mr-2"
                 viewBox="0 0 16 16"
               >
                 <path
                   fillRule="evenodd"
-                  d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.8 11.8 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7 7 0 0 0 1.048-.625 11.8 11.8 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.54 1.54 0 0 0-1.044-1.263 63 63 0 0 0-2.887-.87C9.843.266 8.69 0 8 0m2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793z"
+                  d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
+                />
+                <path
+                  fillRule="evenodd"
+                  d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
                 />
               </svg>
-              <div>
-                <h3 className="font-medium">{t("profile__twoFactorAuth")}</h3>
-                <p className="text-sm text-gray-500">
-                  {t("profile__addExtraLayerSecurity")}
-                </p>
-              </div>
-            </div>
-            <button className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-800 transition hover:bg-gray-100 active:bg-gray-200">
-              {t("profile__enableButton")}
+              {t("profile__logout")}
+            </button>
+
+            <button className="flex w-full cursor-pointer items-center justify-center rounded-md border border-red-300 p-3 font-medium text-red-500 transition hover:bg-red-500 hover:text-white active:bg-red-600 active:text-white dark:border-red-800 dark:text-red-400 dark:hover:bg-red-800 dark:hover:text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-exclamation-circle-fill mr-2"
+                viewBox="0 0 16 16"
+              >
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
+              </svg>
+              {t("profile__deleteAccount")}
             </button>
           </div>
         </div>
-
-        {/* Account Actions */}
-        <div className="rounded-lg bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-lg font-semibold">
-            {t("profile__accountActions")}
-          </h2>
-
-          <button
-            onClick={async () => {
-              try {
-                localStorage.removeItem("token");
-                setUser(null);
-                navigate("/login");
-
-                const response = await fetch("http://localhost:5000/logout", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                });
-              } catch (err) {
-                console.log(err);
-              }
-            }}
-            className="mb-4 flex w-full cursor-pointer items-center justify-center rounded-md bg-blue-500 p-3 font-medium text-white transition hover:bg-blue-600 active:bg-blue-700"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-box-arrow-right mr-2"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
-              />
-              <path
-                fillRule="evenodd"
-                d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
-              />
-            </svg>
-            {t("profile__logout")}
-          </button>
-
-          <button className="flex w-full cursor-pointer items-center justify-center rounded-md border border-red-300 p-3 font-medium text-red-500 transition hover:bg-red-500 hover:text-white active:bg-red-600 active:text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-exclamation-circle-fill mr-2"
-              viewBox="0 0 16 16"
-            >
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
-            </svg>
-            {t("profile__deleteAccount")}
-          </button>
-        </div>
       </div>
+
+      {/* Edit Profile Dialog */}
       <Dialog
         onClose={handleEditCancel}
         open={isEditing}
@@ -360,7 +365,7 @@ const ProfileSettings = () => {
         <button
           onClick={handleEditCancel}
           type="button"
-          className="absolute top-1 right-1 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-500 focus:outline-none focus:ring-inset"
+          className="absolute top-1 right-1 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-500 focus:outline-none focus:ring-inset dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
         >
           <span className="sr-only">Close menu</span>
           <svg
@@ -379,8 +384,8 @@ const ProfileSettings = () => {
             />
           </svg>
         </button>
-        <section className="grid gap-4 p-4">
-          <p className="text-xl font-bold">{t("profile__editProfile")}</p>
+        <section className="grid gap-4 p-4 dark:bg-gray-800">
+          <p className="text-xl font-bold dark:text-white">{t("profile__editProfile")}</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -389,7 +394,7 @@ const ProfileSettings = () => {
           >
             <div className="grid gap-2">
               <div className="grid gap-1">
-                <label htmlFor="name" className="">
+                <label htmlFor="name" className="dark:text-white">
                   {t("signup__name")}
                 </label>
                 <div className="relative inline-flex items-center">
@@ -404,7 +409,7 @@ const ProfileSettings = () => {
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                     placeholder={t("signup__enterName")}
                     type="text"
                     id="name"
@@ -417,7 +422,7 @@ const ProfileSettings = () => {
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="email" className="">
+                <label htmlFor="email" className="dark:text-white">
                   {t("signup__emailAddress")}
                 </label>
                 <div className="relative inline-flex items-center">
@@ -432,7 +437,7 @@ const ProfileSettings = () => {
                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                     placeholder={t("signup__enterEmail")}
                     type="email"
                     id="email"
@@ -447,7 +452,7 @@ const ProfileSettings = () => {
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="carplate-number">
+                <label htmlFor="carplate-number" className="dark:text-white">
                   {t("signup__carPlateNumber")}
                 </label>
                 <div className="relative inline-flex items-center">
@@ -463,7 +468,7 @@ const ProfileSettings = () => {
                     <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM4.82 3a1.5 1.5 0 0 0-1.379.91l-.792 1.847a1.8 1.8 0 0 1-.853.904.8.8 0 0 0-.43.564L1.03 8.904a1.5 1.5 0 0 0-.03.294v.413c0 .796.62 1.448 1.408 1.484 1.555.07 3.786.155 5.592.155s4.037-.084 5.592-.155A1.48 1.48 0 0 0 15 9.611v-.413q0-.148-.03-.294l-.335-1.68a.8.8 0 0 0-.43-.563 1.8 1.8 0 0 1-.853-.904l-.792-1.848A1.5 1.5 0 0 0 11.18 3z" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                     placeholder={t("signup__enterCarPlate")}
                     type="text"
                     id="carplate-number"
@@ -473,11 +478,10 @@ const ProfileSettings = () => {
                     required
                     defaultValue={user.carPlateNumber}
                   ></input>
-                </div>
-                <p className="text-sm text-gray-600">Format: ABC-1234</p>
+                </div><p className="text-sm text-gray-600 dark:text-gray-300">Format: ABC-1234</p>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="username">{t("signup__username")}</label>
+                <label htmlFor="username" className="dark:text-white">{t("signup__username")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -490,16 +494,12 @@ const ProfileSettings = () => {
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                   </svg>
                   <input
-                    className="w-full cursor-not-allowed rounded-md border border-gray-400 bg-gray-200 px-8 py-1 text-gray-500 focus:outline-1 focus:outline-gray-600"
+                    className="w-full cursor-not-allowed rounded-md border border-gray-400 bg-gray-200 px-8 py-1 text-gray-500 focus:outline-1 focus:outline-gray-600 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400"
                     placeholder={t("signup__enterUsername")}
                     type="text"
                     id="username"
                     defaultValue={user.username}
-                    // onChange={(e) => {
-                    //   setUsername(e.target.value);
-                    // }}
                     disabled
-                    // required
                   ></input>
                 </div>
               </div>
@@ -512,6 +512,7 @@ const ProfileSettings = () => {
                 </button>
                 <button
                   onClick={handleEditCancel}
+                  type="button"
                   className="grow basis-0 cursor-pointer rounded-md bg-gray-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-600 active:bg-gray-700"
                 >
                   {t("cancel")}
@@ -521,6 +522,8 @@ const ProfileSettings = () => {
           </form>
         </section>
       </Dialog>
+
+      {/* Change Password Dialog */}
       <Dialog
         onClose={handlePasswordCancel}
         open={isChangingPassword}
@@ -530,7 +533,7 @@ const ProfileSettings = () => {
         <button
           onClick={handlePasswordCancel}
           type="button"
-          className="absolute top-1 right-1 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-500 focus:outline-none focus:ring-inset"
+          className="absolute top-1 right-1 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-500 focus:outline-none focus:ring-inset dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
         >
           <span className="sr-only">Close menu</span>
           <svg
@@ -549,8 +552,8 @@ const ProfileSettings = () => {
             />
           </svg>
         </button>
-        <section className="grid gap-4 p-4">
-          <p className="text-xl font-bold">{t("profile__editPassword")}</p>
+        <section className="grid gap-4 p-4 dark:bg-gray-800">
+          <p className="text-xl font-bold dark:text-white">{t("profile__editPassword")}</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -559,7 +562,7 @@ const ProfileSettings = () => {
           >
             <div className="grid gap-2">
               <div className="currentPassword grid gap-1">
-                <label htmlFor="currentPassword">
+                <label htmlFor="currentPassword" className="dark:text-white">
                   {t("profile__currentPassword")}
                 </label>
                 <div className="relative inline-flex items-center">
@@ -574,7 +577,7 @@ const ProfileSettings = () => {
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                     placeholder={t("profile__currentPasswordPlaceholder")}
                     type={currentPasswordVisbility ? "text" : "password"}
                     id="currentPassword"
@@ -637,7 +640,7 @@ const ProfileSettings = () => {
                 </div>
               </div>
               <div className="newPassword grid gap-1">
-                <label htmlFor="newPassword">{t("signup__password")}</label>
+                <label htmlFor="newPassword" className="dark:text-white">{t("signup__password")}</label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -650,7 +653,7 @@ const ProfileSettings = () => {
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
                   </svg>
                   <input
-                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600"
+                    className="w-full rounded-md border border-gray-400 px-8 py-1 focus:outline-1 focus:outline-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                     placeholder={t("signup__createPassword")}
                     type={newPasswordVisbility ? "text" : "password"}
                     id="newPassword"

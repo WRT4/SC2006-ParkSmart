@@ -1,23 +1,22 @@
-// components/feedback/FAQSection.js
 import React, { useState } from "react";
-import "./FAQSection.css";
 import { useTranslation } from "react-i18next";
 
 // FAQ item component
 const FAQItem = ({ question, answer }) => {
-  const { t } = useTranslation();
-
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="faq-item">
-      <div className="faq-question" onClick={() => setIsOpen(!isOpen)}>
-        <h3>{question}</h3>
-        <span className="toggle-icon">{isOpen ? "−" : "+"}</span>
+    <div className="mb-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+      <div 
+        className="flex cursor-pointer items-center justify-between bg-white p-4 dark:bg-[#1e293b]" 
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <h3 className="text-base font-medium text-gray-800 dark:text-white">{question}</h3>
+        <span className="text-2xl text-blue-600 dark:text-blue-400">{isOpen ? "−" : "+"}</span>
       </div>
       {isOpen && (
-        <div className="faq-answer">
-          <p>{answer}</p>
+        <div className="bg-gray-50 p-4 dark:bg-[#273244]">
+          <p className="text-gray-700 dark:text-gray-300">{answer}</p>
         </div>
       )}
     </div>
@@ -48,8 +47,8 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="faq-section">
-      <h2>{t("feedback__frequentlyAskedQns")}</h2>
+    <section className="mx-auto my-12 max-w-3xl px-4">
+      <h2 className="mb-6 text-center text-2xl font-bold text-blue-800 dark:text-blue-400">{t("feedback__frequentlyAskedQns")}</h2>
 
       {faqData.map((faq) => (
         <FAQItem key={faq.id} question={faq.question} answer={faq.answer} />

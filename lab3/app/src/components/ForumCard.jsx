@@ -12,9 +12,9 @@ export default function ForumCard(post) {
   }
   return (
     <div className="flex items-center justify-center">
-      <div className="grid w-full gap-4 rounded-2xl bg-white p-6 shadow-xl">
-        <p className="text-2xl font-semibold">{post.title}</p>
-        <p>{post.content}</p>
+      <div className="grid w-full gap-4 rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-700 dark:text-white">
+        <p className="text-2xl font-semibold dark:text-white">{post.title}</p>
+        <p className="dark:text-gray-200">{post.content}</p>
         {post.image && (
           <img
             src={
@@ -27,7 +27,7 @@ export default function ForumCard(post) {
           />
         )}{" "}
         {/* Image display */}
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 dark:text-gray-300">
           {t("forum__postedBy")}
           {post.username},{/* Display the username */}{" "}
           {timeSince(new Date(post.date).getTime(), t)}
@@ -39,7 +39,7 @@ export default function ForumCard(post) {
           >
             {t("forum__viewPost")}
           </Link>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             {post.comments.filter((comment) => !comment.deleted).length}{" "}
             {t("forum__comment")}
             {lang === "en" &&

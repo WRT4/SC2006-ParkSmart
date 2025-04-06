@@ -19,7 +19,7 @@ export default function Comment({
   const { t } = useTranslation();
 
   return (
-    <div className="grid gap-2 bg-gray-100 p-4" data-id={comment._id}>
+    <div className="grid gap-2 bg-gray-100 p-4 dark:bg-gray-600 dark:text-white" data-id={comment._id}>
       <p>
         <strong>{comment.username}</strong>:{" "}
         {editingCommentId !== comment._id && <span>{comment.text}</span>}
@@ -28,7 +28,7 @@ export default function Comment({
         <>
           <textarea
             rows="4"
-            className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
             placeholder={t("forum__editYourComment")}
             defaultValue={editedCommentText}
             onChange={(e) => setEditedCommentText(e.target.value)}
@@ -60,7 +60,7 @@ export default function Comment({
             <button
               onClick={editComment}
               type="button"
-              className="cursor-pointer p-1 text-black hover:bg-gray-200 hover:outline-1 active:bg-gray-300 active:outline-1"
+              className="cursor-pointer p-1 text-black dark:text-white hover:bg-gray-200 hover:outline-1 active:bg-gray-300 active:outline-1 dark:hover:bg-gray-700 dark:active:bg-gray-800"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ export default function Comment({
             <button
               onClick={deleteComment}
               type="button"
-              className="hover cursor-pointer p-1 text-black hover:bg-gray-200 hover:outline-1 active:bg-gray-300 active:outline-1"
+              className="hover cursor-pointer p-1 text-black dark:text-white hover:bg-gray-200 hover:outline-1 active:bg-gray-300 active:outline-1 dark:hover:bg-gray-700 dark:active:bg-gray-800"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -90,12 +90,12 @@ export default function Comment({
               </svg>
             </button>
           </div>
-          <p className="text-end text-sm text-gray-600">
+          <p className="text-end text-sm text-gray-600 dark:text-gray-300">
             {timeSince(new Date(comment.date).getTime(), t)}
           </p>
         </div>
       ) : (
-        <p className="text-end text-sm text-gray-600">
+        <p className="text-end text-sm text-gray-600 dark:text-gray-300">
           {timeSince(new Date(comment.date).getTime(), t)}
         </p>
       )}
@@ -104,7 +104,7 @@ export default function Comment({
           <div>
             <button
               onClick={() => setReportingCommentId(comment._id)}
-              className="hover cursor-pointer p-1 text-gray-400 outline-black hover:bg-gray-200 hover:text-red-600 hover:outline-1 active:bg-gray-300 active:text-red-700 active:outline-1"
+              className="hover cursor-pointer p-1 text-gray-400 outline-black hover:bg-gray-200 hover:text-red-600 hover:outline-1 active:bg-gray-300 active:text-red-700 active:outline-1 dark:hover:bg-gray-700 dark:active:bg-gray-800"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +125,7 @@ export default function Comment({
         <div className="grid gap-2">
           <textarea
             rows="4"
-            className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
             placeholder="Reason for reporting comment"
             value={reportText}
             onChange={(e) => setReportText(e.target.value)}

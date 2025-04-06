@@ -1,7 +1,5 @@
-// components/feedback/FeedbackForm.js
 import React, { useState } from "react";
 import axios from "axios";
-import "./FeedbackForm.css";
 import { useTranslation } from "react-i18next";
 
 const FeedbackForm = () => {
@@ -38,7 +36,7 @@ const FeedbackForm = () => {
       // Send feedback to server
       axios
         .post("http://localhost:5000/api/feedback", newFeedback, {
-          headers: { "Content-Type": "application/json" }, // Set content type to JSON)
+          headers: { "Content-Type": "application/json" }, 
         })
         .then((res) => {
           console.log(res.data);
@@ -60,48 +58,51 @@ const FeedbackForm = () => {
     } catch (error) {
       console.error("Error:", error);
       alert(
-        "An error occurred while submitting your feedback. Please try again.",
+        "An error occurred while submitting your feedback. Please try again."
       );
     }
   };
 
   return (
-    <section className="feedback-form-section">
-      <h2>{t("feedback__sendUsFeedback")}</h2>
-      <p>{t("feedback__weValueInput")}</p>
+    <section className="mx-auto my-12 max-w-3xl px-4">
+      <h2 className="mb-2 text-center text-2xl font-bold text-blue-800 dark:text-blue-400">{t("feedback__sendUsFeedback")}</h2>
+      <p className="mb-8 text-center text-gray-600 dark:text-gray-300">{t("feedback__weValueInput")}</p>
 
-      <form className="feedback-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">{t("feedback__name")}</label>
+      <form className="rounded-lg bg-white p-8 shadow-md dark:bg-[#1e293b]" onSubmit={handleSubmit}>
+        <div className="mb-6">
+          <label htmlFor="name" className="mb-2 block font-medium text-gray-700 dark:text-white">{t("feedback__name")}</label>
           <input
             type="text"
             id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            className="w-full rounded-md border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-700 dark:bg-[#273244] dark:text-white"
             required
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="email">{t("feedback__email")}</label>
+        <div className="mb-6">
+          <label htmlFor="email" className="mb-2 block font-medium text-gray-700 dark:text-white">{t("feedback__email")}</label>
           <input
             type="email"
             id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            className="w-full rounded-md border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-700 dark:bg-[#273244] dark:text-white"
             required
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="subject">{t("feedback__selectSubject")}</label>
+        <div className="mb-6">
+          <label htmlFor="subject" className="mb-2 block font-medium text-gray-700 dark:text-white">{t("feedback__selectSubject")}</label>
           <select
             id="subject"
             name="subject"
             value={formData.subject}
             onChange={handleChange}
+            className="w-full rounded-md border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-700 dark:bg-[#273244] dark:text-white"
             required
           >
             <option value="">{t("feedback__selectSubject")}</option>
@@ -112,21 +113,22 @@ const FeedbackForm = () => {
           </select>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="message">{t("feedback__message")}</label>
+        <div className="mb-6">
+          <label htmlFor="message" className="mb-2 block font-medium text-gray-700 dark:text-white">{t("feedback__message")}</label>
           <textarea
             id="message"
             name="message"
             rows="5"
             value={formData.message}
             onChange={handleChange}
+            className="w-full rounded-md border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-700 dark:bg-[#273244] dark:text-white"
             required
           ></textarea>
         </div>
 
-        <div className="form-group">
-          <label>{t("feedback__rateService")}</label>
-          <div className="rating-container">
+        <div className="mb-6">
+          <label className="mb-2 block font-medium text-gray-700 dark:text-white">{t("feedback__rateService")}</label>
+          <div className="flex gap-4">
             {[1, 2, 3, 4, 5].map((num) => (
               <React.Fragment key={num}>
                 <input
@@ -136,15 +138,28 @@ const FeedbackForm = () => {
                   value={num}
                   checked={formData.rating === num.toString()}
                   onChange={handleChange}
+                  className="hidden"
                   required
                 />
-                <label htmlFor={`rating-${num}`}>{num}</label>
+                <label 
+                  htmlFor={`rating-${num}`}
+                  className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full ${
+                    formData.rating === num.toString() 
+                    ? 'bg-blue-500 text-white dark:bg-blue-600' 
+                    : 'bg-gray-100 dark:bg-[#273244] dark:text-white'
+                  }`}
+                >
+                  {num}
+                </label>
               </React.Fragment>
             ))}
           </div>
         </div>
 
-        <button type="submit" className="submit-btn">
+        <button 
+          type="submit" 
+          className="rounded-md bg-blue-500 px-6 py-3 font-medium text-white transition hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
           {t("feedback__submitFeedbackButton")}
         </button>
       </form>

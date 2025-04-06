@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import axios from "axios";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function EditPost() {
   const { id } = useParams(); // Get the post ID from the URL
@@ -84,64 +86,106 @@ function EditPost() {
       .catch((err) => console.log(err));
   };
 
-  return (
-    <div>
-      <h1>Edit Post</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Edit post title"
-          />
-        </div>
-        <div>
-          <label>Content</label>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Edit post content"
-          />
-        </div>
+  if (!post) return <p className="dark:text-white">Loading...</p>;
 
-        {/* Display image preview if there is an image */}
-        {image && !uploaded && (
-          <div>
-            <img
-              src={post.image.startsWith("data:") || post.image.startsWith("http") ? post.image : `data:image/jpeg;base64,${post.image}`}
-              alt="Post Image"
-              style={{ width: "200px", marginTop: "10px" }}
-            />
-            <button type="button" onClick={deleteImage}>
-              Delete Image
-            </button>
-          </div>
-        )}
-        {image && uploaded && (
-          <div>
-            <img
-              src={typeof image === "string" ? image : URL.createObjectURL(image)}
-              alt="Post Image"
-              style={{ width: "200px", marginTop: "10px" }}
-            />
-            <button type="button" onClick={deleteImage}>
-              Delete Image
-            </button>
-          </div>
-        )}
-        {/* Allow the user to upload a new image */}
-        {!image && (
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange} // Handle image selection
-          />
-        )}
-        <button type="submit">Save Changes</button>
-      </form>
-    </div>
+  return (
+    <>
+      <Header />
+      <div className="min-h-screen bg-gray-100 p-4 dark:bg-gray-800">
+        <div className="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow-lg dark:bg-gray-700">
+          <h1 className="mb-6 text-2xl font-bold dark:text-white">Edit Post</h1>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Edit post title"
+                className="w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Content</label>
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Edit post content"
+                className="w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                rows="6"
+              />
+            </div>
+
+            {/* Display image preview if there is an image */}
+            {image && !uploaded && (
+              <div className="mt-4">
+                <img
+                  src={post.image.startsWith("data:") || post.image.startsWith("http") ? post.image : `data:image/jpeg;base64,${post.image}`}
+                  alt="Post Image"
+                  className="mb-2 max-h-60 rounded-lg"
+                />
+                <button 
+                  type="button" 
+                  onClick={deleteImage}
+                  className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                >
+                  Delete Image
+                </button>
+              </div>
+            )}
+            {image && uploaded && (
+              <div className="mt-4">
+                <img
+                  src={typeof image === "string" ? image : URL.createObjectURL(image)}
+                  alt="Post Image"
+                  className="mb-2 max-h-60 rounded-lg"
+                />
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    setImage("");
+                    setUploaded(false);
+                  }}
+                  className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                >
+                  Delete Image
+                </button>
+              </div>
+            )}
+            {/* Allow the user to upload a new image */}
+            {!image && (
+              <div className="mt-4">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Upload Image
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="file:text-md w-full rounded-lg border border-gray-300 p-2 text-gray-600 file:cursor-pointer file:rounded-md file:border file:border-gray-600 file:bg-gray-200 file:p-1 file:px-2 file:text-black hover:file:bg-gray-300 active:file:bg-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:file:bg-gray-700 dark:file:border-gray-600 dark:file:text-white"
+                /> 
+              </div>
+            )}
+            <div className="flex space-x-2 pt-4">
+              <button 
+                type="submit"
+                className="flex-1 rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600 active:bg-blue-700"
+              >
+                Save Changes
+              </button>
+              <button 
+                type="button"
+                onClick={() => navigate(`/forum/post/${id}`)}
+                className="flex-1 rounded-lg bg-gray-500 py-2 text-white transition hover:bg-gray-600 active:bg-gray-700"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 

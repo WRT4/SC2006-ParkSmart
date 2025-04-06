@@ -267,42 +267,42 @@ export default function PostDetail() {
     }
   };
 
-  if (!post) return <p>Loading...</p>;
+  if (!post) return <p className="dark:text-white">Loading...</p>;
 
   return (
     <>
       <Header></Header>
       {isEditingPost ? (
         <form
-          className="flex items-center justify-center"
+          className="flex items-center justify-center dark:bg-gray-800"
           onSubmit={(e) => {
             e.preventDefault();
             editPost();
           }}
         >
-          <div className="w-full max-w-[500px] rounded-2xl bg-white p-6 shadow-xl">
-            <h2 className="mb-4 text-xl font-semibold text-gray-800">
+          <div className="w-full max-w-[500px] rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-700">
+            <h2 className="mb-4 text-xl font-semibold text-gray-800 dark:text-white">
               Edit Post
             </h2>
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Title
               </label>
               <input
                 type="text"
                 defaultValue={title ? title : post.title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-lg border border-gray-400 p-2 focus:outline-4 focus:outline-blue-200"
+                className="w-full rounded-lg border border-gray-400 p-2 focus:outline-4 focus:outline-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                 placeholder="Enter title"
                 required
               />
             </div>
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Content
               </label>
               <textarea
-                className="w-full rounded-lg border border-gray-400 p-2 focus:outline-4 focus:outline-blue-200"
+                className="w-full rounded-lg border border-gray-400 p-2 focus:outline-4 focus:outline-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                 rows="4"
                 defaultValue={content ? content : post.content}
                 onChange={(e) => setContent(e.target.value)}
@@ -311,12 +311,12 @@ export default function PostDetail() {
               ></textarea>
             </div>
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Upload File
               </label>
               <input
                 type="file"
-                className="file:text-md w-full rounded-lg border border-gray-400 p-2 text-gray-600 file:cursor-pointer file:rounded-md file:border file:border-gray-600 file:bg-gray-200 file:p-1 file:px-2 file:text-black hover:file:bg-gray-300 active:file:bg-gray-400"
+                className="file:text-md w-full rounded-lg border border-gray-400 p-2 text-gray-600 file:cursor-pointer file:rounded-md file:border file:border-gray-600 file:bg-gray-200 file:p-1 file:px-2 file:text-black hover:file:bg-gray-300 active:file:bg-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:file:bg-gray-700 dark:file:border-gray-600 dark:file:text-white"
                 accept="image/*"
                 onChange={handleImageChange}
               />
@@ -365,12 +365,12 @@ export default function PostDetail() {
           </div>
         </form>
       ) : (
-        <div className="flex flex-col items-center justify-center gap-6 bg-gray-100 p-4">
-          <div className="grid w-full max-w-[800px] gap-4 rounded-2xl bg-white p-6 shadow-xl">
-            <p className="text-2xl font-semibold">
+        <div className="flex flex-col items-center justify-center gap-6 bg-gray-100 p-4 dark:bg-gray-800">
+          <div className="grid w-full max-w-[800px] gap-4 rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-700">
+            <p className="text-2xl font-semibold dark:text-white">
               {title ? title : post.title}
             </p>
-            <p>{content ? content : post.content}</p>
+            <p className="dark:text-gray-200">{content ? content : post.content}</p>
             {image ? (
               <img
                 src={
@@ -394,7 +394,7 @@ export default function PostDetail() {
               )
             )}{" "}
             {/* Image display */}
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
               {t("forum__postedBy")}
               {post.username},{/* Display the username */}{" "}
               {timeSince(new Date(post.date).getTime(), t)}
@@ -421,7 +421,7 @@ export default function PostDetail() {
                       {t("forum__deletePost")}
                     </button>
                   </div>
-                  <p className="ml-2 text-center text-sm text-gray-600">
+                  <p className="ml-2 text-center text-sm text-gray-600 dark:text-gray-300">
                     {post.comments.filter((comment) => !comment.deleted).length}{" "}
                     {t("forum__comment")}
                     {lang === "en" &&
@@ -434,7 +434,7 @@ export default function PostDetail() {
                 </div>
               </>
             ) : (
-              <p className="text-end text-sm text-gray-600">
+              <p className="text-end text-sm text-gray-600 dark:text-gray-300">
                 {post.comments.filter((comment) => !comment.deleted).length}{" "}
                 {t("forum__comment")}
                 {lang === "en" &&
@@ -449,7 +449,7 @@ export default function PostDetail() {
               <div>
                 <button
                   onClick={() => setReportingPost(true)}
-                  className="hover cursor-pointer p-1 text-gray-400 outline-black hover:bg-gray-200 hover:text-red-600 hover:outline-1 active:bg-gray-300 active:text-red-700 active:outline-1"
+                  className="hover cursor-pointer p-1 text-gray-400 outline-black hover:bg-gray-200 hover:text-red-600 hover:outline-1 active:bg-gray-300 active:text-red-700 active:outline-1 dark:hover:bg-gray-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -469,7 +469,7 @@ export default function PostDetail() {
               <div className="grid gap-2">
                 <textarea
                   rows="4"
-                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                   value={reportText}
                   onChange={(e) => setReportText(e.target.value)}
                   placeholder={t("forum__reason")}
@@ -493,8 +493,8 @@ export default function PostDetail() {
               </div>
             )}
           </div>
-          <div className="grid w-full max-w-[800px] gap-4 rounded-2xl bg-white p-6 shadow-xl">
-            <p className="text-center text-2xl font-semibold">
+          <div className="grid w-full max-w-[800px] gap-4 rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-700">
+            <p className="text-center text-2xl font-semibold dark:text-white">
               {t("forum__commentTitle")}
             </p>
             {post.comments && post.comments.length > 0 ? (
@@ -521,7 +521,7 @@ export default function PostDetail() {
                   ></Comment>
                 ))
             ) : (
-              <p className="text-center">{t("forum__noComments")}</p>
+              <p className="text-center dark:text-gray-200">{t("forum__noComments")}</p>
             )}
             {user ? (
               <form
@@ -533,14 +533,14 @@ export default function PostDetail() {
               >
                 <label
                   htmlFor="comment"
-                  className="mb-2 block text-sm font-medium text-gray-900 min-[400px]:text-base dark:text-black"
+                  className="mb-2 block text-sm font-medium text-gray-900 min-[400px]:text-base dark:text-gray-200"
                 >
                   {t("forum__yourComment")}
                 </label>
                 <textarea
                   id="comment"
                   rows="4"
-                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                   placeholder={t("forum__leaveComment")}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
@@ -553,7 +553,7 @@ export default function PostDetail() {
                 </button>
               </form>
             ) : (
-              <p className="text-center text-red-600">
+              <p className="text-center text-red-600 dark:text-red-400">
                 {t("forum__pleaseLoginComment")}
               </p>
             )}

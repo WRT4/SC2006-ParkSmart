@@ -1,3 +1,4 @@
+// Modified Footer.jsx
 import { Typography } from "@material-tailwind/react";
 import Title from "./Title";
 import { Link } from "react-router-dom";
@@ -7,7 +8,7 @@ export default function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="w-full bg-gray-50 p-8 dark:bg-gray-800">
+    <footer className="w-full bg-white p-8 dark:bg-[#1e293b]">
       <div className="flex flex-col place-content-evenly items-center gap-4 min-[580px]:flex-row">
         <Title colorLight="text-black" colorDark="text-gray-50"></Title>
         <div className="flex flex-row flex-wrap items-center justify-center gap-x-12 gap-y-6 text-center md:justify-between">
@@ -47,7 +48,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <hr className="border-blue-gray-50 my-8 dark:border-gray-50" />
+      <hr className="my-8 border-blue-gray-50 dark:border-gray-50" />
       <Typography
         color="blue-gray"
         className="text-center font-normal dark:text-gray-50"

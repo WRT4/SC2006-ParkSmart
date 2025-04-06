@@ -85,7 +85,9 @@ export default function Forum() {
       <Header></Header>
       <main className="flex flex-col gap-4 bg-gray-100 p-4 min-[840px]:flex-row dark:bg-gray-800">
         <section className="flex flex-col gap-4 min-[840px]:grow min-[840px]:basis-0">
-          <p className="text-center text-2xl font-bold dark:text-white">{t("forum__forum")}</p>
+          <p className="text-center text-2xl font-bold dark:text-white">
+            {t("forum__forum")}
+          </p>
           {user ? (
             <form
               className="flex items-center justify-center"
@@ -106,7 +108,7 @@ export default function Forum() {
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full rounded-lg border border-gray-400 p-2 focus:outline-4 focus:outline-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                    className="w-full rounded-lg border border-gray-400 p-2 focus:outline-4 focus:outline-blue-200 focus:transition-none! dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                     placeholder={t("forum__enterTitle")}
                     required
                   />
@@ -116,7 +118,7 @@ export default function Forum() {
                     {t("forum__content")}
                   </label>
                   <textarea
-                    className="w-full rounded-lg border border-gray-400 p-2 focus:outline-4 focus:outline-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                    className="w-full rounded-lg border border-gray-400 p-2 placeholder:text-gray-500 focus:outline-4 focus:outline-blue-200 focus:transition-none! dark:border-gray-600 dark:bg-gray-800 dark:text-white placeholder:dark:text-gray-400"
                     rows="4"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
@@ -131,7 +133,7 @@ export default function Forum() {
                   <input
                     id="file-input"
                     type="file"
-                    className="file:text-md w-full rounded-lg border border-gray-400 p-2 text-gray-600 file:cursor-pointer file:rounded-md file:border file:border-gray-600 file:bg-gray-200 file:p-1 file:px-2 file:text-black hover:file:bg-gray-300 active:file:bg-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:file:bg-gray-700 dark:file:border-gray-600 dark:file:text-white"
+                    className="file:text-md w-full rounded-lg border border-gray-400 p-2 text-gray-600 file:cursor-pointer file:rounded-md file:border file:border-gray-600 file:bg-gray-200 file:p-1 file:px-2 file:text-black hover:file:bg-gray-300 active:file:bg-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:file:border-gray-600 dark:file:bg-gray-700 dark:file:text-white"
                     accept="image/*"
                     onChange={handleImageChange}
                   />
@@ -157,11 +159,15 @@ export default function Forum() {
               </div>
             </form>
           ) : (
-            <p className="text-center text-red-600 dark:text-red-400">{t("forum_pleaseLogin")}</p>
+            <p className="text-center text-red-600 dark:text-red-400">
+              {t("forum_pleaseLogin")}
+            </p>
           )}
         </section>
         <section className="flex flex-col gap-4 min-[840px]:grow min-[840px]:basis-0">
-          <p className="text-center text-2xl font-bold dark:text-white">{t("forum__posts")}</p>
+          <p className="text-center text-2xl font-bold dark:text-white">
+            {t("forum__posts")}
+          </p>
           {posts.map((post) => (
             <ForumCard key={post._id} post={post}></ForumCard>
           ))}

@@ -316,7 +316,7 @@ export default function PostDetail() {
               </label>
               <input
                 type="file"
-                className="file:text-md w-full rounded-lg border border-gray-400 p-2 text-gray-600 file:cursor-pointer file:rounded-md file:border file:border-gray-600 file:bg-gray-200 file:p-1 file:px-2 file:text-black hover:file:bg-gray-300 active:file:bg-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:file:bg-gray-700 dark:file:border-gray-600 dark:file:text-white"
+                className="file:text-md w-full rounded-lg border border-gray-400 p-2 text-gray-600 file:cursor-pointer file:rounded-md file:border file:border-gray-600 file:bg-gray-200 file:p-1 file:px-2 file:text-black hover:file:bg-gray-300 active:file:bg-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:file:border-gray-600 dark:file:bg-gray-700 dark:file:text-white"
                 accept="image/*"
                 onChange={handleImageChange}
               />
@@ -370,7 +370,9 @@ export default function PostDetail() {
             <p className="text-2xl font-semibold dark:text-white">
               {title ? title : post.title}
             </p>
-            <p className="dark:text-gray-200">{content ? content : post.content}</p>
+            <p className="dark:text-gray-200">
+              {content ? content : post.content}
+            </p>
             {image ? (
               <img
                 src={
@@ -469,7 +471,7 @@ export default function PostDetail() {
               <div className="grid gap-2">
                 <textarea
                   rows="4"
-                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 placeholder:text-gray-600 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:placeholder:text-gray-300"
                   value={reportText}
                   onChange={(e) => setReportText(e.target.value)}
                   placeholder={t("forum__reason")}
@@ -521,7 +523,9 @@ export default function PostDetail() {
                   ></Comment>
                 ))
             ) : (
-              <p className="text-center dark:text-gray-200">{t("forum__noComments")}</p>
+              <p className="text-center dark:text-gray-200">
+                {t("forum__noComments")}
+              </p>
             )}
             {user ? (
               <form
@@ -540,7 +544,7 @@ export default function PostDetail() {
                 <textarea
                   id="comment"
                   rows="4"
-                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 placeholder:text-gray-600 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 placeholder:dark:text-gray-300"
                   placeholder={t("forum__leaveComment")}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}

@@ -20,9 +20,6 @@ export default function Dialog({
         open={open}
         closeAfterTransition={false}
         className="relative"
-        PaperProps={{
-          className: "dark:bg-gray-800 dark:text-white"
-        }}
       >
         <button
           onClick={handleClose}
@@ -51,7 +48,7 @@ export default function Dialog({
             return (
               <div
                 data-address={record.address}
-                className="flex w-full max-w-[350px] flex-col gap-3 rounded-md border-1 border-gray-200 p-6 shadow-md md:w-[350px] dark:bg-gray-800 dark:border-gray-700"
+                className="flex w-full max-w-[350px] flex-col gap-3 rounded-md border-1 border-gray-200 p-6 shadow-md md:w-[350px] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
               >
                 <div className="grid w-full justify-items-center gap-2">
                   <p className="font-medium">{record.title}</p>

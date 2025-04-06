@@ -19,7 +19,7 @@ export default function Filters({
   };
 
   return (
-    <div className="w-72 rounded-xl bg-white p-4 shadow-md dark:bg-gray-800 dark:text-white dark:border dark:border-gray-700">
+    <div className="w-72 rounded-xl bg-white p-4 text-gray-700 shadow-md dark:border dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
       <div className="mb-4 flex items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,11 +31,13 @@ export default function Filters({
         >
           <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z" />
         </svg>
-        <span className="font-bold text-blue-600 dark:text-blue-400">{t("search__filters")}</span>
+        <span className="font-bold text-blue-600 dark:text-blue-400">
+          {t("search__filters")}
+        </span>
       </div>
 
       <div className="mb-4 flex flex-col gap-1">
-        <label className="block text-sm font-medium">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           {t("search__freeParking")}
         </label>
         <div className="flex items-center">
@@ -45,17 +47,13 @@ export default function Filters({
               setFreeParking(e.target.checked);
             }}
           ></Switch>
-          <p
-            className={
-              "text-sm " + `${freeParking ? "font-semibold" : "text-gray-600 dark:text-gray-300"}`
-            }
-          >
+          <p className={"text-sm " + `${freeParking ? "font-semibold" : ""}`}>
             {t("search__onlyFreeParking")}
           </p>
         </div>
       </div>
 
-      <div className="mb-4 flex flex-col gap-1">
+      <div className="mb-4 flex flex-col gap-1 text-gray-600 dark:text-gray-300">
         <label className="block text-sm font-medium">
           {t("search__nightParking")}
         </label>
@@ -92,7 +90,7 @@ export default function Filters({
                 onChange={() => toggleAvailFilter(type)}
                 className="form-checkbox cursor-pointer text-blue-500"
               />
-              <span className="text-sm capitalize dark:text-gray-300">
+              <span className="text-sm text-gray-700 capitalize dark:text-gray-300">
                 {type === "available"
                   ? t("search__available")
                   : type === "limited"
@@ -108,7 +106,9 @@ export default function Filters({
         <label className="block text-sm font-medium">
           {t("search__heightRestriction")}
         </label>
-        <p className="text-sm text-gray-600 dark:text-gray-300">{t("search__selectMinHeight")}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-300">
+          {t("search__selectMinHeight")}
+        </p>
         <Slider
           className=""
           aria-label="heightRestriction"

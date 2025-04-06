@@ -18,11 +18,11 @@ export default function DisplayResult({
   return (
     <div
       data-address={address}
-      className="flex w-full max-w-[350px] flex-col rounded-md border-1 border-gray-200 p-4 shadow-md bg-white dark:bg-gray-700 dark:border-gray-600"
+      className="flex w-full max-w-[350px] flex-col rounded-md border-1 border-gray-200 p-4 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
     >
       <div className="grid justify-items-start gap-2 pb-3">
         <div className="grid w-full justify-items-center gap-2">
-          <p className="font-medium dark:text-white">{title}</p>
+          <p className="font-medium">{title}</p>
           {(() => {
             if (lotsAvailable && totalLots) {
               lotsAvailable = parseInt(lotsAvailable);
@@ -63,15 +63,15 @@ export default function DisplayResult({
               width="16"
               height="16"
               fill="#9ca3af"
-              className="bi bi-geo-alt-fill"
+              className="bi bi-geo-alt-fill dark:fill-gray-400"
               viewBox="0 0 16 16"
             >
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
             </svg>
 
             <div className="grid justify-items-start">
-              <p className="text-sm dark:text-white">{address}</p>
-              <p className="text-xs text-gray-600 dark:text-gray-300">
+              <p className="text-sm">{address}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
                 {Math.round((distance / 1000) * 10) / 10}
                 {t("search__distanceAway")}
               </p>
@@ -84,13 +84,13 @@ export default function DisplayResult({
             width="16"
             height="16"
             fill="#9ca3af"
-            className="bi bi-p-circle-fill"
+            className="bi bi-p-circle-fill dark:fill-gray-400"
             viewBox="0 0 16 16"
           >
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.5 4.002V12h1.283V9.164h1.668C10.033 9.164 11 8.08 11 6.586c0-1.482-.955-2.584-2.538-2.584zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97z" />
           </svg>
           <p
-            className={`text-sm ${!lotsAvailable || !totalLots ? "text-red-600 dark:text-red-400" : "dark:text-white"}`}
+            className={`text-sm ${!lotsAvailable || !totalLots ? "text-red-600 dark:text-red-400" : ""}`}
           >
             {lotsAvailable !== undefined && totalLots != undefined ? (
               <>
@@ -105,7 +105,7 @@ export default function DisplayResult({
                 >
                   {lotsAvailable}
                 </span>{" "}
-                / <span className="font-bold dark:text-white">{totalLots}</span>
+                / <span className="font-bold">{totalLots}</span>
                 {t("search__spotsAvailable")}
               </>
             ) : (
@@ -119,13 +119,13 @@ export default function DisplayResult({
             width="16"
             height="16"
             fill="#9ca3af"
-            className="bi bi-clock-fill"
+            className="bi bi-clock-fill dark:fill-gray-400"
             viewBox="0 0 16 16"
           >
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
           </svg>
 
-          <p className="text-sm dark:text-white">{operatingHours}</p>
+          <p className="text-sm">{operatingHours}</p>
         </div>
         <div className="flex items-center gap-2">
           <svg
@@ -133,12 +133,12 @@ export default function DisplayResult({
             width="16"
             height="16"
             fill="currentColor"
-            className="bi bi-arrows-vertical text-gray-400"
+            className="bi bi-arrows-vertical dark:fill-gray-400"
             viewBox="0 0 16 16"
           >
             <path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708z" />
           </svg>
-          <p className="text-sm dark:text-white">
+          <p className="text-sm">
             {t("search__heightLimit")}: {gantryHeight}
             {t("metres")}
           </p>
@@ -149,18 +149,18 @@ export default function DisplayResult({
             width="16"
             height="16"
             fill="#9ca3af"
-            className="bi bi-credit-card"
+            className="bi bi-credit-card dark:fill-gray-400"
             viewBox="0 0 16 16"
           >
             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
             <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
           </svg>
-          <p className="text-sm dark:text-white">{paymentType}</p>
+          <p className="text-sm">{paymentType}</p>
         </div>
       </div>
-      <div className="mt-auto flex items-center border-t-1 border-t-gray-200 pt-2 dark:border-t-gray-600">
+      <div className="mt-auto flex items-center border-t-1 border-t-gray-200 pt-2 dark:border-t-gray-700">
         <div className="flex flex-col">
-          <p className="text-start text-sm text-gray-600 dark:text-gray-300">
+          <p className="text-start text-sm text-gray-600 dark:text-gray-400">
             {t("search__freeParking")}
           </p>
           <p

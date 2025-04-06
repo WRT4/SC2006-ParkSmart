@@ -334,8 +334,8 @@ export default function SearchPage() {
   return (
     <>
       <Header></Header>
-      <main className="grid gap-5 p-4">
-        <section className="flex flex-col items-center justify-evenly gap-4 rounded-lg bg-blue-50 p-4 min-[400px]:flex-row">
+      <main className="grid gap-5 p-4 dark:bg-gray-800 dark:text-white">
+        <section className="flex flex-col items-center justify-evenly gap-4 rounded-lg bg-blue-50 p-4 min-[400px]:flex-row dark:bg-gray-700">
           <form
             onSubmit={handleSubmit}
             className="relative w-full max-w-md min-w-[250px]"
@@ -364,7 +364,7 @@ export default function SearchPage() {
               <input
                 type="search"
                 id="search-input"
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 placeholder={t("search__searchLocation")}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -379,7 +379,7 @@ export default function SearchPage() {
             </div>
             <section
               id="search-results"
-              className="absolute top-20 z-20 overflow-hidden rounded-lg border-1 border-[#dee2e6] bg-white shadow-md empty:border-0"
+              className="absolute top-20 z-20 overflow-hidden rounded-lg border-1 border-[#dee2e6] bg-white shadow-md empty:border-0 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             >
               {searchResults.slice(0, 5).map((result) => (
                 <SearchResult
@@ -409,17 +409,25 @@ export default function SearchPage() {
               setHeightRestriction={setHeightRestriction}
             ></Filters>
           </div>
-          <iframe
-            src={mapSrc}
-            width="1000px"
-            height="1000px"
-            scrolling="no"
-            frameBorder="0"
-            allowFullScreen="allowfullscreen"
-            className="h-[250px] w-[70vw] justify-self-center rounded-md shadow-md lg:h-[500px]"
-          ></iframe>
+          <div className="relative rounded-md overflow-hidden shadow-md">
+            {/* Very light transparent overlay */}
+            <div 
+              className="absolute inset-0 mix-blend-multiply pointer-events-none z-10 hidden dark:block"
+              style={{ backgroundColor: 'rgba(30, 41, 59, 0.35)' }}
+            ></div>
+            
+            <iframe
+              src={mapSrc}
+              width="1000px"
+              height="1000px"
+              scrolling="no"
+              frameBorder="0"
+              allowFullScreen="allowfullscreen"
+              className="h-[250px] w-[70vw] justify-self-center rounded-md lg:h-[500px]"
+            ></iframe>
+          </div>
         </div>
-        <section className="grid gap-4 border-t-1 border-gray-200 p-4">
+        <section className="grid gap-4 border-t-1 border-gray-200 p-4 dark:border-gray-700">
           <div className="flex flex-col justify-items-center gap-4 md:flex-row md:items-center">
             <p className="text-center text-xl font-semibold">
               {t("search__availableParkingLots")}
@@ -518,8 +526,8 @@ export default function SearchPage() {
           </div>
         </section>
       </main>
-      <section className="grid items-center justify-items-center gap-6 bg-gray-100 p-6 min-[900px]:grid-cols-3 [&>.card]:h-[200px] [&>.card]:w-[min(100%,350px)]">
-        <div className="card grid gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md">
+      <section className="grid items-center justify-items-center gap-6 bg-gray-100 p-6 min-[900px]:grid-cols-3 dark:bg-gray-700 dark:text-white [&>.card]:h-[200px] [&>.card]:w-[min(100%,350px)]">
+        <div className="card grid gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md dark:bg-gray-800 dark:border-gray-600">
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -533,18 +541,18 @@ export default function SearchPage() {
             </svg>
             <p className="text-lg font-bold">{t("search__whyChooseUs")}</p>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             {t("search__findCarparksNear")}
           </p>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             {t("search__viewCarparkTypes")}
           </p>
-          <p className="text-sm text-gray-600">{t("search__checkRealTime")}</p>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-300">{t("search__checkRealTime")}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             {t("search__getNightParkingInfo")}
           </p>
         </div>
-        <div className="card grid gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md">
+        <div className="card grid gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md dark:bg-gray-800 dark:border-gray-600">
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -558,15 +566,15 @@ export default function SearchPage() {
             </svg>
             <p className="text-lg font-bold">{t("search__howItWorks")}</p>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             {t("search__searchForDesired")}
           </p>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             {t("search__choosePreferred")}
           </p>
-          <p className="text-sm text-gray-600">{t("search__viewRealTime")}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">{t("search__viewRealTime")}</p>
         </div>
-        <div className="card grid flex-row gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md">
+        <div className="card grid flex-row gap-2 rounded-md border-1 border-gray-200 bg-white p-4 shadow-md dark:bg-gray-800 dark:border-gray-600">
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -583,7 +591,7 @@ export default function SearchPage() {
             </svg>
             <p className="text-lg font-bold">{t("search__needHelp")}</p>
           </div>
-          <p className="text-sm text-gray-600">{t("search__haveQuestion")}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">{t("search__haveQuestion")}</p>
           <button
             onClick={() => {
               navigate("/support");
@@ -675,4 +683,4 @@ function SVYtoWGS(x, y) {
   const latitude = (lat_rad * 180) / Math.PI;
   const longitude = (long_rad * 180) / Math.PI;
   return { latitude, longitude };
-}
+} 

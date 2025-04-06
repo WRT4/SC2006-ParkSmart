@@ -471,7 +471,7 @@ export default function PostDetail() {
               <div className="grid gap-2">
                 <textarea
                   rows="4"
-                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 placeholder:text-gray-600 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:placeholder:text-gray-300"
+                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 placeholder:text-gray-600 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-300"
                   value={reportText}
                   onChange={(e) => setReportText(e.target.value)}
                   placeholder={t("forum__reason")}
@@ -544,7 +544,7 @@ export default function PostDetail() {
                 <textarea
                   id="comment"
                   rows="4"
-                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 placeholder:text-gray-600 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 placeholder:dark:text-gray-300"
+                  className="block w-full max-w-[400px] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 placeholder:text-gray-600 focus:border-blue-500 focus:ring-blue-500 focus:transition-none! dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
                   placeholder={t("forum__leaveComment")}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}

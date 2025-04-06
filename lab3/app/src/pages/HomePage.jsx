@@ -32,7 +32,7 @@ function Home() {
           </p>
         </div>
       </section>
-      <section className="grid justify-center gap-4 p-6 sm:gap-10 sm:p-10 dark:bg-gray-800">
+      <section className="grid justify-center gap-4 bg-gray-50 p-6 sm:gap-10 sm:p-10 dark:bg-gray-800">
         <p className="text-center text-xl font-bold sm:text-3xl dark:text-white">
           {t("home__quickAccess")}
         </p>
@@ -51,8 +51,12 @@ function Home() {
             >
               <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
             </svg>
-            <p className="font-semibold dark:text-white">{t("home__myProfile")}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-300">{t("home__viewAndManage")}</p>
+            <p className="font-semibold dark:text-white">
+              {t("home__myProfile")}
+            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              {t("home__viewAndManage")}
+            </p>
             <p className="inline-flex items-center text-sm text-blue-600 dark:text-blue-400">
               {t("home__access")}
               <svg
@@ -84,7 +88,9 @@ function Home() {
             >
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
             </svg>
-            <p className="font-semibold dark:text-white">{t("home__carparkSearch")}</p>
+            <p className="font-semibold dark:text-white">
+              {t("home__carparkSearch")}
+            </p>
             <p className="text-sm text-gray-600 dark:text-gray-300">
               {t("home__findAndNavigate")}
             </p>
@@ -154,7 +160,9 @@ function Home() {
             >
               <path d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M4.5 5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z" />
             </svg>
-            <p className="font-semibold dark:text-white">{t("home__provideFeedback")}</p>
+            <p className="font-semibold dark:text-white">
+              {t("home__provideFeedback")}
+            </p>
             <p className="text-sm text-gray-600 dark:text-gray-300">
               {t("home__shareExperience")}
             </p>
@@ -224,7 +232,9 @@ function Home() {
             >
               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.146 4.992c.961 0 1.641.633 1.729 1.512h1.295v-.088c-.094-1.518-1.348-2.572-3.03-2.572-2.068 0-3.269 1.377-3.269 3.638v1.073c0 2.267 1.178 3.603 3.27 3.603 1.675 0 2.93-1.02 3.029-2.467v-.093H9.875c-.088.832-.75 1.418-1.729 1.418-1.224 0-1.927-.891-1.927-2.461v-1.06c0-1.583.715-2.503 1.927-2.503" />
             </svg>
-            <p className="font-semibold dark:text-white">{t("home__license")}</p>
+            <p className="font-semibold dark:text-white">
+              {t("home__license")}
+            </p>
             <p className="text-sm text-gray-600 dark:text-gray-300">
               {t("home__termsAndConditions")}
             </p>

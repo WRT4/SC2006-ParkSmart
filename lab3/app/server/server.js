@@ -321,7 +321,7 @@ app.post("/api/auth/login", async (req, res) => {
 
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
   if (!isPasswordCorrect) {
-    console.log("here2");
+    console.log("Wrong Password!");
 
     return res.status(400).json({ message: "Invalid credentials" });
   }

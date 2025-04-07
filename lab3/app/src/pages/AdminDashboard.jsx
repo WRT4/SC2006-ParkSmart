@@ -55,14 +55,19 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && user.username !== 'admin') {
+    if (!user) {
+      // If not logged in, redirect immediately
+      navigate('/login'); // Redirect to login or another route
+    } else if (user && user.username !== 'admin') {
+      // If logged in but not an admin, redirect after a short delay
       const timeout = setTimeout(() => {
         navigate('/home'); // Redirect to home or another route
       }, 2000);
-
+  
       return () => clearTimeout(timeout); // Cleanup timeout on unmount
     }
   }, [user, navigate]);
+  
 
   // Safeguard against unexpected non-array values
   const totalCount = Array.isArray(feedbackData) ? feedbackData.length : 0;

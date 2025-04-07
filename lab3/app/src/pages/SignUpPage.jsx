@@ -294,6 +294,7 @@ export default function SignUpPage() {
                     specialChar: t("signup__pSpecialCharacter"),
                     number: t("signup__pOneNumber"),
                     capital: t("signup__pOneUppercase"),
+                    lowercase: t("signup__pOneLowercase"),
                   }}
                   style={{ fontSize: "0.875rem" }}
                 />

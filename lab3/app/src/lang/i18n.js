@@ -74,6 +74,8 @@ const resources = {
       signup__pOneNumber: "Password must contain at least one number.",
       signup__pOneUppercase:
         "Password must have at least one uppercase letter.",
+      signup__pOneLowercase:
+        "Password must have at least one lowercase letter.",
       signup__agree: "I agree to the ",
       signup__termsOfService: "Terms of Service ",
       signup__and: "and ",
@@ -310,6 +312,7 @@ const resources = {
       signup__pSpecialCharacter: "密码必须包含至少一个特殊字符。",
       signup__pOneNumber: "密码必须包含至少一个数字。",
       signup__pOneUppercase: "密码必须包含至少一个大写字母。",
+      signup__pOneLowercase: "密码必须至少包含一个小写字母。",
       signup__agree: "我同意",
       signup__termsOfService: "服务条款",
       signup__and: "和",
@@ -547,6 +550,8 @@ const resources = {
         "Kata laluan mesti mengandungi sekurang-kurangnya satu nombor.",
       signup__pOneUppercase:
         "Kata laluan mesti mengandungi sekurang-kurangnya satu huruf besar.",
+      signup__pOneLowercase:
+        "Kata laluan mesti mempunyai sekurang-kurangnya satu huruf kecil.",
       signup__agree: "Saya bersetuju dengan ",
       signup__termsOfService: "Terma Perkhidmatan ",
       signup__and: "dan ",
@@ -794,6 +799,7 @@ const resources = {
         "पासवर्ड में कम से कम एक विशेष वर्ण होना चाहिए।",
       signup__pOneNumber: "पासवर्ड में कम से कम एक संख्या होनी चाहिए।",
       signup__pOneUppercase: "पासवर्ड में कम से कम एक बड़ा अक्षर होना चाहिए।",
+      signup__pOneLowercase: "पासवर्ड में कम से कम एक छोटा अक्षर होना चाहिए",
       signup__agree: "से सहमत हूं",
       signup__termsOfService: "सेवा की शर्तों ",
       signup__and: "और ",

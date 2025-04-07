@@ -1,5 +1,5 @@
 // FeedbackPage.jsx - Fix for the white gap
-import {React, useContext} from "react";
+import React, {useContext} from "react";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import HeroSection from "../components/feedback/HeroSection";
 import SupportOptions from "../components/feedback/SupportOptions";

@@ -206,6 +206,37 @@ app.post("/api/feedback", async (req, res) => {
   res.status(201).json(newFeedback);
 });
 
+// Get all reports with Post Title and Comment Text
+app.get("/api/reports", async (req, res) => {
+  try {
+    const reports = await Report.find().sort({ createdAt: -1 }).lean(); // Use .lean() for faster reads
+
+    const enrichedReports = await Promise.all(
+      reports.map(async (report) => {
+        // Fetch the Post for each report
+        const post = await Post.findById(report.postId).lean();
+
+        // Find the comment text if the report references a comment
+        const commentText = report.commentId
+          ? post?.comments.find(c => c._id.toString() === report.commentId.toString())?.text
+          : null;
+
+        // Add post title and comment text to the report
+        return {
+          ...report,
+          postTitle: post?.title || "Unknown Post", // Use default if no post is found
+          commentText: commentText || null,         // Use null if no comment found
+        };
+      })
+    );
+
+    res.json(enrichedReports);
+  } catch (err) {
+    console.error("Error fetching reports:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 // Report a post
 app.post("/api/posts/:id/report", async (req, res) => {
   const { username, report } = req.body;

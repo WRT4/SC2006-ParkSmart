@@ -116,7 +116,7 @@ mongoose
 app.use(
   cors({
     origin: "http://localhost:5173",
-    methods: "GET,POST",
+    methods: "GET,POST,DELETE",
     credentials: true, // Allow credentials like cookies
   }),
 );
@@ -693,6 +693,26 @@ app.put("/api/auth/change-password", async (req, res) => {
   } catch (error) {
     console.error("Error changing password:", error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// DELETE endpoint to delete user account
+app.delete('/api/users/delete', verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.id; // From the verified JWT token
+
+    // Find and delete the user account from the database
+    const user = await User.findByIdAndDelete(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Send success response
+    res.status(200).json({ message: 'Account deleted successfully' });
+  } catch (error) {
+    console.error("Error deleting account:", error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 

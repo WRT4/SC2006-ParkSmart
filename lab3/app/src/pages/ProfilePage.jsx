@@ -13,6 +13,7 @@ const ProfileSettings = () => {
   const [username, setUsername] = useState(user ? user.username : "");
   const [email, setEmail] = useState(user ? user.email : "");
   const [name, setName] = useState(user ? user.name : "");
+  const [isDeleting, setIsDeleting] = useState(false);
   const [currentPasswordVisbility, setCurrentPasswordVisibility] =
     useState(false);
   const [newPasswordVisbility, setNewPasswordVisibility] = useState(false);
@@ -32,6 +33,44 @@ const ProfileSettings = () => {
   if (!user) {
     return <Navigate to="/login" />;
   }
+
+  const handleDeleteAccount = async () => {
+    if (user && user.username === "admin") {
+      alert("Admin account cannot be deleted.");
+      return;
+    }
+    // Show a confirmation dialog to the user
+    const confirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+
+    if (confirmed) {
+        setIsDeleting(true);  // Set deleting state to show loading or handle progress
+
+        try {
+            // Call the delete API endpoint to remove the account
+            const response = await fetch("http://localhost:5000/api/users/delete", {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+
+            if (response.ok) {
+                // Handle successful deletion (e.g., log out the user, show success message)
+                localStorage.removeItem("token"); // Remove the token or log out
+                window.location.href = "/login";  // Redirect to login or home page
+            } else {
+                // Handle errors, e.g., show an error message
+                const data = await response.json();
+                alert(data.message || "An error occurred while deleting your account.");
+            }
+        } catch (error) {
+            console.error("Error deleting account:", error);
+            alert("An error occurred while deleting your account.");
+        } finally {
+            setIsDeleting(false);  // Reset the deleting state
+        }
+    }
+  };
 
   const handleEditCancel = () => {
     setIsEditing(false);
@@ -350,7 +389,9 @@ const ProfileSettings = () => {
               {t("profile__logout")}
             </button>
 
-            <button className="flex w-full cursor-pointer items-center justify-center rounded-md border border-red-300 p-3 font-medium text-red-500 transition hover:bg-red-500 hover:text-white active:bg-red-600 active:text-white dark:border-red-800 dark:text-red-400 dark:hover:bg-red-800 dark:hover:text-white">
+            <button 
+              onClick={handleDeleteAccount}
+              className="flex w-full cursor-pointer items-center justify-center rounded-md border border-red-300 p-3 font-medium text-red-500 transition hover:bg-red-500 hover:text-white active:bg-red-600 active:text-white dark:border-red-800 dark:text-red-400 dark:hover:bg-red-800 dark:hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

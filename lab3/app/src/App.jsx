@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProfilePage from "./pages/ProfilePage";
 import LicensePage from "./pages/LicensePage";
 import Forum from "./pages/Forum";
+import About from "./pages/About";
 
 function App() {
   const router = createBrowserRouter([
@@ -66,6 +67,10 @@ function App() {
     {
       path: "license",
       element: <LicensePage />,
+    },
+    {
+      path: "about",
+      element: <About />,
     },
   ]);
 

@@ -59,7 +59,7 @@ export default function LoginPage() {
       <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
         <section className="flex grow flex-col gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-32 dark:bg-gray-800 dark:text-white">
           {/* <Title colorDark="text-black"></Title> */}
-          <div className="flex flex-col items-center gap-8 p-4 lg:gap-16">
+          <div className="flex flex-col items-center justify-center gap-8 p-4 lg:gap-16 min-h-[80vh]">
             <img
               src="./car.jpg"
               alt="Image of a car"

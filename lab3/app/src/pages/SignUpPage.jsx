@@ -58,7 +58,7 @@ export default function SignUpPage() {
     <>
       <Header></Header>
       <div className="signup flex min-h-full min-w-full flex-col min-[600px]:flex-row">
-        <section className="flex grow flex-col items-center gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-10 dark:bg-gray-800 dark:text-white">
+        <section className="flex grow flex-col items-center justify-center gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-10 dark:bg-gray-800 dark:text-white min-h-[80vh]">
           {/* <Title colorDark="text-black"></Title> */}
 
           <p className="2xl:text-4x; max-w-[350px] text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl min-[600px]:text-start">

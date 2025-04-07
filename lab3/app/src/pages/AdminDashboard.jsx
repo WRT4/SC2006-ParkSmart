@@ -91,7 +91,7 @@ const AdminDashboard = () => {
     return (
       <>
         <Header />
-        <main className="min-h-screen bg-gray-50 dark:bg-gray-800">
+        <main className="min-h-screen bg-gray-50 dark:bg-gray-800 overflow-auto">
           <section className="admin-section mx-auto max-w-6xl px-4 py-8">
             <h1 className="mb-8 text-center text-3xl font-bold text-gray-800 dark:text-white">
               Feedback Dashboard

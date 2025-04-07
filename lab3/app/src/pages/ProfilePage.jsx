@@ -46,7 +46,7 @@ const ProfileSettings = () => {
   const handleSave = async () => {
     setUsernameError(""); // Clear previous errors
     setEmailError("");
-
+  
     const updatedUser = {
       current_username: user.username,
       username,
@@ -54,22 +54,24 @@ const ProfileSettings = () => {
       carPlateNumber,
       name,
     };
-
+  
     try {
       const response = await fetch("http://localhost:5000/api/users/update", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedUser),
       });
-
+  
       const data = await response.json();
-
+  
       if (!response.ok) {
         if (data.message === "Username already exists") {
-          setUsernameError("Username already in use");
+          setUsernameError("Username already exists");
+          alert("Username Error: Username already exists"); // Alert for username error
         }
         if (data.message === "Email already in use") {
           setEmailError("Email already in use");
+          alert("Email Error: Email already in use"); // Alert for email error
         }
         throw new Error(data.message);
       }
@@ -81,6 +83,7 @@ const ProfileSettings = () => {
     }
     setIsEditing(false);
   };
+  
 
   const handlePasswordCancel = () => {
     setIsChangingPassword(false);
@@ -400,18 +403,7 @@ const ProfileSettings = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              // Check if there are any errors
-              if (usernameError || emailError) {
-                // Display alert if there's any error
-                if (usernameError) {
-                  alert(`Username Error: ${usernameError}`);
-                }
-                if (emailError) {
-                  alert(`Email Error: ${emailError}`);
-                }
-              } else {
-                handleSave();
-              }
+              handleSave();
             }}
           >
             <div className="grid gap-2">

@@ -605,6 +605,7 @@ app.put("/api/users/update", async (req, res) => {
       // Check if the username already exists
       const temp = await User.findOne({ username: username });
       if (temp) {
+        console.log("Username already exists", temp);
         return res.status(400).json({ message: "Username already exists" });
       }
     }
@@ -613,6 +614,7 @@ app.put("/api/users/update", async (req, res) => {
       // Check if the email already in use
       const temp2 = await User.findOne({ email: email });
       if (temp2) {
+        console.log("Email already in use", temp2);
         return res.status(400).json({ message: "Email already in use" });
       }
     }

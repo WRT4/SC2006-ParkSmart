@@ -100,7 +100,7 @@ export default function Comment({
         </p>
       )}
       {/* Allow admin to delete comment */}
-      {user && user.username === 'admin' && (
+      {user && user.username === 'admin' && comment.username !== 'admin' && (
         <div className="flex items-center justify-between">
           <div className="flex gap-1">
             <button

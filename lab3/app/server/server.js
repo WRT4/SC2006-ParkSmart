@@ -121,71 +121,12 @@ app.use(
   }),
 );
 
-// Define Mongoose Schemas
-
-const commentSchema = new mongoose.Schema({
-  username: { type: String, required: true }, // Add the username field
-  text: { type: String, required: true }, // Text of the comment
-  date: { type: Date, default: Date.now }, // Date of the comment
-  deleted: { type: Boolean, default: false }, // Flag to mark the comment as deleted
-});
-
-const PostSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  title: { type: String, required: true },
-  content: { type: String, required: true },
-  image: { type: String }, // Base64 image string field
-  comments: [commentSchema], // Add the comments array
-  deleted: { type: Boolean, default: false },
-  date: { type: Date, default: Date.now },
-});
-
-const Post = mongoose.model("Post", PostSchema);
-
-const UserSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  carPlateNumber: { type: String },
-  name: { type: String, required: true },
-});
-
-const User = mongoose.model("User", UserSchema);
-
-const ReportSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  postId: { type: mongoose.Schema.Types.ObjectId, ref: "Post", required: true },
-  commentId: { type: mongoose.Schema.Types.ObjectId, ref: "Comment" },
-  report: { type: String, required: true },
-  date: { type: Date, default: Date.now },
-});
-
-const Report = mongoose.model("Report", ReportSchema);
-
-const FeedbackSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  subject: { type: String, required: true },
-  message: { type: String, required: true },
-  rating: { type: Number, required: true },
-  createdAt: { type: Date, required: true },
-});
-
-const Feedback = mongoose.model("Feedback", FeedbackSchema);
-
-const AboutMissionSchema = new mongoose.Schema({
-  aboutText: {
-      type: String,
-      required: true,
-  },
-  missionText: {
-      type: String,
-      required: true,
-  },
-});
-
-const AboutMission = mongoose.model("AboutMission", AboutMissionSchema);
-module.exports = AboutMission;
+// Import models
+const Post = require("../src/models/Post.jsx");
+const User = require("../src/models/User.jsx");
+const Report = require("../src/models/Report.jsx");
+const Feedback = require("../src/models/Feedback.jsx");
+const AboutMission = require("../src/models/AboutMission.jsx");
 
 // API Routes
 

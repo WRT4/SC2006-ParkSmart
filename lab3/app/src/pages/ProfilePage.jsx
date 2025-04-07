@@ -780,7 +780,7 @@ const ProfileSettings = () => {
                   </button>
                 </div>
                 <PasswordChecklist
-                  rules={["minLength", "specialChar", "number", "capital"]}
+                  rules={["minLength", "specialChar", "number", "capital", "lowercase"]}
                   minLength={8}
                   value={newPassword}
                   messages={{

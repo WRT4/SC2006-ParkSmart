@@ -286,7 +286,7 @@ export default function SignUpPage() {
                   </button>
                 </div>
                 <PasswordChecklist
-                  rules={["minLength", "specialChar", "number", "capital"]}
+                  rules={["minLength", "specialChar", "number", "capital", "lowercase"]}
                   minLength={8}
                   value={password}
                   messages={{

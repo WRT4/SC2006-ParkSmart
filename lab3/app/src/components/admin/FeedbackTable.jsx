@@ -1,17 +1,16 @@
 // components/admin/FeedbackTable.js
 import React from 'react';
-import './FeedbackTable.css';
 
 const FeedbackTable = ({ feedbackData }) => {
   // Sort by most recent first
-  const sortedData = [...feedbackData].sort((a, b) => 
+  const sortedData = [...feedbackData].sort((a, b) =>
     new Date(b.createdAt) - new Date(a.createdAt)
   );
 
   const truncateMessage = (message, maxLength = 100) => {
     if (!message) return '';
-    return message.length > maxLength 
-      ? `${message.substring(0, maxLength)}...` 
+    return message.length > maxLength
+      ? `${message.substring(0, maxLength)}...`
       : message;
   };
 
@@ -21,32 +20,32 @@ const FeedbackTable = ({ feedbackData }) => {
   };
 
   return (
-    <div className="feedback-table-container">
-      <h2>Recent Feedback</h2>
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md max-h-[400px] overflow-auto">
+      <h2 className="text-2xl font-semibold text-[#1e3a8a] dark:text-white mb-4">Recent Feedback</h2>
       
       {sortedData.length === 0 ? (
-        <p>No feedback data available.</p>
+        <p className="text-gray-600 dark:text-gray-300">No feedback data available.</p>
       ) : (
-        <table className="feedback-table">
+        <table className="w-full border-collapse">
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Subject</th>
-              <th>Message</th>
-              <th>Rating</th>
+              <th className="px-4 py-2 text-left border-b border-gray-200 dark:border-gray-700">Date</th>
+              <th className="px-4 py-2 text-left border-b border-gray-200 dark:border-gray-700">Name</th>
+              <th className="px-4 py-2 text-left border-b border-gray-200 dark:border-gray-700">Email</th>
+              <th className="px-4 py-2 text-left border-b border-gray-200 dark:border-gray-700">Subject</th>
+              <th className="px-4 py-2 text-left border-b border-gray-200 dark:border-gray-700">Message</th>
+              <th className="px-4 py-2 text-left border-b border-gray-200 dark:border-gray-700">Rating</th>
             </tr>
           </thead>
           <tbody>
             {sortedData.map((item, index) => (
-              <tr key={index}>
-                <td>{formatDate(item.createdAt)}</td>
-                <td>{item.name || 'N/A'}</td>
-                <td>{item.email || 'N/A'}</td>
-                <td>{item.subject || 'N/A'}</td>
-                <td>{truncateMessage(item.message)}</td>
-                <td>{item.rating}/5</td>
+              <tr key={index} className="hover:bg-gray-100 dark:hover:bg-gray-600">
+                <td className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{formatDate(item.createdAt)}</td>
+                <td className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{item.name || 'N/A'}</td>
+                <td className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{item.email || 'N/A'}</td>
+                <td className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{item.subject || 'N/A'}</td>
+                <td className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{truncateMessage(item.message)}</td>
+                <td className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{item.rating}/5</td>
               </tr>
             ))}
           </tbody>

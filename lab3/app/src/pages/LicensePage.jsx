@@ -5,7 +5,7 @@ const LicensePage = () => {
   return (
     <>
       <Header></Header>
-      <main className="flex-1 bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 dark:bg-gray-800">
+      <main className="flex-1 bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 dark:bg-gray-800 min-h-[80.4vh]">
         <div className="mx-auto max-w-3xl rounded-lg bg-white p-8 shadow-lg dark:bg-gray-700 dark:shadow-xl">
           <h2 className="text-3xl font-bold text-gray-800 dark:text-white">License</h2>
           <p className="mt-4 text-center text-gray-600 dark:text-gray-300">

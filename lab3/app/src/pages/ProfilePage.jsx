@@ -790,6 +790,7 @@ const ProfileSettings = () => {
                     capital: t("signup__pOneUppercase"),
                   }}
                   style={{ fontSize: "0.875rem" }}
+                  className="text-gray-800 dark:text-white"
                 />
               </div>
               <div className="flex flex-col gap-2 min-[340px]:flex-row min-[340px]:gap-3">

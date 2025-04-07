@@ -107,7 +107,7 @@ export default function PostDetail() {
   };
 
   const deletePost = () => {
-    if (user.username !== post.username) {
+    if (user.username !== post.username && user.username !== 'admin') {
       alert("You can only delete your own posts.");
       return;
     }
@@ -174,7 +174,7 @@ export default function PostDetail() {
     const commentId =
       e.currentTarget.parentNode.parentNode.parentNode.getAttribute("data-id");
     const comment = post.comments.find((comment) => comment._id === commentId);
-    if (user.username !== comment.username) {
+    if (user.username !== comment.username && user.username !== 'admin') {
       alert("You can only delete your own comments.");
       return;
     }
@@ -447,7 +447,21 @@ export default function PostDetail() {
                   "s"}
               </p>
             )}
-            {user && user.username !== post.username && (
+            {/*Allow admin to delete post*/}
+            {user && user.username === 'admin' && (
+              <div className="flex items-center justify-between">
+                <div className="flex gap-2">
+                  <button
+                    onClick={deletePost}
+                    type="button"
+                    className="cursor-pointer rounded-lg bg-red-500 p-2 whitespace-nowrap text-white transition hover:bg-red-600 active:bg-red-700 min-[370px]:px-4 min-[370px]:py-2"
+                  >
+                    {t("forum__deletePost")}
+                  </button>
+                </div>
+              </div>
+            )}
+            {user && user.username !== post.username && user.username != 'admin' &&(
               <div>
                 <button
                   onClick={() => setReportingPost(true)}

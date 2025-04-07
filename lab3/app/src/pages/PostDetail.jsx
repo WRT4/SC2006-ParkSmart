@@ -274,7 +274,7 @@ export default function PostDetail() {
       <Header></Header>
       {isEditingPost ? (
         <form
-          className="flex items-center justify-center dark:bg-gray-800"
+          className="flex items-center justify-center dark:bg-gray-800 min-h-[80.4vh]"
           onSubmit={(e) => {
             e.preventDefault();
             editPost();
@@ -365,7 +365,7 @@ export default function PostDetail() {
           </div>
         </form>
       ) : (
-        <div className="flex flex-col items-center justify-center gap-6 bg-gray-100 p-4 dark:bg-gray-800">
+        <div className="flex flex-col items-center justify-center gap-6 bg-gray-100 p-4 dark:bg-gray-800 min-h-[80.4vh]">
           <div className="grid w-full max-w-[800px] gap-4 rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-700">
             <p className="text-2xl font-semibold dark:text-white">
               {title ? title : post.title}
@@ -448,7 +448,7 @@ export default function PostDetail() {
               </p>
             )}
             {/*Allow admin to delete post*/}
-            {user && user.username === 'admin' && (
+            {user && user.username === 'admin' && post.username !== 'admin' && (
               <div className="flex items-center justify-between">
                 <div className="flex gap-2">
                   <button

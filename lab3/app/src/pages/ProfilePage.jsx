@@ -193,7 +193,9 @@ const ProfileSettings = () => {
                       <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
                     </svg>
                     {t("profile__emailAddress")}
-                    <span className="ml-1 text-gray-600 dark:text-gray-300">{user.email}</span>
+                    <span className="ml-1 text-gray-600 dark:text-gray-300">
+                      {user.email}
+                    </span>
                   </span>
                 </div>
 
@@ -249,7 +251,9 @@ const ProfileSettings = () => {
                   <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2M2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
                 </svg>
                 <div>
-                  <h3 className="font-medium dark:text-white">{t("profile__changePassword")}</h3>
+                  <h3 className="font-medium dark:text-white">
+                    {t("profile__changePassword")}
+                  </h3>
                   <p className="text-sm text-gray-500 dark:text-gray-300">
                     {t("profile__updatePasswordRegularly")}
                   </p>
@@ -281,13 +285,18 @@ const ProfileSettings = () => {
                   />
                 </svg>
                 <div>
-                  <h3 className="font-medium dark:text-white">{t("profile__twoFactorAuth")}</h3>
+                  <h3 className="font-medium dark:text-white">
+                    {t("profile__twoFactorAuth")}
+                  </h3>
                   <p className="text-sm text-gray-500 dark:text-gray-300">
                     {t("profile__addExtraLayerSecurity")}
                   </p>
                 </div>
               </div>
-              <button className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-800 transition hover:bg-gray-100 active:bg-gray-200 dark:border-gray-600 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500 dark:active:bg-gray-400">
+              <button
+                disabled
+                className="cursor-not-allowed rounded-md border border-gray-300 bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 transition dark:border-gray-600 dark:bg-gray-600 dark:text-white"
+              >
                 {t("profile__enableButton")}
               </button>
             </div>
@@ -385,7 +394,9 @@ const ProfileSettings = () => {
           </svg>
         </button>
         <section className="grid gap-4 p-4 dark:bg-gray-800">
-          <p className="text-xl font-bold dark:text-white">{t("profile__editProfile")}</p>
+          <p className="text-xl font-bold dark:text-white">
+            {t("profile__editProfile")}
+          </p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -478,10 +489,15 @@ const ProfileSettings = () => {
                     required
                     defaultValue={user.carPlateNumber}
                   ></input>
-                </div><p className="text-sm text-gray-600 dark:text-gray-300">Format: ABC-1234</p>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  Format: ABC-1234
+                </p>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="username" className="dark:text-white">{t("signup__username")}</label>
+                <label htmlFor="username" className="dark:text-white">
+                  {t("signup__username")}
+                </label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -553,7 +569,9 @@ const ProfileSettings = () => {
           </svg>
         </button>
         <section className="grid gap-4 p-4 dark:bg-gray-800">
-          <p className="text-xl font-bold dark:text-white">{t("profile__editPassword")}</p>
+          <p className="text-xl font-bold dark:text-white">
+            {t("profile__editPassword")}
+          </p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -640,7 +658,9 @@ const ProfileSettings = () => {
                 </div>
               </div>
               <div className="newPassword grid gap-1">
-                <label htmlFor="newPassword" className="dark:text-white">{t("signup__password")}</label>
+                <label htmlFor="newPassword" className="dark:text-white">
+                  {t("signup__password")}
+                </label>
                 <div className="relative inline-flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

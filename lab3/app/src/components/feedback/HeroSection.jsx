@@ -12,7 +12,9 @@ const HeroSection = () => {
 
   return (
     <section className="grid gap-5 bg-blue-100 px-4 py-12 text-center dark:bg-[#1e293b]">
-      <p className="text-2xl font-bold text-gray-800 dark:text-white">{t("feedback__howCanWeHelpYou")}</p>
+      <p className="text-2xl font-bold text-gray-800 dark:text-white">
+        {t("feedback__howCanWeHelpYou")}
+      </p>
       <form
         className="mx-auto w-full max-w-md"
         onSubmit={(e) => {
@@ -46,13 +48,15 @@ const HeroSection = () => {
           <input
             type="search"
             id="default-search"
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-[#273244] dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className="block w-full cursor-not-allowed rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:bg-gray-200 dark:border-gray-600 dark:bg-[#273244] dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             placeholder={t("feedback__searchArticles")}
             required
+            disabled
           />
           <button
             type="submit"
-            className="absolute end-2.5 bottom-2.5 rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            disabled
+            className="absolute end-2.5 bottom-2.5 cursor-not-allowed rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white disabled:bg-gray-500 dark:bg-blue-600"
           >
             {t("feedback__searchButton")}
           </button>

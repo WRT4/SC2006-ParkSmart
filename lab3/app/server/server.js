@@ -173,7 +173,43 @@ const FeedbackSchema = new mongoose.Schema({
 
 const Feedback = mongoose.model("Feedback", FeedbackSchema);
 
+const AboutMissionSchema = new mongoose.Schema({
+  aboutText: {
+      type: String,
+      required: true,
+  },
+  missionText: {
+      type: String,
+      required: true,
+  },
+});
+
+const AboutMission = mongoose.model("AboutMission", AboutMissionSchema);
+module.exports = AboutMission;
+
 // API Routes
+
+// Route to update About and Mission
+app.put("/api/about-mission/update", async (req, res) => {
+  const { aboutText, missionText } = req.body;
+
+  try {
+      // Find and update the About and Mission text, create if not found (upsert: true)
+      const updatedAboutMission = await AboutMission.findOneAndUpdate(
+          {}, // Empty filter to find the document (or specify if you have conditions)
+          { aboutText, missionText },
+          {
+              new: true, // Return the updated document
+              upsert: true, // Create a new document if one doesn't exist
+          }
+      );
+
+      res.status(200).json(updatedAboutMission);
+  } catch (error) {
+      console.error("Error updating About and Mission:", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 // Get all feedback
 app.get("/api/feedbacks", async (req, res) => {

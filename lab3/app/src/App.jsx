@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
@@ -71,6 +71,11 @@ function App() {
     {
       path: "about",
       element: <About />,
+    },
+    // Catch-all route for invalid paths and redirect to home
+    {
+      path: "*",
+      element: <Navigate to="/" replace />,
     },
   ]);
 

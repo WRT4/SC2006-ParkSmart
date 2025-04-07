@@ -32,6 +32,7 @@ const FeedbackTable = ({ feedbackData }) => {
             <tr>
               <th>Date</th>
               <th>Name</th>
+              <th>Email</th>
               <th>Subject</th>
               <th>Message</th>
               <th>Rating</th>
@@ -42,6 +43,7 @@ const FeedbackTable = ({ feedbackData }) => {
               <tr key={index}>
                 <td>{formatDate(item.createdAt)}</td>
                 <td>{item.name || 'N/A'}</td>
+                <td>{item.email || 'N/A'}</td>
                 <td>{item.subject || 'N/A'}</td>
                 <td>{truncateMessage(item.message)}</td>
                 <td>{item.rating}/5</td>

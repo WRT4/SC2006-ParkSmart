@@ -83,7 +83,7 @@ export default function Forum() {
   return (
     <>
       <Header></Header>
-      <main className="flex flex-col gap-4 bg-gray-100 p-4 min-[840px]:flex-row dark:bg-gray-800">
+      <main className="flex flex-col gap-4 bg-gray-100 p-4 min-[840px]:flex-row dark:bg-gray-800 min-h-[80.4vh]">
         <section className="flex flex-col gap-4 min-[840px]:grow min-[840px]:basis-0">
           <p className="text-center text-2xl font-bold dark:text-white">
             {t("forum__forum")}

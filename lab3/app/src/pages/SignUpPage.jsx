@@ -19,6 +19,7 @@ export default function SignUpPage() {
   const { user, setUser } = useContext(AuthContext);
   const [errorState, setErrorState] = useState(false);
   const { t } = useTranslation();
+  const [errorMessage, setErrorMessage] = useState("An error has occurred. Please try again.");
 
   if (user) {
     return <Navigate to="/home" />;
@@ -44,7 +45,10 @@ export default function SignUpPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error("An error has occurred. Please try again.");
+        // Show backend error message
+        setErrorState(true);
+        setErrorMessage(data.message || "An error has occurred. Please try again.");
+        return;
       }
       setUser(data.user);
       // Optionally, save the token in localStorage/sessionStorage if using JWT
@@ -122,6 +126,7 @@ export default function SignUpPage() {
                     required
                     onChange={(e) => {
                       setEmail(e.target.value);
+                      if (errorMessage) setErrorMessage("An error has occurred. Please try again.");
                     }}
                   ></input>
                 </div>
@@ -202,6 +207,7 @@ export default function SignUpPage() {
                     id="username"
                     onChange={(e) => {
                       setUsername(e.target.value);
+                      if (errorMessage) setErrorMessage("An error has occurred. Please try again.");
                     }}
                     required
                   ></input>
@@ -311,9 +317,9 @@ export default function SignUpPage() {
                   </span>
                 </label>
               </div>
-              <small className={errorState ? "text-red-600" : "hidden"}>
-                An error occurred. Please try again later.
-              </small>
+              {errorState && (
+                <p className="text-red-500 text-sm">{errorMessage}</p>
+              )}
               <button
                 type="submit"
                 className="cursor-pointer rounded-md bg-blue-600 p-2 font-semibold text-neutral-100 shadow-md transition hover:bg-blue-700 active:bg-blue-800"

@@ -231,7 +231,7 @@ const ProfileSettings = () => {
               </button>
             </div>
           </div>
-
+          
           {/* Security Settings */}
           <div className="mb-6 rounded-lg bg-white p-6 shadow-sm dark:bg-gray-700">
             <h2 className="mb-4 text-lg font-semibold dark:text-white">
@@ -400,7 +400,18 @@ const ProfileSettings = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSave();
+              // Check if there are any errors
+              if (usernameError || emailError) {
+                // Display alert if there's any error
+                if (usernameError) {
+                  alert(`Username Error: ${usernameError}`);
+                }
+                if (emailError) {
+                  alert(`Email Error: ${emailError}`);
+                }
+              } else {
+                handleSave();
+              }
             }}
           >
             <div className="grid gap-2">

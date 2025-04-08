@@ -61,7 +61,7 @@ npx vite
 ```
 
 - Frontend: Open your browser and go to http://localhost:5173 (or the port you're using for the React app).
-- Backend: Saved data should be viewable on MongoDB Compass.
+- Backend: Saved data should be viewable on MongoDB Compass, connect to local/cloud URIs.
 
 ## Usage
 

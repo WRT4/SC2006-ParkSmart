@@ -135,20 +135,34 @@ app.put("/api/about-mission/update", async (req, res) => {
   const { aboutText, missionText } = req.body;
 
   try {
-      // Find and update the About and Mission text, create if not found (upsert: true)
-      const updatedAboutMission = await AboutMission.findOneAndUpdate(
-          {}, // Empty filter to find the document (or specify if you have conditions)
-          { aboutText, missionText },
-          {
-              new: true, // Return the updated document
-              upsert: true, // Create a new document if one doesn't exist
-          }
-      );
+    // Find and update the About and Mission text, create if not found (upsert: true)
+    const updatedAboutMission = await AboutMission.findOneAndUpdate(
+      {}, // Empty filter to find the document (or specify if you have conditions)
+      { aboutText, missionText },
+      {
+        new: true, // Return the updated document
+        upsert: true, // Create a new document if one doesn't exist
+      },
+    );
 
-      res.status(200).json(updatedAboutMission);
+    res.status(200).json(updatedAboutMission);
   } catch (error) {
-      console.error("Error updating About and Mission:", error);
-      res.status(500).json({ message: "Internal server error" });
+    console.error("Error updating About and Mission:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Route to get About and Mission text
+app.get("/api/about-mission/get", async (req, res) => {
+  try {
+    const aboutMission = await AboutMission.findOne(
+      {},
+      { aboutText: 1, missionText: 1, _id: 0 },
+    );
+    res.json(aboutMission);
+  } catch (error) {
+    console.error("Error retrieving About and Mission:", error);
+    res.status(500).json({ error: "Failed to retrieve About and Mission" });
   }
 });
 
@@ -195,16 +209,18 @@ app.get("/api/reports", async (req, res) => {
 
         // Find the comment text if the report references a comment
         const commentText = report.commentId
-          ? post?.comments.find(c => c._id.toString() === report.commentId.toString())?.text
+          ? post?.comments.find(
+              (c) => c._id.toString() === report.commentId.toString(),
+            )?.text
           : null;
 
         // Add post title and comment text to the report
         return {
           ...report,
           postTitle: post?.title || "Unknown Post", // Use default if no post is found
-          commentText: commentText || null,         // Use null if no comment found
+          commentText: commentText || null, // Use null if no comment found
         };
-      })
+      }),
     );
 
     res.json(enrichedReports);
@@ -674,7 +690,7 @@ app.put("/api/auth/change-password", async (req, res) => {
 });
 
 // DELETE endpoint to delete user account
-app.delete('/api/users/delete', verifyToken, async (req, res) => {
+app.delete("/api/users/delete", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id; // From the verified JWT token
 
@@ -682,14 +698,14 @@ app.delete('/api/users/delete', verifyToken, async (req, res) => {
     const user = await User.findByIdAndDelete(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     // Send success response
-    res.status(200).json({ message: 'Account deleted successfully' });
+    res.status(200).json({ message: "Account deleted successfully" });
   } catch (error) {
     console.error("Error deleting account:", error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 

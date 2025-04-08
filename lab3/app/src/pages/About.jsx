@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../auth/AuthWrapper";
 
 export default function About() {
@@ -41,6 +41,28 @@ export default function About() {
       alert("Error updating About and Mission. Please try again.");
     }
   };
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/about-mission/get", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.aboutText) setAboutText(data.aboutText);
+        if (data.missionText) setMissionText(data.missionText);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  }, []);
 
   return (
     <>

@@ -7,6 +7,7 @@ import Title from "../components/Title";
 import Header from "../components/Header";
 import { useTranslation } from "react-i18next";
 import Footer from "../components/Footer";
+import SignUpController from "../controllers/SignUpController";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -19,52 +20,29 @@ export default function SignUpPage() {
   const { user, setUser } = useContext(AuthContext);
   const [errorState, setErrorState] = useState(false);
   const { t } = useTranslation();
-  const [errorMessage, setErrorMessage] = useState("An error has occurred. Please try again.");
+  const [errorMessage, setErrorMessage] = useState(
+    "An error has occurred. Please try again.",
+  );
 
   if (user) {
     return <Navigate to="/home" />;
   }
-
-  const signUp = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
-        // Updated to the correct signup endpoint
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          username,
-          carPlateNumber,
-          name,
-        }), // Send username along with email and password
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        // Show backend error message
-        setErrorState(true);
-        setErrorMessage(data.message || "An error has occurred. Please try again.");
-        return;
-      }
-      setUser(data.user);
-      // Optionally, save the token in localStorage/sessionStorage if using JWT
-      localStorage.setItem("token", data.token); // assuming the server returns a token
-      navigate("/home");
-    } catch (err) {
-      setErrorState(true);
-    }
+  const signUpController = new SignUpController();
+  const signUp = (data) => {
+    signUpController.signUp(
+      navigate,
+      setErrorState,
+      setErrorMessage,
+      setUser,
+      data,
+    );
   };
+
   return (
     <>
       <Header></Header>
       <div className="signup flex min-h-full min-w-full flex-col min-[600px]:flex-row">
-        <section className="flex grow flex-col items-center justify-center gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-10 dark:bg-gray-800 dark:text-white min-h-[80vh]">
-          {/* <Title colorDark="text-black"></Title> */}
-
+        <section className="flex min-h-[80vh] grow flex-col items-center justify-center gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-10 dark:bg-gray-800 dark:text-white">
           <p className="2xl:text-4x; max-w-[350px] text-xl font-bold min-[400px]:text-2xl min-[450px]:text-3xl min-[600px]:text-start">
             {t("signup__joinParkingCommunity")}
           </p>
@@ -90,7 +68,8 @@ export default function SignUpPage() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              signUp();
+              signUp({ email, password, username, carPlateNumber, name });
+              console.log("HI!");
             }}
             className="grid max-w-[400px] gap-5 self-center p-4 text-start min-[600px]:max-w-[600px]"
           >
@@ -126,7 +105,10 @@ export default function SignUpPage() {
                     required
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      if (errorMessage) setErrorMessage("An error has occurred. Please try again.");
+                      if (errorMessage)
+                        setErrorMessage(
+                          "An error has occurred. Please try again.",
+                        );
                     }}
                   ></input>
                 </div>
@@ -207,7 +189,10 @@ export default function SignUpPage() {
                     id="username"
                     onChange={(e) => {
                       setUsername(e.target.value);
-                      if (errorMessage) setErrorMessage("An error has occurred. Please try again.");
+                      if (errorMessage)
+                        setErrorMessage(
+                          "An error has occurred. Please try again.",
+                        );
                     }}
                     required
                   ></input>
@@ -286,7 +271,13 @@ export default function SignUpPage() {
                   </button>
                 </div>
                 <PasswordChecklist
-                  rules={["minLength", "specialChar", "number", "capital", "lowercase"]}
+                  rules={[
+                    "minLength",
+                    "specialChar",
+                    "number",
+                    "capital",
+                    "lowercase",
+                  ]}
                   minLength={8}
                   value={password}
                   messages={{
@@ -319,7 +310,7 @@ export default function SignUpPage() {
                 </label>
               </div>
               {errorState && (
-                <p className="text-red-500 text-sm">{errorMessage}</p>
+                <p className="text-sm text-red-500">{errorMessage}</p>
               )}
               <button
                 type="submit"

@@ -15,7 +15,7 @@ const HeroSection = () => {
       <p className="text-2xl font-bold text-gray-800 dark:text-white">
         {t("feedback__howCanWeHelpYou")}
       </p>
-      <form
+      {/* <form
         className="mx-auto w-full max-w-md"
         onSubmit={(e) => {
           e.preventDefault();
@@ -61,7 +61,7 @@ const HeroSection = () => {
             {t("feedback__searchButton")}
           </button>
         </div>
-      </form>
+      </form> */}
     </section>
   );
 };

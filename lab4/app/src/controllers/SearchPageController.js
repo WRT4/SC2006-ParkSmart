@@ -1,4 +1,5 @@
 import { getDistance } from "geolib";
+import RecordRepository from "../repositories/RecordRepository";
 
 export default class SearchPageController {
   constructor() {}
@@ -188,70 +189,92 @@ export default class SearchPageController {
       availabilityLimit,
     },
   ) => {
-    if (freeParking) {
-      records = records.filter((record) => record.free_parking !== "NO");
-    }
-    if (nightParking === "yes") {
-      records = records.filter((record) => record.night_parking === "YES");
-    }
-
-    if (!availFilter.available) {
-      records = records.filter((record) => {
-        const carpark = avail.find(
-          (el) => el.carpark_number === record.car_park_no,
-        );
-        if (carpark) {
-          const lotsAvailable = carpark.carpark_info[0].lots_available;
-          const totalLots = carpark.carpark_info[0].total_lots;
-          if (lotsAvailable / totalLots >= availabilityLimit) {
-            return false;
-          }
-        }
-        return true;
-      });
-    }
-
-    if (!availFilter.limited) {
-      records = records.filter((record) => {
-        const carpark = avail.find(
-          (el) => el.carpark_number === record.car_park_no,
-        );
-        if (carpark) {
-          const lotsAvailable = carpark.carpark_info[0].lots_available;
-          const totalLots = carpark.carpark_info[0].total_lots;
-          if (
-            lotsAvailable / totalLots > 0 &&
-            lotsAvailable / totalLots < availabilityLimit
-          ) {
-            return false;
-          }
-        }
-        return true;
-      });
-    }
-
-    if (!availFilter.full) {
-      records = records.filter((record) => {
-        const carpark = avail.find(
-          (el) => el.carpark_number === record.car_park_no,
-        );
-        if (carpark) {
-          const lotsAvailable = carpark.carpark_info[0].lots_available;
-          if (parseInt(lotsAvailable) === 0) {
-            return false;
-          }
-        }
-        return true;
-      });
-    }
-
-    if (heightRestriction > 0) {
-      records = records.filter(
-        (record) => parseFloat(record.gantry_height) >= heightRestriction,
-      );
-    }
-    return records;
+    const recordRepository = new RecordRepository(records);
+    return recordRepository.filter({
+      freeParking,
+      availFilter,
+      nightParking,
+      heightRestriction,
+      avail,
+      availabilityLimit,
+    });
   };
+
+  // filter = (
+  //   records,
+  //   {
+  //     freeParking,
+  //     availFilter,
+  //     nightParking,
+  //     heightRestriction,
+  //     avail,
+  //     availabilityLimit,
+  //   },
+  // ) => {
+  //   if (freeParking) {
+  //     records = records.filter((record) => record.free_parking !== "NO");
+  //   }
+  //   if (nightParking === "yes") {
+  //     records = records.filter((record) => record.night_parking === "YES");
+  //   }
+
+  //   if (!availFilter.available) {
+  //     records = records.filter((record) => {
+  //       const carpark = avail.find(
+  //         (el) => el.carpark_number === record.car_park_no,
+  //       );
+  //       if (carpark) {
+  //         const lotsAvailable = carpark.carpark_info[0].lots_available;
+  //         const totalLots = carpark.carpark_info[0].total_lots;
+  //         if (lotsAvailable / totalLots >= availabilityLimit) {
+  //           return false;
+  //         }
+  //       }
+  //       return true;
+  //     });
+  //   }
+
+  //   if (!availFilter.limited) {
+  //     records = records.filter((record) => {
+  //       const carpark = avail.find(
+  //         (el) => el.carpark_number === record.car_park_no,
+  //       );
+  //       if (carpark) {
+  //         const lotsAvailable = carpark.carpark_info[0].lots_available;
+  //         const totalLots = carpark.carpark_info[0].total_lots;
+  //         if (
+  //           lotsAvailable / totalLots > 0 &&
+  //           lotsAvailable / totalLots < availabilityLimit
+  //         ) {
+  //           return false;
+  //         }
+  //       }
+  //       return true;
+  //     });
+  //   }
+
+  //   if (!availFilter.full) {
+  //     records = records.filter((record) => {
+  //       const carpark = avail.find(
+  //         (el) => el.carpark_number === record.car_park_no,
+  //       );
+  //       if (carpark) {
+  //         const lotsAvailable = carpark.carpark_info[0].lots_available;
+  //         if (parseInt(lotsAvailable) === 0) {
+  //           return false;
+  //         }
+  //       }
+  //       return true;
+  //     });
+  //   }
+
+  //   if (heightRestriction > 0) {
+  //     records = records.filter(
+  //       (record) => parseFloat(record.gantry_height) >= heightRestriction,
+  //     );
+  //   }
+  //   return records;
+  // };
 }
 
 function SVYtoWGS(x, y) {

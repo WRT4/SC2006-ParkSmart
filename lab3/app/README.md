@@ -30,21 +30,20 @@ cd 2006-FDAE-D2
 ### 2. Install dependencies
 
 ```
-cd lab4/app
+cd lab3/app
 npm i
 ```
 
-### 3. Set up MongoDB (Optional, if cloud database not working)
+### 3. Set up MongoDB
 
-Local MongoDB: Ensure you have MongoDB running locally on your machine. If you don’t have MongoDB installed, you can download it from [here](https://www.mongodb.com/try/download/community).
+Local MongoDB: Ensure you have MongoDB running locally on your machine. If you don’t have MongoDB installed, you can download it from [here](https://www.mongodb.com/try/download/community-kubernetes-operator).
 
 ### 4. Set up environment variables
 
 If you do not have the .env file in the repository, enter the following commands.
 
 ```
-echo LOCAL_MONGO_URI="mongodb://localhost:27017/sc2006" > .env
-echo CLOUD_MONGO_URI="mongodb+srv://wenrongtan16:7F5vZcLpytTXXl9z@wr.re7utjp.mongodb.net/sc2006?retryWrites=true&w=majority" >> .env
+echo MONGO_URI="mongodb://localhost:27017/sc2006" > .env
 echo ONEMAP_EMAIL="brandon02.lee@gmail.com" >> .env
 echo ONEMAP_PASSWORD="WQ!*PJwF7a#k*@" >> .env
 echo JWT_SECRET=123456 >> .env
@@ -61,7 +60,7 @@ npx vite
 ```
 
 - Frontend: Open your browser and go to http://localhost:5173 (or the port you're using for the React app).
-- Backend: Saved data should be viewable on MongoDB Compass, connect to local/cloud URIs.
+- Backend: Saved data should be viewable on MongoDB Compass.
 
 ## Usage
 

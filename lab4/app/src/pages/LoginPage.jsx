@@ -5,6 +5,7 @@ import Title from "../components/Title";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useTranslation } from "react-i18next";
+import LoginController from "../controllers/LoginController";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -20,46 +21,15 @@ export default function LoginPage() {
     return <Navigate to="/home" />;
   }
 
-  const signIn = async () => {
-    const emailInput = document.querySelector("#email");
-    const passwordInput = document.querySelector("#password");
-    if (!emailInput.checkValidity() || !passwordInput.checkValidity()) {
-      setError(true);
-      return;
-    }
-    setError(false);
-
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error("Error logging in.");
-      }
-      setUser(data.user);
-      // Optionally, save the token in localStorage/sessionStorage if using JWT
-      localStorage.setItem("token", data.token); // assuming the server returns a token
-      navigate("/home");
-    } catch (error) {
-      document.querySelector("#password").value = "";
-      document.querySelector(".incorrect").classList.remove("hidden");
-    }
-  };
+  const loginController = new LoginController();
+  const signIn = loginController.signIn;
 
   return (
     <>
       <Header></Header>
       <div className="flex min-h-full min-w-full flex-col min-[600px]:flex-row">
         <section className="flex grow flex-col gap-4 bg-sky-50 p-8 sm:gap-8 lg:gap-32 dark:bg-gray-800 dark:text-white">
-          {/* <Title colorDark="text-black"></Title> */}
-          <div className="flex flex-col items-center justify-center gap-8 p-4 lg:gap-16 min-h-[80vh]">
+          <div className="flex min-h-[80vh] flex-col items-center justify-center gap-8 p-4 lg:gap-16">
             <img
               src="./car.jpg"
               alt="Image of a car"
@@ -90,7 +60,7 @@ export default function LoginPage() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              signIn();
+              signIn(email, password, { setError, setUser, navigate });
             }}
             className="grid max-w-[400px] grow gap-5 self-center p-4 text-start min-[600px]:max-w-[600px]"
           >

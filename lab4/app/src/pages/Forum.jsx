@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ForumCard from "../components/ForumCard";
 import { useTranslation } from "react-i18next";
+import ForumController from "../controllers/ForumController";
 
 export default function Forum() {
   const [posts, setPosts] = useState([]);
@@ -25,65 +26,12 @@ export default function Forum() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      try {
-        // Set compression options
-        const options = {
-          maxSizeMB: 1, // Limit image size to 1MB
-          maxWidthOrHeight: 1024, // Resize to max 1024px width/height
-          useWebWorker: true, // Enable multi-threading for faster processing
-        };
-
-        // Compress the image
-        const compressedFile = await imageCompression(file, options);
-
-        // Convert the compressed file to base64 (if needed)
-        const reader = new FileReader();
-        reader.readAsDataURL(compressedFile);
-        reader.onloadend = () => {
-          setImage(compressedFile); // Set the file (not base64) for upload
-        };
-      } catch (error) {
-        console.error("Error compressing image:", error);
-      }
-    }
-  };
-
-  const createPost = async () => {
-    if (!user) {
-      alert("You must be logged in to create a post.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("username", user.username);
-
-    if (image) {
-      formData.append("image", image); // Send the compressed file
-    }
-
-    axios
-      .post("http://localhost:5000/api/posts", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => {
-        setPosts([...posts, res.data]);
-        setTitle("");
-        setContent("");
-        setImage("");
-      })
-      .catch((err) => console.log(err));
-  };
+  const forumController = new ForumController();
 
   return (
     <>
       <Header></Header>
-      <main className="flex flex-col gap-4 bg-gray-100 p-4 min-[840px]:flex-row dark:bg-gray-800 min-h-[80.4vh]">
+      <main className="flex min-h-[80.4vh] flex-col gap-4 bg-gray-100 p-4 min-[840px]:flex-row dark:bg-gray-800">
         <section className="flex flex-col gap-4 min-[840px]:grow min-[840px]:basis-0">
           <p className="text-center text-2xl font-bold dark:text-white">
             {t("forum__forum")}
@@ -93,7 +41,17 @@ export default function Forum() {
               className="flex items-center justify-center"
               onSubmit={(e) => {
                 e.preventDefault();
-                createPost();
+                forumController.createPost({
+                  posts,
+                  setPosts,
+                  setTitle,
+                  setContent,
+                  setImage,
+                  user,
+                  image,
+                  title,
+                  content,
+                });
               }}
             >
               <div className="w-full max-w-[500px] rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-700">
@@ -135,7 +93,9 @@ export default function Forum() {
                     type="file"
                     className="file:text-md w-full rounded-lg border border-gray-400 p-2 text-gray-600 file:cursor-pointer file:rounded-md file:border file:border-gray-600 file:bg-gray-200 file:p-1 file:px-2 file:text-black hover:file:bg-gray-300 active:file:bg-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:file:border-gray-600 dark:file:bg-gray-700 dark:file:text-white"
                     accept="image/*"
-                    onChange={handleImageChange}
+                    onChange={(e) =>
+                      forumController.handleImageChange(e, { setImage })
+                    }
                   />
                   {image && (
                     <img

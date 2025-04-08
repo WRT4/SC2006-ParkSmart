@@ -1,18 +1,22 @@
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import SignUpPage from "./pages/SignUpPage";
-import LoginPage from "./pages/LoginPage";
-import HomePage from "./pages/HomePage";
-import Index from "./pages/Index";
-import SearchPage from "./pages/SearchPage";
-import LoadingPage from "./pages/LoadingPage";
-import PostDetail from "./pages/PostDetail";
-import EditPost from "./pages/EditPost";
-import FeedbackPage from "./pages/FeedbackPage";
-import AdminDashboard from "./pages/AdminDashboard";
-import ProfilePage from "./pages/ProfilePage";
-import LicensePage from "./pages/LicensePage";
-import Forum from "./pages/Forum";
-import About from "./pages/About";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
+import SignUpPage from "./views/SignUpPage";
+import LoginPage from "./views/LoginPage";
+import HomePage from "./views/HomePage";
+import Index from "./views/Index";
+import SearchPage from "./views/SearchPage";
+import LoadingPage from "./views/LoadingPage";
+import PostDetail from "./views/PostDetail";
+import EditPost from "./views/EditPost";
+import FeedbackPage from "./views/FeedbackPage";
+import AdminDashboard from "./views/AdminDashboard";
+import ProfilePage from "./views/ProfilePage";
+import LicensePage from "./views/LicensePage";
+import Forum from "./views/Forum";
+import About from "./views/About";
 
 function App() {
   const router = createBrowserRouter([

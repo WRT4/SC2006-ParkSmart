@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import LoadingPage from "../pages/LoadingPage";
+import LoadingPage from "../views/LoadingPage";
 
 // Create context for user authentication
 export const AuthContext = createContext();

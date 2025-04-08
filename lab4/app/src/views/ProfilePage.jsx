@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Dialog from "@mui/material/Dialog";
 import PasswordChecklist from "react-password-checklist";
 import { useTranslation } from "react-i18next";
+import ProfileController from "../controllers/ProfileController";
 
 const ProfileSettings = () => {
   const { user, setUser } = useContext(AuthContext); // Get user from AuthContext
@@ -34,143 +35,12 @@ const ProfileSettings = () => {
     return <Navigate to="/login" />;
   }
 
-  const handleDeleteAccount = async () => {
-    if (user && user.username === "admin") {
-      alert("Admin account cannot be deleted.");
-      return;
-    }
-    // Show a confirmation dialog to the user
-    const confirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
-
-    if (confirmed) {
-        setIsDeleting(true);  // Set deleting state to show loading or handle progress
-
-        try {
-            // Call the delete API endpoint to remove the account
-            const response = await fetch("http://localhost:5000/api/users/delete", {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
-
-            if (response.ok) {
-                // Handle successful deletion (e.g., log out the user, show success message)
-                localStorage.removeItem("token"); // Remove the token or log out
-                window.location.href = "/login";  // Redirect to login or home page
-            } else {
-                // Handle errors, e.g., show an error message
-                const data = await response.json();
-                alert(data.message || "An error occurred while deleting your account.");
-            }
-        } catch (error) {
-            console.error("Error deleting account:", error);
-            alert("An error occurred while deleting your account.");
-        } finally {
-            setIsDeleting(false);  // Reset the deleting state
-        }
-    }
-  };
-
-  const handleEditCancel = () => {
-    setIsEditing(false);
-    setUsername(user.username); // Reset username to original value
-    setEmail(user.email); // Reset email to original value
-    setName(user.name); // Reset email to original value
-    setCarPlateNumber(user.carPlateNumber); // Reset email to original value
-    setUsernameError(""); // Clear previous errors
-    setEmailError("");
-  };
-
-  const handleSave = async () => {
-    setUsernameError(""); // Clear previous errors
-    setEmailError("");
-  
-    const updatedUser = {
-      current_username: user.username,
-      username,
-      email,
-      carPlateNumber,
-      name,
-    };
-  
-    try {
-      const response = await fetch("http://localhost:5000/api/users/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedUser),
-      });
-  
-      const data = await response.json();
-  
-      if (!response.ok) {
-        if (data.message === "Username already exists") {
-          setUsernameError("Username already exists");
-          alert("Username Error: Username already exists"); // Alert for username error
-        }
-        if (data.message === "Email already in use") {
-          setEmailError("Email already in use");
-          alert("Email Error: Email already in use"); // Alert for email error
-        }
-        throw new Error(data.message);
-      }
-      setUser(data.user);
-      if (data.token) localStorage.setItem("token", data.token);
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
-    setIsEditing(false);
-  };
-  
-
-  const handlePasswordCancel = () => {
-    setIsChangingPassword(false);
-    setCurrentPassword("");
-    setNewPassword("");
-    setCurrentPasswordVisibility(false);
-    setNewPasswordVisibility(false);
-  };
-
-  const handlePasswordSave = async () => {
-    const updatedUser = { user, currentPassword, newPassword };
-    console.log(updatedUser, JSON.stringify(updatedUser));
-    try {
-      console.log("entered try");
-      console.log(updatedUser);
-      const response = await fetch(
-        "http://localhost:5000/api/auth/change-password",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedUser),
-        },
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json(); // Parse error message from response
-        console.log("Error:", errorData.message);
-
-        throw new Error(errorData.message);
-      }
-
-      alert("Password updated successfully!");
-      setIsChangingPassword(false);
-      setCurrentPassword("");
-      setNewPassword("");
-      setCurrentPasswordVisibility(false);
-      setNewPasswordVisibility(false);
-      const data = await response.json();
-      setUser(data.user);
-      if (data.token) localStorage.setItem("token", data.token);
-    } catch (error) {
-      console.error("Error changing password:", error);
-      alert(
-        `Failed to update password. Please try again. Error: ${error.message || error}`,
-      );
-      console.log("after!");
-    }
-  };
+  const profileController = new ProfileController();
+  const handleEditCancel = profileController.handleEditCancel;
+  const handleSave = profileController.handleSave;
+  const handlePasswordCancel = profileController.handlePasswordCancel;
+  const handlePasswordSave = profileController.handlePasswordSave;
+  const handleDeleteAccount = profileController.handleDeleteAccount;
 
   return (
     <>
@@ -273,7 +143,7 @@ const ProfileSettings = () => {
               </button>
             </div>
           </div>
-          
+
           {/* Security Settings */}
           <div className="mb-6 rounded-lg bg-white p-6 shadow-sm dark:bg-gray-700">
             <h2 className="mb-4 text-lg font-semibold dark:text-white">
@@ -389,9 +259,10 @@ const ProfileSettings = () => {
               {t("profile__logout")}
             </button>
 
-            <button 
-              onClick={handleDeleteAccount}
-              className="flex w-full cursor-pointer items-center justify-center rounded-md border border-red-300 p-3 font-medium text-red-500 transition hover:bg-red-500 hover:text-white active:bg-red-600 active:text-white dark:border-red-800 dark:text-red-400 dark:hover:bg-red-800 dark:hover:text-white">
+            <button
+              onClick={() => handleDeleteAccount(user, { setIsDeleting })}
+              className="flex w-full cursor-pointer items-center justify-center rounded-md border border-red-300 p-3 font-medium text-red-500 transition hover:bg-red-500 hover:text-white active:bg-red-600 active:text-white dark:border-red-800 dark:text-red-400 dark:hover:bg-red-800 dark:hover:text-white"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -410,13 +281,33 @@ const ProfileSettings = () => {
 
       {/* Edit Profile Dialog */}
       <Dialog
-        onClose={handleEditCancel}
+        onClose={() =>
+          handleEditCancel(user, {
+            setIsEditing,
+            setUsername,
+            setEmail,
+            setName,
+            setCarPlateNumber,
+            setUsernameError,
+            setEmailError,
+          })
+        }
         open={isEditing}
         closeAfterTransition={false}
         className="relative"
       >
         <button
-          onClick={handleEditCancel}
+          onClick={() =>
+            handleEditCancel(user, {
+              setIsEditing,
+              setUsername,
+              setEmail,
+              setName,
+              setCarPlateNumber,
+              setUsernameError,
+              setEmailError,
+            })
+          }
           type="button"
           className="absolute top-1 right-1 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-500 focus:outline-none focus:ring-inset dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
         >
@@ -444,7 +335,16 @@ const ProfileSettings = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSave();
+              handleSave(user, {
+                setUsernameError,
+                setEmailError,
+                username,
+                email,
+                carPlateNumber,
+                name,
+                setUser,
+                setIsEditing,
+              });
             }}
           >
             <div className="grid gap-2">
@@ -571,7 +471,17 @@ const ProfileSettings = () => {
                   {t("profile__saveChanges")}
                 </button>
                 <button
-                  onClick={handleEditCancel}
+                  onClick={() =>
+                    handleEditCancel(user, {
+                      setIsEditing,
+                      setUsername,
+                      setEmail,
+                      setName,
+                      setCarPlateNumber,
+                      setUsernameError,
+                      setEmailError,
+                    })
+                  }
                   type="button"
                   className="grow basis-0 cursor-pointer rounded-md bg-gray-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-600 active:bg-gray-700"
                 >
@@ -585,13 +495,29 @@ const ProfileSettings = () => {
 
       {/* Change Password Dialog */}
       <Dialog
-        onClose={handlePasswordCancel}
+        onClose={() =>
+          handlePasswordCancel({
+            setIsChangingPassword,
+            setCurrentPassword,
+            setNewPassword,
+            setCurrentPasswordVisibility,
+            setNewPasswordVisibility,
+          })
+        }
         open={isChangingPassword}
         closeAfterTransition={false}
         className="relative"
       >
         <button
-          onClick={handlePasswordCancel}
+          onClick={() =>
+            handlePasswordCancel({
+              setIsChangingPassword,
+              setCurrentPassword,
+              setNewPassword,
+              setCurrentPasswordVisibility,
+              setNewPasswordVisibility,
+            })
+          }
           type="button"
           className="absolute top-1 right-1 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-500 focus:outline-none focus:ring-inset dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
         >
@@ -619,7 +545,17 @@ const ProfileSettings = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handlePasswordSave();
+              handlePasswordSave({
+                user,
+                currentPassword,
+                newPassword,
+                setIsChangingPassword,
+                setCurrentPassword,
+                setNewPassword,
+                setCurrentPasswordVisibility,
+                setNewPasswordVisibility,
+                setUser,
+              });
             }}
           >
             <div className="grid gap-2">
@@ -780,7 +716,13 @@ const ProfileSettings = () => {
                   </button>
                 </div>
                 <PasswordChecklist
-                  rules={["minLength", "specialChar", "number", "capital", "lowercase"]}
+                  rules={[
+                    "minLength",
+                    "specialChar",
+                    "number",
+                    "capital",
+                    "lowercase",
+                  ]}
                   minLength={8}
                   value={newPassword}
                   messages={{
@@ -802,7 +744,15 @@ const ProfileSettings = () => {
                   {t("profile__saveChanges")}
                 </button>
                 <button
-                  onClick={handlePasswordCancel}
+                  onClick={() =>
+                    handlePasswordCancel({
+                      setIsChangingPassword,
+                      setCurrentPassword,
+                      setNewPassword,
+                      setCurrentPasswordVisibility,
+                      setNewPasswordVisibility,
+                    })
+                  }
                   type="button"
                   className="grow basis-0 cursor-pointer rounded-md bg-gray-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-600 active:bg-gray-700"
                 >

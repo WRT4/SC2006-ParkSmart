@@ -1,8 +1,8 @@
-import Header from "../components/Header";
-import { AuthContext } from "../auth/AuthWrapper";
+import Header from "../components/Header.jsx";
+import { AuthContext } from "../auth/AuthWrapper.jsx";
 import { useState, useContext, useEffect, useRef, useReducer } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import SearchResult from "../components/SearchResult";
+import SearchResult from "../components/SearchResult.jsx";
 import DisplayResult from "../components/DisplayResult.jsx";
 import { getDistance } from "geolib";
 import { Slider } from "@mui/material";

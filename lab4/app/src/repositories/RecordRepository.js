@@ -1,14 +1,22 @@
+// The RecordRepository class is an example of the Repository Pattern,
+// which abstracts and encapsulates data access and filtering logic.
+// This pattern helps separate the business logic from how data is retrieved or modified.
 export default class RecordRepository {
   constructor(records) {
+    // The repository is initialized with a collection of records.
+    // This local state is what the repository manages and filters.
     this.records = records;
   }
 
+  // This method filters the records to include only those with free parking.
+  // It encapsulates one specific rule for data filtering.
   filterByFreeParking = () => {
     this.records = this.records.filter(
       (record) => record.free_parking !== "NO",
     );
   };
 
+  // This method filters the records to include only those with night parking.
   filterByNightParking = () => {
     this.records = this.records.filter(
       (record) => record.night_parking === "YES",

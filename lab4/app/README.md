@@ -36,7 +36,7 @@ npm i
 
 ### 3. Set up MongoDB (Optional, if cloud database not working)
 
-Local MongoDB: Ensure you have MongoDB running locally on your machine. If you don’t have MongoDB installed, you can download it from [here](https://www.mongodb.com/try/download/community-kubernetes-operator).
+Local MongoDB: Ensure you have MongoDB running locally on your machine. If you don’t have MongoDB installed, you can download it from [here](https://www.mongodb.com/try/download/community).
 
 ### 4. Set up environment variables
 

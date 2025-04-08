@@ -30,11 +30,11 @@ cd 2006-FDAE-D2
 ### 2. Install dependencies
 
 ```
-cd lab3/app
+cd lab4/app
 npm i
 ```
 
-### 3. Set up MongoDB
+### 3. Set up MongoDB (Optional, if cloud database not working)
 
 Local MongoDB: Ensure you have MongoDB running locally on your machine. If you don’t have MongoDB installed, you can download it from [here](https://www.mongodb.com/try/download/community-kubernetes-operator).
 
@@ -43,7 +43,8 @@ Local MongoDB: Ensure you have MongoDB running locally on your machine. If you d
 If you do not have the .env file in the repository, enter the following commands.
 
 ```
-echo MONGO_URI="mongodb://localhost:27017/sc2006" > .env
+echo LOCAL_MONGO_URI="mongodb://localhost:27017/sc2006" > .env
+echo CLOUD_MONGO_URI="mongodb+srv://wenrongtan16:7F5vZcLpytTXXl9z@wr.re7utjp.mongodb.net/sc2006?retryWrites=true&w=majority" >> .env
 echo ONEMAP_EMAIL="brandon02.lee@gmail.com" >> .env
 echo ONEMAP_PASSWORD="WQ!*PJwF7a#k*@" >> .env
 echo JWT_SECRET=123456 >> .env

@@ -34,7 +34,7 @@ cd lab4/app
 npm i
 ```
 
-### 3. Set up MongoDB (Optional, if cloud database is not working local server will be used automatically instead)
+### 3. Set up MongoDB (Optional, if cloud database is not working local server will be used automatically)
 
 Local MongoDB: If you don’t have MongoDB server installed, you can download it from [here](https://www.mongodb.com/try/download/community).
 

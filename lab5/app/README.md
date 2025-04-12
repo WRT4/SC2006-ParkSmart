@@ -16,7 +16,7 @@ This project uses the typical MERN stack:
 ## Requirements
 
 - Node.js
-- MongoDB (if cloud server is no longer working)
+- MongoDB (if cloud server is no longer working / password has been changed)
 
 ## Installation
 

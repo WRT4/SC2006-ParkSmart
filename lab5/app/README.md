@@ -1,4 +1,4 @@
-# 🚘ParkSmart
+# ParkSmart
 
 ## Description
 

@@ -10,7 +10,7 @@ import Index from "./views/Index";
 import SearchPage from "./views/SearchPage";
 import LoadingPage from "./views/LoadingPage";
 import PostDetail from "./views/PostDetail";
-import EditPost from "./views/EditPost";
+// import EditPost from "./views/EditPost";
 import FeedbackPage from "./views/FeedbackPage";
 import AdminDashboard from "./views/AdminDashboard";
 import ProfilePage from "./views/ProfilePage";
@@ -52,10 +52,10 @@ function App() {
       path: "forum/post/:id",
       element: <PostDetail />,
     },
-    {
-      path: "forum/post/:id/edit",
-      element: <EditPost />,
-    },
+    // {
+    //   path: "forum/post/:id/edit",
+    //   element: <EditPost />,
+    // },
     {
       path: "support",
       element: <FeedbackPage />,

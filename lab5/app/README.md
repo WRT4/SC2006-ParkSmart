@@ -51,7 +51,7 @@ echo JWT_SECRET=123456 >> .env
 echo JWT_EXPIRATION=1h >> .env
 ```
 
-Note that `sc2006` in the mongo URI is the collection name we set.
+Note that `sc2006` in the mongo URIs is the collection name we set.
 
 ### 5. Start the application
 

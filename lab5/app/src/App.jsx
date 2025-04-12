@@ -52,10 +52,6 @@ function App() {
       path: "forum/post/:id",
       element: <PostDetail />,
     },
-    // {
-    //   path: "forum/post/:id/edit",
-    //   element: <EditPost />,
-    // },
     {
       path: "support",
       element: <FeedbackPage />,

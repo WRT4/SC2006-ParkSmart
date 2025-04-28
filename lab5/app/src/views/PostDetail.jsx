@@ -119,7 +119,7 @@ export default function PostDetail() {
     if (confirmDelete) {
       // Delete the post from the backend
       axios
-        .patch(`http://localhost:5000/api/posts/${id}`, { deleted: true })
+        .delete(`http://localhost:5000/api/posts/${id}`, { deleted: true })
         .then(() => {
           // After successfully deleting the post, redirect to the forum page
           navigate("/forum");
@@ -127,6 +127,19 @@ export default function PostDetail() {
         .catch((err) => console.log(err));
     }
   };
+
+  const restorePost = () => {
+    if (user.username !== post.username && user.username !== 'admin') {
+      alert("You can only restore your own posts.");
+      return;
+    }
+    axios
+      .patch(`http://localhost:5000/api/posts/${id}`, { deleted: false })
+      .then(() => {
+        navigate("/forum"); // Redirect to the forum page
+      })
+      .catch((err) => console.log(err));
+  }
 
   // Edit Comment Functionality
   const editComment = (e) => {
@@ -426,7 +439,7 @@ export default function PostDetail() {
               </p>
             )}
             {/*Allow admin to delete post*/}
-            {user && user.username === 'admin' && post.username !== 'admin' && (
+            {user && user.username === 'admin' && post.username !== 'admin' && post.deleted == false && (
               <div className="flex items-center justify-between">
                 <div className="flex gap-2">
                   <button
@@ -436,6 +449,28 @@ export default function PostDetail() {
                   >
                     {t("forum__deletePost")}
                   </button>
+                </div>
+              </div>
+            )}
+            {/*Allow admin to restore deleted post*/}
+            {user && user.username === 'admin' && post.username !== 'admin' && post.deleted == true && (
+              <div className="flex flex-col items-start gap-2">
+                {/* Red text above the button */}
+                <div className="text-red-500 font-semibold">
+                  This post has been deleted.
+                </div>
+
+                {/* Button to restore */}
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={restorePost}
+                      type="button"
+                      className="cursor-pointer rounded-lg bg-red-500 p-2 whitespace-nowrap text-white transition hover:bg-red-600 active:bg-red-700 min-[370px]:px-4 min-[370px]:py-2"
+                    >
+                      {t("forum__restorePost")}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

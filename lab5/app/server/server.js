@@ -475,7 +475,7 @@ app.delete("/api/posts/:postId/comments/:commentId", async (req, res) => {
 });
 
 // Delete a post
-app.patch("/api/posts/:id", async (req, res) => {
+app.delete("/api/posts/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {
@@ -487,6 +487,23 @@ app.patch("/api/posts/:id", async (req, res) => {
     res.json({ message: "Post deleted" });
   } catch (err) {
     console.error("Error deleting post:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// restore a post
+app.patch("/api/posts/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    post.deleted = false;
+    await post.save();
+    res.json({ message: "Post Restored" });
+  } catch (err) {
+    console.error("Error restoring post:", err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });

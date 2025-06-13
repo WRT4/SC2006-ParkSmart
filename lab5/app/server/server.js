@@ -127,8 +127,158 @@ const User = require("../src/models/User.jsx");
 const Report = require("../src/models/Report.jsx");
 const Feedback = require("../src/models/Feedback.jsx");
 const AboutMission = require("../src/models/AboutMission.jsx");
+const Carpark = require("../src/models/Carpark.jsx");
+const Record = require("../src/models/Record.jsx");
+
+// Convert SVY coordinates to WGS84 (latitude, longitude)
+function SVYtoWGS(x, y) {
+  const refLat = 1.366666, refLong = 103.833333;
+  const originX = 38744.572, originY = 28001.642;
+  const k0 = 1.0;
+  const a = 6378137;
+  const f = 1 / 298.257223563;
+  const e2 = 2 * f - f * f;
+  const A0 = 1 - e2 / 4 - (3 * e2 ** 2) / 64 - (5 * e2 ** 3) / 256;
+  const A2 = (3 / 8) * (e2 + e2 ** 2 / 4 + (15 * e2 ** 3) / 128);
+  const A4 = (15 / 256) * (e2 ** 2 + (3 * e2 ** 3) / 4);
+  const A6 = (35 * e2 ** 3) / 3072;
+  const lat0 = (refLat * Math.PI) / 180;
+  const long0 = (refLong * Math.PI) / 180;
+  const E = x - originY, N = y - originX;
+  const M0 = a * (A0 * lat0 - A2 * Math.sin(2 * lat0) + A4 * Math.sin(4 * lat0) - A6 * Math.sin(6 * lat0));
+  const M = M0 + N / k0;
+  const mu = M / (a * A0);
+  const e1 = (1 - Math.sqrt(1 - e2)) / (1 + Math.sqrt(1 - e2));
+  const J1 = (3 / 2) * e1 - (27 / 32) * e1 ** 3;
+  const J2 = (21 / 16) * e1 ** 2 - (55 / 32) * e1 ** 4;
+  const J3 = (151 / 96) * e1 ** 3;
+  const J4 = (1097 / 512) * e1 ** 4;
+  const fp_lat = mu + J1 * Math.sin(2 * mu) + J2 * Math.sin(4 * mu) + J3 * Math.sin(6 * mu) + J4 * Math.sin(8 * mu);
+  const e2_prime = e2 / (1 - e2);
+  const C1 = e2_prime * Math.cos(fp_lat) ** 2;
+  const T1 = Math.tan(fp_lat) ** 2;
+  const R1 = (a * (1 - e2)) / (1 - e2 * Math.sin(fp_lat) ** 2) ** 1.5;
+  const N1 = a / Math.sqrt(1 - e2 * Math.sin(fp_lat) ** 2);
+  const D = E / (N1 * k0);
+  const lat_rad = fp_lat - ((N1 * Math.tan(fp_lat)) / R1) *
+    (D ** 2 / 2 -
+      ((5 + 3 * T1 + 10 * C1 - 4 * C1 ** 2 - 9 * e2_prime) * D ** 4) / 24 +
+      ((61 + 90 * T1 + 298 * C1 + 45 * T1 ** 2 - 252 * e2_prime - 3 * C1 ** 2) * D ** 6) / 720);
+  const long_rad = long0 +
+    (D -
+      ((1 + 2 * T1 + C1) * D ** 3) / 6 +
+      ((5 - 2 * C1 + 28 * T1 - 3 * C1 ** 2 + 8 * e2_prime + 24 * T1 ** 2) * D ** 5) / 120) /
+      Math.cos(fp_lat);
+  return {
+    latitude: (lat_rad * 180) / Math.PI,
+    longitude: (long_rad * 180) / Math.PI,
+  };
+}
+
 
 // API Routes
+
+// Fetch and store carpark availability data
+async function fetchAndStoreCarparkAvailability() {
+  try {
+    const response = await fetch("https://api.data.gov.sg/v1/transport/carpark-availability");
+    const data = await response.json();
+    const carparkData = data.items[0].carpark_data;
+
+    for (const carpark of carparkData) {
+      await Carpark.findOneAndUpdate(
+        { carpark_number: carpark.carpark_number },
+        carpark,
+        { upsert: true, new: true }
+      );
+    }
+
+    console.log("Carpark availability updated at", new Date().toLocaleTimeString());
+  } catch (err) {
+    console.error("Error fetching or storing carpark availability:", err);
+  }
+}
+
+// Endpoint to get carpark availability
+app.get("/api/carparks", async (req, res) => {
+  console.log("GET /api/carparks called");
+
+  try {
+    const results = await Carpark.find({});
+    res.json(results);
+  } catch (err) {
+    console.error("Failed to get carpark data", err);
+    res.status(500).json({ error: "Failed to get data" });
+  }
+});
+
+
+const fetchCarparkData = async () => {
+  try {
+    const res = await fetch("https://data.gov.sg/api/action/datastore_search?resource_id=d_23f946fa557947f93a8043bbef41dd09&limit=5000");
+    const data = await res.json();
+
+    const records = data.result.records.map(record => {
+      const x = parseFloat(record.x_coord);
+      const y = parseFloat(record.y_coord);
+      const { latitude, longitude } = SVYtoWGS(x, y);
+
+      // Clean title from address
+      const title = record.address
+        .split(" ")
+        .filter(word => word !== "BLK" && !(word.charAt(0) >= "0" && word.charAt(0) <= "9"))
+        .join(" ");
+
+      return {
+        ...record,
+        x_coord: x,
+        y_coord: y,
+        latitude,
+        longitude,
+        title,
+        fetchedAt: new Date(),
+      };
+    });
+
+    const bulkOps = records.map(doc => ({
+      replaceOne: {
+        filter: { _id: doc._id },
+        replacement: doc,
+        upsert: true
+      }
+    }));
+
+    await Record.bulkWrite(bulkOps);
+    console.log(`Replaced/inserted ${records.length} records at ${new Date().toISOString()}`);
+  } catch (error) {
+    console.error('Failed to fetch and replace carpark data:', error);
+  }
+};
+
+app.get("/api/records", async (req, res) => {
+  try {
+    const records = await Record.find({});
+    res.json(records);
+  } catch (error) {
+    console.error("Error fetching carpark records:", error);
+    res.status(500).json({ error: "Failed to fetch carpark records" });
+  }
+});
+
+// Run every 60 seconds
+// cron.schedule('*/1 * * * *', () => {
+//   console.log('Fetching carpark data...');
+//   fetchAndStoreCarparkAvailability()
+//   fetchCarparkData();
+// });
+setInterval(() => {
+  console.log("Fetching carpark data...");
+  fetchAndStoreCarparkAvailability();
+  fetchCarparkData();
+}, 60 * 1000); // Run every 60 seconds
+fetchAndStoreCarparkAvailability();
+fetchCarparkData();
+
 
 // Route to update About and Mission
 app.put("/api/about-mission/update", async (req, res) => {
